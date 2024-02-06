@@ -7,13 +7,17 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import controller.ControleurPacmanGame;
+import model.AgentAction;
+import model.Pacman;
+import model.PacmanGame;
+import model.Iterateur.IterateurAgent;
+import model.Iterateur.IterateurPacman;
+import model.Strategie.ListeStrategie;
+import model.Strategie.StrategieAgent;
 
 public class Client {
-    public static void main(String[] argu)
+    public static void main(String[] argu) throws InterruptedException
     {
-        //ControleurPacmanGame game = new ControleurPacmanGame("layout/originalClassic.lay");
-        //game.play();
-
         int p=1234; // le port d’écoute
         Socket so;
 
@@ -28,9 +32,21 @@ public class Client {
 
             String message = entree.readLine();
 
-            if(message.equals("Lance"))
-                System.out.println("Lancement du jeu");
-                
+            if(message.equals("Lance")) {
+                ControleurPacmanGame controleur = new ControleurPacmanGame("layout/originalClassic.lay");
+                controleur.setStrategiePacman(ListeStrategie.KEYBOARD);
+                controleur.play();
+
+                PacmanGame game = (PacmanGame)controleur.getGame();
+                Pacman pacmans = game.getPacman();
+                StrategieAgent strategie = pacmans.getStrategie();
+                while(so.isConnected()) {
+                    Thread.sleep(1000);
+                    AgentAction action = strategie.getAction();
+                    sortie.println(action.get_direction());
+                }
+            }
+
         } catch (IOException e) { System.out.println("problème\n"+e); }
     }
 }

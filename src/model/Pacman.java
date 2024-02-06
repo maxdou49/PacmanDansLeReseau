@@ -107,4 +107,9 @@ public class Pacman extends Agent
         a.killMe();
     }
 
+    public StrategieAgent getStrategie()
+    {
+        return strategie;
+    }
+
 }
