@@ -6,6 +6,8 @@ import model.EtatFantome.EtatFantome;
 import model.EtatFantome.EtatFantomeChase;
 import model.EtatFantome.EtatFantomeFright;
 import model.Strategie.ListeStrategie;
+import model.Transfert.EtatAgent;
+import model.Transfert.EtatAgentFantome;
 
 public class Fantome extends Agent {
     protected boolean canDie;
@@ -115,5 +117,10 @@ public class Fantome extends Agent {
         {
             etat.setStrategie();
         }
+    }
+
+    public EtatAgent getEtatAgent()
+    {
+        return new EtatAgentFantome(pos, alive, canDie);
     }
 }

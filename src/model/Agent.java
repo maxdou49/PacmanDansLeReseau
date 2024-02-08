@@ -6,6 +6,7 @@ package model;
 
 import model.Iterateur.IterateurAgent;
 import model.Iterateur.IterateurAgentPosition;
+import model.Transfert.EtatAgent;
 
 public abstract class Agent {
     protected PositionAgent pos;
@@ -122,6 +123,11 @@ public abstract class Agent {
     public void setPlayer(int player)
     {
         this.player = player;
+    }
+
+    public EtatAgent getEtatAgent()
+    {
+        return new EtatAgent(pos, alive);
     }
 
 }
