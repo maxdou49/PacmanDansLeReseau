@@ -10,7 +10,6 @@ public abstract class AbstractController {
 
     public AbstractController()
     {
-
     }
 
     public void restart()

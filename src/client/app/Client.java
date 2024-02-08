@@ -1,4 +1,4 @@
-package client;
+package client.app;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.net.Socket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import controller.ControleurPacmanGame;
+import client.controller.ControllerPacmanGameClient;
 import model.AgentAction;
 import model.Pacman;
 import model.PacmanGame;
@@ -34,7 +34,7 @@ public class Client {
             ObjectMapper objectMapper = new ObjectMapper();
 
             if(message.equals("Lance")) {
-                ControleurPacmanGame controleur = new ControleurPacmanGame("layout/originalClassic.lay");
+                ControllerPacmanGameClient controleur = new ControllerPacmanGameClient("layout/originalClassic.lay");
                 controleur.setStrategiePacman(ListeStrategie.KEYBOARD);
                 controleur.play();
 
