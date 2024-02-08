@@ -3,6 +3,10 @@ package model.Strategie;
 import model.Agent;
 import model.PositionAgent;
 
+/*
+ * Stratégie A* cherchant Pacman
+ */
+
 public class StrategieAstarTargetPacman extends StrategieAStar {
     public StrategieAstarTargetPacman(Agent a)
     {

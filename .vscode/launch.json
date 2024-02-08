@@ -21,7 +21,7 @@
             "type": "java",
             "name": "Client",
             "request": "launch",
-            "mainClass": "client.Client",
+            "mainClass": "client.app.Client",
             "args": "localhost 1234"
         }
     ]

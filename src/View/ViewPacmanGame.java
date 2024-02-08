@@ -6,6 +6,7 @@ import javax.swing.*;
 
 import controller.AbstractController;
 import model.Agent;
+import model.Fantome;
 import model.KeyboadManager;
 import model.Observable;
 import model.Observer;
@@ -58,8 +59,9 @@ public class ViewPacmanGame extends JFrame implements Observer {
                 }
                 else
                 {
+                    Fantome f = (Fantome)a;
                     fantomes.add(a.getPos());
-                    fright.add(a.canBeKilled());
+                    fright.add(f.isFrightened());
                 }
             }
             pa.setPacmans_pos(pacman);

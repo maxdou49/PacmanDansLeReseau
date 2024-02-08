@@ -5,7 +5,6 @@ package model;
 import model.EtatFantome.EtatFantome;
 import model.EtatFantome.EtatFantomeChase;
 import model.EtatFantome.EtatFantomeFright;
-import model.Iterateur.IterateurAgent;
 import model.Strategie.ListeStrategie;
 
 public class Fantome extends Agent {
@@ -33,34 +32,9 @@ public class Fantome extends Agent {
         etat = new EtatFantomeChase(this);
     }
 
-    protected boolean isMoveLegal(AgentAction action)
+    public AgentAction getAction()
     {
-        PositionAgent newpos = new PositionAgent(pos.getX() + action.get_vx(), pos.getY() + action.get_vy(), pos.getX() + action.get_direction());
-        return !game.getMaze().isWall(newpos.getX(), newpos.getY());
-    }
-
-    protected void moveAgent(AgentAction action)
-    {
-        pos.setX(pos.getX() + action.get_vx());
-        pos.setY(pos.getY() + action.get_vy());
-        pos.setDir(action.get_direction());
-        Pacman pacman = null;
-        IterateurAgent iter = game.pacmanIsHereIter(pos);
-        if(iter.hasNext())
-        {
-            pacman = (Pacman)iter.next();
-            if(pacman != null)
-            {
-                if(canBeKilled())
-                {
-                    pacman.killGhost(this);
-                }
-                else
-                {
-                    pacman.killMe();
-                }
-            }
-        }
+        return etat.takeTurn();
     }
 
     public void takeTurn()
@@ -78,16 +52,6 @@ public class Fantome extends Agent {
         {
             revive();
         }
-        if(alive)
-        {
-            AgentAction action = etat.takeTurn();
-        
-            //On veux pas de mur
-            if(isMoveLegal(action))
-            {
-                moveAgent(action);
-            }
-        }
     }
 
     public void makeVulnerable(int timer)
@@ -97,17 +61,30 @@ public class Fantome extends Agent {
         etat = new EtatFantomeFright(this);
     }
 
-    public boolean canKillPacman()
+    public boolean canKillThis(Agent a)
     {
-        return !canDie;
+        if(a instanceof Fantome) //Un fantome ne peux pas tuer un fantome
+        {
+            return false;
+        }
+        return !canDie; //On ne peux pas tuer si on est vulnérable
     }
 
-    public boolean canKillGhost()
+    public boolean canBeKilledBy(Agent a)
     {
-        return false;
+        if(a instanceof Fantome) //Un fantome ne peux pas tuer un fantome
+        {
+            return false;
+        }
+        return canDie; //On est vulnérable donc on peux mourir
     }
 
-    public boolean canBeKilled()
+    public void kill(Agent a)
+    {
+        super.kill(a);
+    }
+
+    public boolean isFrightened()
     {
         return canDie;
     }

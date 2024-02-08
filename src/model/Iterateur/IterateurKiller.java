@@ -2,12 +2,18 @@ package model.Iterateur;
 
 import model.Agent;
 
-public class IterateurPacmanKiller extends IterateurAgent {
+/*
+ * Ne garde que ce qui peut tuer l'agent spécifié
+ */
+
+public class IterateurKiller extends IterateurAgent {
     IterateurAgent iter;
-    public IterateurPacmanKiller(IterateurAgent it)
+    Agent agent;
+    public IterateurKiller(IterateurAgent it, Agent a)
     {
         super();
         iter = it;
+        this.agent = a;
     }
 
     public Agent get(int pos)
@@ -24,7 +30,7 @@ public class IterateurPacmanKiller extends IterateurAgent {
     protected boolean valid(Agent a) {
         if(iter.valid(a))
         {
-            return a.canKillPacman();
+            return (agent.canBeKilledBy(a) && a.canKillThis(agent));
         }
         return false;
     }

@@ -83,6 +83,7 @@ public class KeyboadManager implements KeyListener {
         }
     }
 
+    //Vérifie si une touche a été appuyé
     public boolean getKeyPress(int player, int key, boolean isLast)
     {
         if(key >= 0 && key < KEY_MAX)
@@ -92,6 +93,7 @@ public class KeyboadManager implements KeyListener {
         return false;
     }
 
+    //Regarde la dernière touche appuyé
     public int getLastKey(int player, boolean isPressed)
     {
         //System.out.println(Integer.toString(lastKey));

@@ -7,10 +7,6 @@ import java.util.ArrayList;
 
 import model.Iterateur.IterateurAgent;
 import model.Iterateur.IterateurAgentBase;
-import model.Iterateur.IterateurAgentPosition;
-import model.Iterateur.IterateurFantome;
-import model.Iterateur.IterateurPacman;
-import model.Iterateur.IterateurPacmanKiller;
 import model.Random.BasicRandom;
 import model.Random.RandomGenerator;
 import View.PanelPacmanGame;
@@ -71,6 +67,7 @@ public class PacmanGame extends Game {
         initializeGame();
     }
 
+    //Initialiser une partie
     protected void initializeGame()
     {
         loadMaze();
@@ -123,7 +120,10 @@ public class PacmanGame extends Game {
         //On gère la logique
         for(Agent a:agents)
         {
+            AgentAction action = a.getAction();
+            a.moveAgent(action);
             a.takeTurn();
+            a.manageKill();
         }
         
         updateObservers();
@@ -196,11 +196,12 @@ public class PacmanGame extends Game {
         this.keyboard = keyboard;
     }
 
-    public IterateurAgent pacmanKillerIter()
+    public IterateurAgent getAgentIter()
     {
-        return new IterateurPacmanKiller(new IterateurAgentBase(agents));
+        return new IterateurAgentBase(agents);
     }
 
+    //Regarde si il y a un pacman a une position donné
     public boolean pacmanIsHere(PositionAgent p)
     {
         for(Agent a: agents)
@@ -213,26 +214,7 @@ public class PacmanGame extends Game {
         return false;
     }
 
-    public IterateurAgent pacmanIsHereIter(PositionAgent p)
-    {
-        return new IterateurAgentPosition(getPacmanIter(), p);
-    }
-
-    public IterateurAgent ghostIsHereIter(PositionAgent p)
-    {
-        return new IterateurAgentPosition(getGhostIter(), p);
-    }
-
-    public IterateurAgent getPacmanIter()
-    {
-        return new IterateurPacman(new IterateurAgentBase(agents));
-    }
-
-    public IterateurAgent getGhostIter()
-    {
-        return new IterateurFantome(new IterateurAgentBase(agents));
-    }
-
+    //Rend les fantomes vulnérable
     public void makeGhostVulnerable()
     {
         for(Agent a: agents)
@@ -245,6 +227,7 @@ public class PacmanGame extends Game {
         }
     }
 
+    //Vérifie si au moins un fantôme est vulnérable
     public boolean areGhostVulnerable()
     {
         for(Agent a: agents)
@@ -252,7 +235,7 @@ public class PacmanGame extends Game {
             if(a instanceof Fantome)
             {
                 Fantome f = (Fantome)a;
-                if(f.canBeKilled())
+                if(f.isFrightened())
                 {
                     return true;
                 }
@@ -261,6 +244,7 @@ public class PacmanGame extends Game {
         return false;
     }
 
+    //Vérifie si au moins un pacman est en vie
     public boolean pacmanAlive()
     {
         for(Agent a: agents)
@@ -319,6 +303,7 @@ public class PacmanGame extends Game {
         return String.format("Niveau: %d <br/>Score: %d \tVies: %d", level, getScore(), getLives());
     }
 
+    //Changer la stratégie de Pacman
     public void setPacmanStrategie(ListeStrategie strategie)
     {
         pacmanStrategie = strategie;
@@ -332,6 +317,7 @@ public class PacmanGame extends Game {
         }
     }
 
+    //Changer la stratégie des fantomes
     public void setFantomeStrategie(ListeStrategie strategie)
     {
         fantomeStrategie = strategie;

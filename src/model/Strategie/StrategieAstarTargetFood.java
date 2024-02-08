@@ -1,8 +1,14 @@
 package model.Strategie;
 
 import model.Iterateur.IterateurAgent;
+import model.Iterateur.IterateurAgentPosition;
+import model.Iterateur.IterateurKiller;
 import model.Agent;
 import model.PositionAgent;
+
+/*
+ * Algorithme a* cherchant la nourriture.
+ */
 
 public class StrategieAstarTargetFood extends StrategieAStar {
     public StrategieAstarTargetFood(Agent a)
@@ -14,17 +20,12 @@ public class StrategieAstarTargetFood extends StrategieAStar {
     {
         if(super.isValid(pos))
         {
-            //On cherche a éviter les fantomes qui peuvent nous tuer
+            //On cherche a éviter ce qui peux nous tuer
             boolean ghosthere = false;
-            Agent a = null;
-            IterateurAgent iter = agent.getGame().ghostIsHereIter(pos);
-            while(iter.hasNext())
+            IterateurAgent iter = new IterateurKiller(new IterateurAgentPosition(agent.getGame().getAgentIter(), pos), agent);
+            if(iter.hasNext())
             {
-                a = iter.next();
-                if(a.canKillPacman())
-                {
-                    ghosthere = true;
-                }
+                ghosthere = true;
             }
             return !ghosthere;
         }

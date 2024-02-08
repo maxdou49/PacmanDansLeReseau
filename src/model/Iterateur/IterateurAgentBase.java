@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import model.Agent;
 
+/*
+ * Itérateur d'agent définissant la liste sur lequel itérer
+ */
+
 public class IterateurAgentBase extends IterateurAgent {
     protected ArrayList<Agent> liste;
     public IterateurAgentBase(ArrayList<Agent> liste)

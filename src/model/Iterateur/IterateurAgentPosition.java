@@ -3,6 +3,10 @@ package model.Iterateur;
 import model.Agent;
 import model.PositionAgent;
 
+/*
+ * Ne garde que les agents ayant une certaine position
+ */
+
 public class IterateurAgentPosition extends IterateurAgent {
     IterateurAgent iter;
     PositionAgent pos;

@@ -3,6 +3,10 @@ package model.Iterateur;
 import model.Agent;
 import model.Fantome;
 
+/*
+ * Ne garde que les fantômes
+ */
+
 public class IterateurFantome extends IterateurAgent {
     IterateurAgent iter;
     public IterateurFantome(IterateurAgent it)

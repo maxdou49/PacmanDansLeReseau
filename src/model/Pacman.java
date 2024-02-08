@@ -4,7 +4,6 @@
 
 package model;
 
-import model.Iterateur.IterateurAgent;
 import model.Strategie.ListeStrategie;
 import model.Strategie.StrategieAgent;
 import model.Strategie.StrategieFractory;
@@ -38,55 +37,43 @@ public class Pacman extends Agent
         }
     }
 
-    protected void moveAgent(AgentAction action)
+    //On va dire que par défaut Pacman peut tout tuer vu que cela dépend du fantome.
+    public boolean canKillThis(Agent a)
     {
-        pos.setX(pos.getX() + action.get_vx());
-        pos.setY(pos.getY() + action.get_vy());
-        pos.setDir(action.get_direction());
+        return (a instanceof Fantome);
+    }
 
-        if(game.getMaze().isFood(pos.getX(), pos.getY()))
-        {
-            game.getMaze().setFood(pos.getX(), pos.getY(), false);
-            game.awardScore(10);
-        }
-        if(game.getMaze().isCapsule(pos.getX(), pos.getY()))
-        {
-            game.getMaze().setCapsule(pos.getX(), pos.getY(), false);
-            game.makeGhostVulnerable();
-            game.awardScore(50);
-        }
-        //Kill(or be killed by) ghosts
-        IterateurAgent iter = game.ghostIsHereIter(pos);
-        Agent ghost = null;
-        while(iter.hasNext())
-        {
-            ghost = iter.next();
-            if(ghost.canBeKilled())
-            {
-                killGhost(ghost);
-            }
-            else
-            {
-                killMe();
-            }
-        }
+    //Cela dépend du fantome si Pacman peut mourir
+    public boolean canBeKilledBy(Agent a)
+    {
+        return (a instanceof Fantome);
+    }
+
+    public AgentAction getAction()
+    {
+        return strategie.getAction();
     }
 
     public void takeTurn()
     {
-        if(alive)
+        if(isAlive())
         {
-            AgentAction action = strategie.getAction();
-
+            //Casser la chaine si aucun fantome n'est vulnérable
             if(!game.areGhostVulnerable())
             {
                 breakChain();
             }
-        
-            //On veux pas de mur
-            if(isMoveLegal(action))
+            //On gère la collecte de nourriture
+            if(game.getMaze().isFood(pos.getX(), pos.getY()))
             {
-                moveAgent(action);
+                game.getMaze().setFood(pos.getX(), pos.getY(), false);
+                game.awardScore(10);
+            }
+            if(game.getMaze().isCapsule(pos.getX(), pos.getY()))
+            {
+                game.getMaze().setCapsule(pos.getX(), pos.getY(), false);
+                game.makeGhostVulnerable();
+                game.awardScore(50);
             }
         }
     }
@@ -96,7 +83,8 @@ public class Pacman extends Agent
         chain = 0;
     }
 
-    public void killGhost(Agent a)
+    //On gagne des points si pacman tue un fantome
+    public void kill(Agent a)
     {
         if(!a.isAlive())
         {

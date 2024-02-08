@@ -3,6 +3,9 @@ package model.Iterateur;
 import model.Agent;
 import model.Pacman;
 
+/*
+ * Ne garde que les pacman
+ */
 
 public class IterateurPacman extends IterateurAgent {
     IterateurAgent iter;

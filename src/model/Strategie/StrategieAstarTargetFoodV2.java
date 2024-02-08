@@ -1,9 +1,13 @@
 package model.Strategie;
 
 import model.Iterateur.IterateurAgent;
-import model.Iterateur.IterateurPacmanKiller;
+import model.Iterateur.IterateurKiller;
 import model.Agent;
 import model.Noeud;
+
+/*
+ * Algorithme a* préviligiant les cases loin des fantomes.
+ */
 
 public class StrategieAstarTargetFoodV2 extends StrategieAstarTargetFood {
     public StrategieAstarTargetFoodV2(Agent a)
@@ -13,10 +17,10 @@ public class StrategieAstarTargetFoodV2 extends StrategieAstarTargetFood {
 
     public void getHeuristic(Noeud n)
     {
-        //On évite les fantomes qui peuvent nous tuer
+        //On évite ce qui peut nous tuer
         Agent a = null;
         int d = Integer.MAX_VALUE;
-        IterateurAgent iter = new IterateurPacmanKiller(agent.getGame().getGhostIter());
+        IterateurAgent iter = new IterateurKiller(agent.getGame().getAgentIter(), agent);
         while(iter.hasNext())
         {
             a = iter.next();

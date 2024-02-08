@@ -1,9 +1,13 @@
 package model.Strategie;
 
 import model.Iterateur.IterateurAgent;
-import model.Iterateur.IterateurPacmanKiller;
+import model.Iterateur.IterateurKiller;
 import model.Agent;
 import model.PositionAgent;
+
+/*
+ * Stratégie a* n'allant pas a proximité des fantômes
+ */
 
 public class StrategieAstarTargetFoodV3 extends StrategieAstarTargetFood {
     public StrategieAstarTargetFoodV3(Agent a)
@@ -18,7 +22,7 @@ public class StrategieAstarTargetFoodV3 extends StrategieAstarTargetFood {
             //On évite les fantomes qui peuvent nous tuer
             Agent a = null;
             int d = Integer.MAX_VALUE;
-            IterateurAgent iter = new IterateurPacmanKiller(agent.getGame().getGhostIter());
+            IterateurAgent iter = new IterateurKiller(agent.getGame().getAgentIter(), agent);
             while(iter.hasNext())
             {
                 a = iter.next();

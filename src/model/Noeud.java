@@ -1,5 +1,9 @@
 package model;
 
+/*
+ * Un noeud pour calculer un chemin A*
+ */
+
 public class Noeud implements Comparable<Noeud> {
     public PositionAgent pos; //La position
     public Double distance; //La distance par rapport au départ

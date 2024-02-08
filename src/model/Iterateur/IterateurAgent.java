@@ -2,6 +2,10 @@ package model.Iterateur;
 
 import model.Agent;
 
+/*
+ * La classe de base pour itérer sur des agents
+ */
+
 public abstract class IterateurAgent {
     protected int position; //Prochain élément a itérer
 
