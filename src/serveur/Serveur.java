@@ -8,6 +8,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import model.AgentAction;
+
 public class Serveur {
     public static void main(String[] args)
     {
@@ -19,7 +21,8 @@ public class Serveur {
         Socket so;
         BufferedReader entree;
         PrintWriter sortie;
-        
+        ObjectMapper objectMapper = new ObjectMapper();
+
         try {
             ecoute = new ServerSocket(p); // on crée le serveur
             System.out.println("serveur mis en place ");
@@ -30,8 +33,8 @@ public class Serveur {
                 sortie = new PrintWriter (so.getOutputStream(), true);    
                 sortie.println("Lance");
                 while(so.isConnected()) {
-                    String keyValue = entree.readLine();
-                    System.out.println(keyValue);
+                    AgentAction action = objectMapper.readValue(entree.readLine(), AgentAction.class);
+                    System.out.println(action);
                 }
             }
         } catch (IOException e) { System.out.println("problème\n"+e); }

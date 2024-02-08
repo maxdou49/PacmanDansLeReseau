@@ -18,6 +18,9 @@ public class AgentAction {
 	// Direction
 	private int _direction;
 
+	public AgentAction() {		
+	}
+
 	public AgentAction(int d) {
 
 		_direction = d;
@@ -74,5 +77,31 @@ public class AgentAction {
 
 	public void set_direction(int _direction) {
 		this._direction = _direction;
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder("Action choisie : ");
+
+		switch (_direction) {
+		case NORTH:
+			sb.append("NORTH");
+			break;
+		case SOUTH:
+			sb.append("SOUTH");
+			break;
+		case EAST:
+			sb.append("EAST");
+			break;
+		case WEST:
+			sb.append("WEST");
+			break;
+		case STOP:
+			sb.append("STOP");
+			break;
+		default:
+			sb.append("UNKNOWN");
+		}
+
+		return sb.toString();
 	}
 }

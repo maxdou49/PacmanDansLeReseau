@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import controller.ControleurPacmanGame;
 import model.AgentAction;
 import model.Pacman;
@@ -29,6 +31,7 @@ public class Client {
             sortie = new PrintWriter (so.getOutputStream(), true); 
 
             String message = entree.readLine();
+            ObjectMapper objectMapper = new ObjectMapper();
 
             if(message.equals("Lance")) {
                 ControleurPacmanGame controleur = new ControleurPacmanGame("layout/originalClassic.lay");
@@ -41,7 +44,7 @@ public class Client {
                 while(so.isConnected()) {
                     Thread.sleep(1000);
                     AgentAction action = strategie.getAction();
-                    sortie.println(action.get_direction());
+                    sortie.println(objectMapper.writeValueAsString(action));
                 }
             }
 
