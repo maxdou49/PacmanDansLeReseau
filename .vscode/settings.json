@@ -5,6 +5,15 @@
     ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
+        "lib/jackson-core-2.16.1.jar",
+        "lib/jackson-annotations-2.16.1.jar",
+        "lib/jackson-databind-2.16.1.jar",
+        "jackson-core-2.16.1.pom",
+        "jackson-annotations-2.16.1.pom",
+        "jackson-databind-2.16.1.pom.xml",
+        "jackson-core-2.16.1.module",
+        "jackson-annotations-2.16.1.module",
+        "jackson-databind-2.16.1.module",
         "lib/**/*.jar"
     ]
 }
