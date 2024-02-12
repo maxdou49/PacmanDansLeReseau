@@ -10,6 +10,7 @@ import model.AgentAction;
 import model.Game;
 import model.Maze;
 import model.PositionAgent;
+import serveur.controller.ControllerPacmanGameServeur;
 import serveur.model.Iterateur.IterateurAgent;
 import serveur.model.Iterateur.IterateurAgentBase;
 import model.Random.BasicRandom;
@@ -35,7 +36,9 @@ public class PacmanGame extends Game {
 
     private int NB_LIVES = 5;
 
-    public PacmanGame(String mazeFile)
+    private ControllerPacmanGameServeur controlleur;
+
+    public PacmanGame(String mazeFile, ControllerPacmanGameServeur controller)
     {
         super();
         this.mazeFile = mazeFile;
@@ -46,6 +49,7 @@ public class PacmanGame extends Game {
         lives = NB_LIVES;
         pacmanStrategie = ListeStrategie.NONE;
         fantomeStrategie = ListeStrategie.NONE;
+        this.controlleur = controller;
     }
 
     public String getMazeFile()

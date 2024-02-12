@@ -9,7 +9,7 @@ public class ControllerPacmanGameServeur extends AbstractController {
     public ControllerPacmanGameServeur(String mazePath)
     {
         super();
-        PacmanGame g = new PacmanGame(mazePath);
+        PacmanGame g = new PacmanGame(mazePath, this);
         this.game = g;
         this.game.setMaxTurn(Integer.MAX_VALUE);
         this.game.init();
