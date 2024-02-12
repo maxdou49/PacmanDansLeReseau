@@ -1,10 +1,20 @@
 package serveur.controller;
 
+import java.io.IOException;
+import java.net.Socket;
+import java.util.ArrayList;
+
 import controller.AbstractController;
+import model.AgentAction;
+import model.ReaderWriter;
+import model.Transfert.EtatGame;
+import serveur.model.ClientCommunication;
 import serveur.model.PacmanGame;
 import serveur.model.Strategie.ListeStrategie;
 
 public class ControllerPacmanGameServeur extends AbstractController {
+
+    protected ArrayList<ClientCommunication> clients;
 
     public ControllerPacmanGameServeur(String mazePath)
     {
@@ -12,7 +22,13 @@ public class ControllerPacmanGameServeur extends AbstractController {
         PacmanGame g = new PacmanGame(mazePath, this);
         this.game = g;
         this.game.setMaxTurn(Integer.MAX_VALUE);
+        this.clients = new ArrayList<ClientCommunication>();
+    }
+
+    public void lancer()
+    {
         this.game.init();
+        this.game.launch();
     }
 
     public void setStrategiePacman(ListeStrategie strategie)
@@ -56,5 +72,32 @@ public class ControllerPacmanGameServeur extends AbstractController {
     /***   
         *   fonction qui retourne le jeu pacman utiliser par le controleur pacman
     ***/
+
+    public void ajouterJoueur(Socket s)
+    {
+        try
+        {
+            ClientCommunication client = new ClientCommunication(new ReaderWriter(s));
+            this.clients.add(client);
+            client.launch();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public AgentAction lireActionClient(int client)
+    {
+        AgentAction action = clients.get(client).getAction();
+        return action;
+    }
+
+    public void envoyerEtat(EtatGame etat)
+    {
+        for(ClientCommunication client: clients)
+        {
+            client.sendState(etat);
+        }
+    }
 }
  
