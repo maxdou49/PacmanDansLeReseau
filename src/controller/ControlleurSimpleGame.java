@@ -3,8 +3,8 @@
  */
 package controller;
 
-import View.ViewCommand;
-import View.ViewSimpleGame;
+import client.view.ViewCommand;
+import client.view.ViewSimpleGame;
 import model.SimpleGame;
 
 public class ControlleurSimpleGame extends AbstractController {

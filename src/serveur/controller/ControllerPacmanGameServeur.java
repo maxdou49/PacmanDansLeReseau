@@ -1,24 +1,17 @@
-package client.controller;
+package serveur.controller;
 
 import controller.AbstractController;
-import client.model.Strategie.ListeStrategie;
-import client.view.ViewCommand;
-import client.view.ViewPacmanGame;
-import client.model.PacmanGame;
+import serveur.model.PacmanGame;
+import serveur.model.Strategie.ListeStrategie;
 
-public class ControllerPacmanGameClient extends AbstractController {
-    ViewPacmanGame viewGame;
-    ViewCommand viewCom;
+public class ControllerPacmanGameServeur extends AbstractController {
 
-    public ControllerPacmanGameClient(String mazePath)
+    public ControllerPacmanGameServeur(String mazePath)
     {
         super();
         PacmanGame g = new PacmanGame(mazePath);
         this.game = g;
         this.game.setMaxTurn(Integer.MAX_VALUE);
-        this.viewGame = new ViewPacmanGame(this);
-        this.viewCom = new ViewCommand(this);
-        g.setKeyboard(viewGame.getKeyboard());
         this.game.init();
     }
 

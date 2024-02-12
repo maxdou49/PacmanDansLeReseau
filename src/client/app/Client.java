@@ -9,11 +9,11 @@ import java.net.Socket;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.controller.ControllerPacmanGameClient;
+import client.model.PacmanGame;
 import model.AgentAction;
-import model.Pacman;
-import model.PacmanGame;
-import model.Strategie.ListeStrategie;
-import model.Strategie.StrategieAgent;
+import client.model.Strategie.ListeStrategie;
+import client.model.Strategie.StrategieAgent;
+import client.model.Pacman;
 
 public class Client {
     public static void main(String[] argu) throws InterruptedException
