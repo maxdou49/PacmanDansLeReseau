@@ -123,6 +123,11 @@ public class PacmanGame extends Game {
 
     protected void takeTurn()
     {
+        /*Un tour du client devrait être
+            - Envoyer l'entrée au serveur
+            - Recuperer l'état depuis le serveur
+            - Afficher cet état
+        */
         //On gère la logique
         for(Agent a:agents)
         {
@@ -347,5 +352,36 @@ public class PacmanGame extends Game {
                 etat.addFantome((EtatAgentFantome)a.getEtatAgent());
         }
         return etat;
+    }
+
+    public void setFromEtat(EtatGame etat)
+    {
+        this.score = etat.getScore();
+        this.lives = etat.getLives();
+        this.level = etat.getLevel();
+        this.turn = etat.getTurn();
+
+        ArrayList<EtatAgentFantome> fantomes = etat.getFantomes();
+        ArrayList<EtatAgentPacman> pacmans = etat.getPacmans();
+        int fantomesIdx = 0;
+        int pacmansIdx = 0;
+        for(Agent a: agents)
+        {
+            if(a instanceof Pacman)
+            {
+                Pacman p = (Pacman)a;
+                if(pacmansIdx < pacmans.size())
+                {
+                    p.setFromEtatAgent(pacmans.get(pacmansIdx++));
+                }
+            } else if(a instanceof Fantome)
+            {
+                Fantome f = (Fantome)a;
+                if(fantomesIdx < fantomes.size())
+                {
+                    f.setFromEtatAgent(fantomes.get(fantomesIdx++));
+                }
+            }
+        }
     }
 }
