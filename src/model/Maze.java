@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import model.Transfert.EtatMaze;
+
 
 public class Maze implements Serializable, Cloneable {
 
@@ -229,7 +231,7 @@ public class Maze implements Serializable, Cloneable {
 
 	public String toString() {
 		String s = "Maze\n";
-		s += plateauToString();
+		s += plateauToString("\n");
 		s += "\nPosition agents fantom :";
 		for (PositionAgent pa : ghosts_start) {
 			s += pa + " ";
@@ -241,7 +243,7 @@ public class Maze implements Serializable, Cloneable {
 		return s;
 	}
 
-	public String plateauToString() {
+	public String plateauToString(String lineSep) {
 		String s = "";
 		for (int i = 0; i < size_x; i++) {
 			for (int j = 0; j < size_y; j++) {
@@ -254,15 +256,19 @@ public class Maze implements Serializable, Cloneable {
 				else
 					s += " ";
 			}
-			s += "\n";
+			s += lineSep;
 		}
 		return s;
 	}
 
-
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return (Maze) super.clone();
+	}
+
+	public EtatMaze getEtat()
+	{
+		return new EtatMaze(plateauToString("|"));
 	}
 	
 }

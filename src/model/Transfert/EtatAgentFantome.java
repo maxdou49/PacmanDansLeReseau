@@ -9,6 +9,7 @@ public class EtatAgentFantome extends EtatAgent {
     {
         super(pos, alive);
         this.frightened = frightened;
+        this.type = 'f';
     }
 
     public boolean getFrightened()

@@ -9,11 +9,13 @@ import model.PositionAgent;
 public class EtatAgent {
     protected PositionAgent pos;
     protected boolean alive;
+    protected char type;
 
     public EtatAgent(PositionAgent pos, boolean alive)
     {
         this.pos = pos;
         this.alive = alive;
+        this.type = ' ';
     }
 
     public PositionAgent getPos()
@@ -24,5 +26,10 @@ public class EtatAgent {
     public boolean getAlive()
     {
         return alive;
+    }
+
+    public char getType()
+    {
+        return type;
     }
 }

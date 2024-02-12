@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import client.controller.ControllerPacmanGameClient;
 import client.model.PacmanGame;
 import model.AgentAction;
+import model.Transfert.EtatGame;
 import client.model.Strategie.ListeStrategie;
 import client.model.Strategie.StrategieAgent;
 import client.model.Pacman;
@@ -45,7 +46,9 @@ public class Client {
                     Thread.sleep(1000);
                     AgentAction action = strategie.getAction();
                     sortie.println(objectMapper.writeValueAsString(action));
-                    System.out.println(objectMapper.writeValueAsString(game.getEtat()));
+                    EtatGame etat = game.getEtat();
+                    System.out.println(objectMapper.writeValueAsString(etat));
+                    //System.out.println(objectMapper.writeValueAsString(etat.getMaze()));
                 }
             }
 

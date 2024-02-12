@@ -6,6 +6,9 @@ package serveur.model;
 
 import model.AgentAction;
 import model.PositionAgent;
+import model.Transfert.EtatAgent;
+import model.Transfert.EtatAgentFantome;
+import model.Transfert.EtatAgentPacman;
 import serveur.model.Strategie.ListeStrategie;
 import serveur.model.Strategie.StrategieAgent;
 import serveur.model.Strategie.StrategieFractory;
@@ -100,6 +103,11 @@ public class Pacman extends Agent
     public StrategieAgent getStrategie()
     {
         return strategie;
+    }
+
+    public EtatAgent getEtatAgent()
+    {
+        return new EtatAgentPacman(pos, alive);
     }
 
 }
