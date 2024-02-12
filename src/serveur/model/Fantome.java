@@ -125,4 +125,15 @@ public class Fantome extends Agent {
     {
         return new EtatAgentFantome(pos, alive, canDie);
     }
+
+    public void setFromEtatAgent(EtatAgent e)
+    {
+        if(e instanceof EtatAgentFantome)
+        {
+            EtatAgentFantome f = (EtatAgentFantome)e;
+            pos = f.getPos();
+            alive = f.getAlive();
+            canDie = f.getFrightened();
+        }
+    }
 }

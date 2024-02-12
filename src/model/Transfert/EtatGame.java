@@ -3,7 +3,8 @@ package model.Transfert;
 import java.util.ArrayList;
 
 public class EtatGame {
-    protected ArrayList<EtatAgent> agents;
+    protected ArrayList<EtatAgentFantome> fantomes;
+    protected ArrayList<EtatAgentPacman> pacmans;
     protected int score;
     protected int lives;
     protected int level;
@@ -16,18 +17,29 @@ public class EtatGame {
         this.lives = lives;
         this.level = level;
         this.turn = turn;
-        this.agents = new ArrayList<EtatAgent>();
+        this.fantomes = new ArrayList<EtatAgentFantome>();
+        this.pacmans = new ArrayList<EtatAgentPacman>();
         this.maze = maze;
     }
 
-    public void addAgent(EtatAgent a)
+    public void addFantome(EtatAgentFantome a)
     {
-        agents.add(a);
+        fantomes.add(a);
     }
 
-    public ArrayList<EtatAgent> getAgents()
+    public ArrayList<EtatAgentFantome> getFantomes()
     {
-        return agents;
+        return fantomes;
+    }
+
+    public void addPacman(EtatAgentPacman a)
+    {
+        pacmans.add(a);
+    }
+
+    public ArrayList<EtatAgentPacman> getPacmans()
+    {
+        return pacmans;
     }
 
     public int getScore()

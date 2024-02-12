@@ -96,4 +96,15 @@ public class Fantome extends Agent {
             e.printStackTrace();
         }*/
     } 
+
+    public void setFromEtatAgent(EtatAgent e)
+    {
+        if(e instanceof EtatAgentFantome)
+        {
+            EtatAgentFantome f = (EtatAgentFantome)e;
+            pos = f.getPos();
+            alive = f.getAlive();
+            canDie = f.getFrightened();
+        }
+    }
 }

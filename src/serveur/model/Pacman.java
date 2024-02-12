@@ -7,7 +7,6 @@ package serveur.model;
 import model.AgentAction;
 import model.PositionAgent;
 import model.Transfert.EtatAgent;
-import model.Transfert.EtatAgentFantome;
 import model.Transfert.EtatAgentPacman;
 import serveur.model.Strategie.ListeStrategie;
 import serveur.model.Strategie.StrategieAgent;
@@ -108,6 +107,16 @@ public class Pacman extends Agent
     public EtatAgent getEtatAgent()
     {
         return new EtatAgentPacman(pos, alive);
+    }
+
+    public void setFromEtatAgent(EtatAgent e)
+    {
+        if(e instanceof EtatAgentPacman)
+        {
+            EtatAgentPacman p = (EtatAgentPacman)e;
+            pos = p.getPos();
+            alive = p.getAlive();
+        }
     }
 
 }

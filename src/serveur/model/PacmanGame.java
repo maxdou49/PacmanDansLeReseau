@@ -14,6 +14,8 @@ import serveur.model.Iterateur.IterateurAgent;
 import serveur.model.Iterateur.IterateurAgentBase;
 import model.Random.BasicRandom;
 import model.Random.RandomGenerator;
+import model.Transfert.EtatAgentFantome;
+import model.Transfert.EtatAgentPacman;
 import model.Transfert.EtatGame;
 import serveur.model.Strategie.ListeStrategie;
 import serveur.model.Strategie.StrategieAgent;
@@ -339,7 +341,10 @@ public class PacmanGame extends Game {
         EtatGame etat = new EtatGame(score, lives, level, turn, maze.getEtat());
         for(Agent a:agents)
         {
-            etat.addAgent(a.getEtatAgent());
+            if(a instanceof Pacman)
+                etat.addPacman((EtatAgentPacman)a.getEtatAgent());
+            else if(a instanceof Fantome)
+                etat.addFantome((EtatAgentFantome)a.getEtatAgent());
         }
         return etat;
     }

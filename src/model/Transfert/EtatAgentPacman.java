@@ -2,11 +2,23 @@ package model.Transfert;
 
 import model.PositionAgent;
 
-public class EtatAgentPacman extends EtatAgent {
+public class EtatAgentPacman implements EtatAgent {
+
+    protected boolean alive;
+    protected PositionAgent pos;
 
     public EtatAgentPacman(PositionAgent pos, boolean alive) {
-        super(pos, alive);
-        this.type = 'p';
+        this.pos = pos;
+        this.alive = alive;
     }
     
+    public PositionAgent getPos()
+    {
+        return pos;
+    }
+
+    public boolean getAlive()
+    {
+        return alive;
+    }
 }

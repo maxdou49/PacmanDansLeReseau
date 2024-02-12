@@ -127,9 +127,8 @@ public abstract class Agent {
         this.player = player;
     }
 
-    public EtatAgent getEtatAgent()
-    {
-        return new EtatAgent(pos, alive);
-    }
+    public abstract EtatAgent getEtatAgent();
+
+    public abstract void setFromEtatAgent(EtatAgent e);
 
 }
