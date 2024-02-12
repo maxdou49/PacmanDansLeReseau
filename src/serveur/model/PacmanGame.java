@@ -14,6 +14,7 @@ import serveur.model.Iterateur.IterateurAgent;
 import serveur.model.Iterateur.IterateurAgentBase;
 import model.Random.BasicRandom;
 import model.Random.RandomGenerator;
+import model.Transfert.EtatGame;
 import serveur.model.Strategie.ListeStrategie;
 import serveur.model.Strategie.StrategieAgent;
 
@@ -330,5 +331,16 @@ public class PacmanGame extends Game {
 
     public void setFantomeStrategieParam(int param) {
         StrategieAgent.setParamFantome(param);
+    }
+
+    //Etat
+    public EtatGame getEtat()
+    {
+        EtatGame etat = new EtatGame(score, lives, turn);
+        for(Agent a:agents)
+        {
+            etat.addAgent(a.getEtatAgent());
+        }
+        return etat;
     }
 }

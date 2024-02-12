@@ -45,6 +45,7 @@ public class Client {
                     Thread.sleep(1000);
                     AgentAction action = strategie.getAction();
                     sortie.println(objectMapper.writeValueAsString(action));
+                    System.out.println(objectMapper.writeValueAsString(game.getEtat()));
                 }
             }
 
