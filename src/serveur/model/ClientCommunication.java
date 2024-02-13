@@ -1,7 +1,5 @@
 package serveur.model;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.AgentAction;

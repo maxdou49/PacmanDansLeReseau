@@ -43,6 +43,8 @@ public class Client {
                 PacmanGame game = (PacmanGame)controleur.getGame();
                 Pacman pacmans = game.getPacman();
                 StrategieAgent strategie = pacmans.getStrategie();
+
+                Random r = new Random();
                 while(so.isConnected()) {
                     Thread.sleep(1000);
                     AgentAction action = new AgentAction(r.nextInt(4));

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Serveur",
+            "request": "launch",
+            "mainClass": "serveur.app.Serveur",
+            "projectName": "PacmanDansLeReseau_fcd066c3"
+        },
+        {
+            "type": "java",
             "name": "Test",
             "request": "launch",
             "mainClass": "client.test.Test",
