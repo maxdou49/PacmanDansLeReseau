@@ -9,6 +9,8 @@ import java.net.Socket;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.AgentAction;
+import serveur.controller.ControllerPacmanGameServeur;
+import serveur.model.Strategie.ListeStrategie;
 
 public class Serveur {
     public static void main(String[] args)
@@ -32,10 +34,11 @@ public class Serveur {
                 entree = new BufferedReader(new InputStreamReader(so.getInputStream()));
                 sortie = new PrintWriter (so.getOutputStream(), true);    
                 sortie.println("Lance");
-                while(so.isConnected()) {
-                    AgentAction action = objectMapper.readValue(entree.readLine(), AgentAction.class);
-                    System.out.println(action);
-                }
+                ControllerPacmanGameServeur game = new ControllerPacmanGameServeur("layout/originalClassic.lay");
+                game.ajouterJoueur(so);
+                game.setStrategieFantome(ListeStrategie.RANDOM);
+                game.setStrategiePacman(ListeStrategie.KEYBOARD);
+                game.lancer();
             }
         } catch (IOException e) { System.out.println("problème\n"+e); }
     

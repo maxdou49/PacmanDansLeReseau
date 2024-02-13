@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Random;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -44,11 +45,8 @@ public class Client {
                 StrategieAgent strategie = pacmans.getStrategie();
                 while(so.isConnected()) {
                     Thread.sleep(1000);
-                    AgentAction action = strategie.getAction();
+                    AgentAction action = new AgentAction(r.nextInt(4));
                     sortie.println(objectMapper.writeValueAsString(action));
-                    EtatGame etat = game.getEtat();
-                    System.out.println(objectMapper.writeValueAsString(etat));
-                    //System.out.println(objectMapper.writeValueAsString(etat.getMaze()));
                 }
             }
 

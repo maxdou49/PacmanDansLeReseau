@@ -7,15 +7,13 @@ import java.net.Socket;
 
 import javax.naming.directory.InvalidAttributesException;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 public class ReaderWriter {
     private PrintWriter writer;
     private BufferedReader reader;
+    private Socket socket;
     
-   public ReaderWriter(Socket socket) throws IOException {
+    public ReaderWriter(Socket socket) throws IOException {
+        this.socket = socket;
         this.writer = new PrintWriter(socket.getOutputStream(), true);
         this.reader = new BufferedReader(new java.io.InputStreamReader(socket.getInputStream()));
     }
@@ -35,6 +33,11 @@ public class ReaderWriter {
         } else {
             throw new InvalidAttributesException("Instance null");
         }
+    }
+
+    public String getAddress()
+    {
+        return String.format("%s:%s", socket.getInetAddress().toString(), socket.getPort());
     }
 
     // public AgentAction read() throws JsonMappingException, JsonProcessingException, IOException {

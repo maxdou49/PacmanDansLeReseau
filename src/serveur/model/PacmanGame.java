@@ -5,7 +5,6 @@
 package serveur.model;
 import java.util.ArrayList;
 
-import client.view.PanelPacmanGame;
 import model.AgentAction;
 import model.Game;
 import model.Maze;
@@ -24,7 +23,6 @@ import serveur.model.Strategie.StrategieAgent;
 public class PacmanGame extends Game {
 
     private Maze maze;
-    private PanelPacmanGame mazePanel;
     private String mazeFile;
     protected ArrayList<Agent> agents;
     protected RandomGenerator rand;
@@ -44,7 +42,6 @@ public class PacmanGame extends Game {
         this.mazeFile = mazeFile;
         agents = new ArrayList<Agent>();
         loadMaze();
-        mazePanel = new PanelPacmanGame(maze);
         level = 1;
         lives = NB_LIVES;
         pacmanStrategie = ListeStrategie.NONE;
@@ -81,7 +78,6 @@ public class PacmanGame extends Game {
     protected void initializeGame()
     {
         loadMaze();
-        mazePanel.setMaze(maze);
         level = 1;
         score = 0;
         lives = NB_LIVES;
@@ -111,7 +107,6 @@ public class PacmanGame extends Game {
     protected void nextLevel()
     {
         loadMaze();
-        mazePanel.setMaze(maze);
         level += 1;
         System.out.println("Niveau "+Integer.toString(level));
         for(Agent a: agents)
@@ -127,11 +122,7 @@ public class PacmanGame extends Game {
 
     protected void takeTurn()
     {
-        /*Un tour du client devrait être
-            - Envoyer l'entrée au serveur
-            - Recuperer l'état depuis le serveur
-            - Afficher cet état
-        */
+        System.out.println("a");
         //On gère la logique
         for(Agent a:agents)
         {
@@ -141,7 +132,7 @@ public class PacmanGame extends Game {
             a.manageKill();
         }
         
-        updateObservers();
+        //updateObservers();
 
         if(!isAnyFoodLeft())
         {
@@ -157,6 +148,8 @@ public class PacmanGame extends Game {
                 a.revive();
             }
         }
+
+        controlleur.envoyerEtat(getEtat());
     }
 
     protected boolean gameEnd()
@@ -184,11 +177,6 @@ public class PacmanGame extends Game {
     public Maze getMaze()
     {
         return maze;
-    }
-
-    public PanelPacmanGame getMazePanel()
-    {
-        return mazePanel;
     }
 
     public RandomGenerator getRandom()
@@ -387,5 +375,10 @@ public class PacmanGame extends Game {
                 }
             }
         }
+    }
+
+    public ControllerPacmanGameServeur getController()
+    {
+        return controlleur;
     }
 }
