@@ -20,12 +20,9 @@ import model.Transfert.EtatAgentPacman;
 import model.Transfert.EtatGame;
 import client.model.Strategie.ListeStrategie;
 import client.model.Strategie.StrategieAgent;
-import client.view.PanelPacmanGame;
-
 public class PacmanGame extends Game {
 
     private Maze maze;
-    private PanelPacmanGame mazePanel;
     private String mazeFile;
     protected ArrayList<Agent> agents;
     protected RandomGenerator rand;
@@ -43,7 +40,6 @@ public class PacmanGame extends Game {
         this.mazeFile = mazeFile;
         agents = new ArrayList<Agent>();
         loadMaze();
-        mazePanel = new PanelPacmanGame(maze);
         level = 1;
         lives = NB_LIVES;
         this.controlleur = controlleur;
@@ -78,7 +74,6 @@ public class PacmanGame extends Game {
     protected void initializeGame()
     {
         loadMaze();
-        mazePanel.setMaze(maze);
         level = 1;
         score = 0;
         lives = NB_LIVES;
@@ -108,7 +103,6 @@ public class PacmanGame extends Game {
     protected void nextLevel()
     {
         loadMaze();
-        mazePanel.setMaze(maze);
         level += 1;
         System.out.println("Niveau "+Integer.toString(level));
         for(Agent a: agents)
@@ -176,11 +170,6 @@ public class PacmanGame extends Game {
     public Maze getMaze()
     {
         return maze;
-    }
-
-    public PanelPacmanGame getMazePanel()
-    {
-        return mazePanel;
     }
 
     public RandomGenerator getRandom()

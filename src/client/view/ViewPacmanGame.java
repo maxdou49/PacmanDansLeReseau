@@ -6,7 +6,7 @@ import javax.swing.*;
 
 import client.model.Agent;
 import client.model.PacmanGame;
-import controller.AbstractController;
+import client.controller.ControllerPacmanGameClient;
 import model.KeyboadManager;
 import model.Observable;
 import model.Observer;
@@ -16,8 +16,10 @@ import client.model.Pacman;
 
 public class ViewPacmanGame extends JFrame implements Observer {
     protected KeyboadManager keyboard;
+    private PanelPacmanGame mazePanel;
 
-    public ViewPacmanGame(AbstractController controlleur)
+
+    public ViewPacmanGame(ControllerPacmanGameClient controlleur)
     {
         setTitle("Pacman");
         setSize(new Dimension(700,700));
@@ -28,16 +30,18 @@ public class ViewPacmanGame extends JFrame implements Observer {
         int dy = centerPoint.y - windowSize.height/2 - 350;
         setLocation(dx, dy);
         setVisible(true);
+        PacmanGame p = (PacmanGame)controlleur.getGame();
+        mazePanel = new PanelPacmanGame(p.getMaze());
         controlleur.getGame().addObserver(this);
         if(controlleur.getGame() instanceof PacmanGame) //Il faut que ce soit correctement initialiser...
         {
-            PacmanGame p = (PacmanGame)controlleur.getGame();
-            add(p.getMazePanel());
+            add(mazePanel);
         }
         
         keyboard = new KeyboadManager();
         addKeyListener(keyboard);
 
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void update(Observable o)
@@ -45,7 +49,7 @@ public class ViewPacmanGame extends JFrame implements Observer {
         if(o instanceof PacmanGame)
         {
             PacmanGame p = (PacmanGame)o;
-            PanelPacmanGame pa = p.getMazePanel();
+            PanelPacmanGame pa = new PanelPacmanGame(p.getMaze());
             //On met a jour les positions
             pa.getPacmans_pos();
             ArrayList<PositionAgent> pacman = new ArrayList<PositionAgent>();
@@ -67,7 +71,7 @@ public class ViewPacmanGame extends JFrame implements Observer {
             pa.setPacmans_pos(pacman);
             pa.setGhosts_pos(fantomes);
             pa.setGhostsScarred(fright);
-            p.getMazePanel().repaint();
+            mazePanel.repaint();
         }
     }
 

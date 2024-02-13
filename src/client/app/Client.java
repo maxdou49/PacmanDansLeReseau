@@ -35,7 +35,7 @@ public class Client {
             ObjectMapper objectMapper = new ObjectMapper();
 
             if(message.equals("Lance")) {
-                ControllerPacmanGameClient controleur = new ControllerPacmanGameClient("layout/originalClassic.lay");
+                ControllerPacmanGameClient controleur = new ControllerPacmanGameClient("layout/originalClassic.lay", so);
                 controleur.setStrategiePacman(ListeStrategie.KEYBOARD);
                 controleur.play();
 

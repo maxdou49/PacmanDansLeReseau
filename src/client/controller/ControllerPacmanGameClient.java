@@ -1,16 +1,24 @@
 package client.controller;
 
 import controller.AbstractController;
+import model.ReaderWriter;
 import client.model.Strategie.ListeStrategie;
 import client.view.ViewCommand;
 import client.view.ViewPacmanGame;
+
+import java.io.IOException;
+import java.net.Socket;
+
 import client.model.PacmanGame;
 
 public class ControllerPacmanGameClient extends AbstractController {
     ViewPacmanGame viewGame;
     ViewCommand viewCom;
+    Socket socket;
+    ReaderWriter rw;
+    
 
-    public ControllerPacmanGameClient(String mazePath)
+    public ControllerPacmanGameClient(String mazePath, Socket so) throws IOException
     {
         super();
         PacmanGame g = new PacmanGame(mazePath, this);
@@ -20,6 +28,8 @@ public class ControllerPacmanGameClient extends AbstractController {
         this.viewCom = new ViewCommand(this);
         g.setKeyboard(viewGame.getKeyboard());
         this.game.init();
+        this.socket = so;
+        this.rw = new ReaderWriter(so);
     }
 
     public void setStrategiePacman(ListeStrategie strategie)
