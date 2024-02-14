@@ -6,11 +6,22 @@ package client.model;
 import model.Game;
 import model.KeyboadManager;
 import model.Maze;
+import model.PositionAgent;
+import model.Transfert.EtatGame;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.naming.directory.InvalidAttributesException;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import client.controller.ControllerPacmanGameClient;
 public class PacmanGame extends Game {
 
     private Maze maze;
     protected KeyboadManager keyboard;
+    StrategieKeyboard strategieKeyboard;
     private ControllerPacmanGameClient controlleur;
 
     public PacmanGame(String mazeFile, ControllerPacmanGameClient controlleur) throws Exception
@@ -28,6 +39,16 @@ public class PacmanGame extends Game {
 
     protected void takeTurn()
     {
+        try {
+            controlleur.sendAction(strategieKeyboard.getAction());
+            EtatGame etat = controlleur.getEtatGame();
+            maze = etat.getMaze();
+            controlleur.getViewGame().rafrachier(etat);
+        } catch (JsonProcessingException | InvalidAttributesException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         updateObservers();
     }
 
@@ -55,6 +76,7 @@ public class PacmanGame extends Game {
     public void setKeyboard(KeyboadManager keyboard)
     {
         this.keyboard = keyboard;
+        this.strategieKeyboard = new StrategieKeyboard(keyboard);
     }
 
     public String getTexte()

@@ -1,5 +1,7 @@
 package client.view;
 import java.awt.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 import client.model.PacmanGame;
@@ -8,6 +10,8 @@ import model.KeyboadManager;
 import model.Maze;
 import model.Observable;
 import model.Observer;
+import model.PositionAgent;
+import model.Transfert.EtatGame;
 
 public class ViewPacmanGame extends JFrame implements Observer {
     protected KeyboadManager keyboard;
@@ -45,8 +49,6 @@ public class ViewPacmanGame extends JFrame implements Observer {
         {
             Maze maze = ((PacmanGame)o).getMaze();
             mazePanel.setMaze((maze));
-            mazePanel.setPacmans_pos(maze.getPacman_start());
-            mazePanel.setGhosts_pos(maze.getGhosts_start());
             mazePanel.repaint();
         }
     }
@@ -54,5 +56,20 @@ public class ViewPacmanGame extends JFrame implements Observer {
     public KeyboadManager getKeyboard()
     {
         return keyboard;
+    }
+
+    public void rafrachier(EtatGame etat) {
+        ArrayList<PositionAgent> pacmans = new ArrayList<PositionAgent>();
+        for(int i = 0; i < etat.getPacmans().size(); i++)
+        {
+            pacmans.add(etat.getPacmans().get(i).getPos());
+        }
+        mazePanel.setPacmans_pos(pacmans);
+        ArrayList<PositionAgent> fantomes = new ArrayList<PositionAgent>();
+        for(int i = 0; i < etat.getFantomes().size(); i++)
+        {
+            fantomes.add(etat.getFantomes().get(i).getPos());
+        }
+        mazePanel.setGhosts_pos(fantomes);
     }
 }
