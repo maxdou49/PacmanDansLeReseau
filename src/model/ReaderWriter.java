@@ -39,9 +39,4 @@ public class ReaderWriter {
     {
         return String.format("%s:%s", socket.getInetAddress().toString(), socket.getPort());
     }
-
-    // public AgentAction read() throws JsonMappingException, JsonProcessingException, IOException {
-    //     ObjectMapper mapper = new ObjectMapper();
-    //     return mapper.readValue(reader.readLine(), AgentAction.class);
-    // }
 }

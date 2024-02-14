@@ -16,8 +16,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import client.model.PacmanGame;
+import serveur.model.Strategie.ListeStrategie;
 import client.controller.ControllerPacmanGameClient;
-import client.model.Strategie.ListeStrategie;
 
 public class ViewCommandPacman extends ViewCommand {
     JLabel mazeFile;
@@ -31,7 +31,6 @@ public class ViewCommandPacman extends ViewCommand {
         panelStrat.setLayout(new GridLayout(4,2));
         add(panelStrat);
         //Choix layout
-        mazeFile = new JLabel(((PacmanGame)controlleur.getGame()).getMazeFile());
         panelStrat.add(mazeFile);
         //On fait les boutons
         JButton changeLayout = new JButton("Changer layout");
@@ -49,52 +48,6 @@ public class ViewCommandPacman extends ViewCommand {
         panelStrat.add(stratPacmanLabel);
         JLabel stratFantomeLabel = new JLabel("Strategie Fantome");
         panelStrat.add(stratFantomeLabel);
-
-        //Pacman
-        JComboBox<ListeStrategie> stratPacman = new JComboBox<ListeStrategie>(ListeStrategie.values());
-        panelStrat.add(stratPacman);
-        stratPacman.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent event) {
-                if(event.getSource() == stratPacman)
-                {
-                    controlleur.setStrategiePacman((ListeStrategie)stratPacman.getSelectedItem());
-                }
-            };
-        });
-        
-        //Fantomes
-        JComboBox<ListeStrategie> stratFantome = new JComboBox<ListeStrategie>(ListeStrategie.values());
-        panelStrat.add(stratFantome);
-        stratFantome.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent event) {
-                if(event.getSource() == stratFantome)
-                {
-                    controlleur.setStrategieFantome((ListeStrategie)stratFantome.getSelectedItem());
-                }
-            };
-        });
-
-        //Paramètrage stratégie
-        JSpinner paramPacman = new JSpinner();
-        paramPacman.setValue(0);
-        paramPacman.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                controlleur.setStrategiePacmanParam(Integer.valueOf(paramPacman.getValue().toString()));
-            }
-        });
-        panelStrat.add(paramPacman);
-
-        JSpinner paramFantome = new JSpinner();
-        paramFantome.setValue(0);
-        paramFantome.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                controlleur.setStrategieFantomeParam(Integer.valueOf(paramFantome.getValue().toString()));
-            }
-        });
-        panelStrat.add(paramFantome);
-
     }
 
     private void changeLayout()
@@ -109,8 +62,6 @@ public class ViewCommandPacman extends ViewCommand {
             String path = fd.getDirectory() + fd.getFile();
             System.out.println("Selected:" + path);
             mazeFile.setText(file);
-            ControllerPacmanGameClient cp = (ControllerPacmanGameClient)controller;
-            cp.changeMaze(path);
         }
     }
 }

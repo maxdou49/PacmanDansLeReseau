@@ -1,18 +1,13 @@
 package client.view;
 import java.awt.*;
-import java.util.ArrayList;
-
 import javax.swing.*;
 
-import client.model.Agent;
 import client.model.PacmanGame;
 import client.controller.ControllerPacmanGameClient;
 import model.KeyboadManager;
+import model.Maze;
 import model.Observable;
 import model.Observer;
-import model.PositionAgent;
-import client.model.Fantome;
-import client.model.Pacman;
 
 public class ViewPacmanGame extends JFrame implements Observer {
     protected KeyboadManager keyboard;
@@ -48,29 +43,10 @@ public class ViewPacmanGame extends JFrame implements Observer {
     {
         if(o instanceof PacmanGame)
         {
-            PacmanGame p = (PacmanGame)o;
-            PanelPacmanGame pa = new PanelPacmanGame(p.getMaze());
-            //On met a jour les positions
-            pa.getPacmans_pos();
-            ArrayList<PositionAgent> pacman = new ArrayList<PositionAgent>();
-            ArrayList<PositionAgent> fantomes = new ArrayList<PositionAgent>();
-            ArrayList<Boolean> fright = new ArrayList<Boolean>();
-            for(Agent a: p.getAgents())
-            {
-                if(a instanceof Pacman)
-                {
-                    pacman.add(a.getPos());
-                }
-                else
-                {
-                    Fantome f = (Fantome)a;
-                    fantomes.add(a.getPos());
-                    fright.add(f.isFrightened());
-                }
-            }
-            pa.setPacmans_pos(pacman);
-            pa.setGhosts_pos(fantomes);
-            pa.setGhostsScarred(fright);
+            Maze maze = ((PacmanGame)o).getMaze();
+            mazePanel.setMaze((maze));
+            mazePanel.setPacmans_pos(maze.getPacman_start());
+            mazePanel.setGhosts_pos(maze.getGhosts_start());
             mazePanel.repaint();
         }
     }

@@ -11,8 +11,10 @@ public class Test {
             Socket so = new Socket();
             ControllerPacmanGameClient controleur;
             controleur = new ControllerPacmanGameClient("layout/openClassic.lay", so);
-            controleur.play();
+            // controleur.play();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -12,5 +12,6 @@ public class EtatMaze {
     {
         return maze;
     }
+    
 
 }

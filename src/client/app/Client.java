@@ -10,12 +10,7 @@ import java.util.Random;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.controller.ControllerPacmanGameClient;
-import client.model.PacmanGame;
 import model.AgentAction;
-import model.Transfert.EtatGame;
-import client.model.Strategie.ListeStrategie;
-import client.model.Strategie.StrategieAgent;
-import client.model.Pacman;
 
 public class Client {
     public static void main(String[] argu) throws InterruptedException
@@ -32,17 +27,12 @@ public class Client {
             entree = new BufferedReader(new InputStreamReader(so.getInputStream()));
             sortie = new PrintWriter (so.getOutputStream(), true); 
 
+            ControllerPacmanGameClient controleur = new ControllerPacmanGameClient("layout/originalClassic.lay", so);
             String message = entree.readLine();
             ObjectMapper objectMapper = new ObjectMapper();
 
             if(message.equals("Lance")) {
-                ControllerPacmanGameClient controleur = new ControllerPacmanGameClient("layout/originalClassic.lay", so);
-                controleur.setStrategiePacman(ListeStrategie.KEYBOARD);
                 controleur.play();
-
-                PacmanGame game = (PacmanGame)controleur.getGame();
-                Pacman pacmans = game.getPacman();
-                StrategieAgent strategie = pacmans.getStrategie();
 
                 Random r = new Random();
                 while(so.isConnected()) {
@@ -53,5 +43,6 @@ public class Client {
             }
 
         } catch (IOException e) { System.out.println("problème\n"+e); }
+        catch (Exception e) { System.out.println("problème\n"+e); }
     }
 }

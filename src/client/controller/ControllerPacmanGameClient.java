@@ -1,13 +1,20 @@
 package client.controller;
 
 import controller.AbstractController;
+import model.AgentAction;
 import model.ReaderWriter;
-import client.model.Strategie.ListeStrategie;
+import model.Transfert.EtatGame;
+import serveur.model.Agent;
 import client.view.ViewCommand;
 import client.view.ViewPacmanGame;
 
 import java.io.IOException;
 import java.net.Socket;
+
+import javax.naming.directory.InvalidAttributesException;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.model.PacmanGame;
 
@@ -18,7 +25,7 @@ public class ControllerPacmanGameClient extends AbstractController {
     ReaderWriter rw;
     
 
-    public ControllerPacmanGameClient(String mazePath, Socket so) throws IOException
+    public ControllerPacmanGameClient(String mazePath, Socket so) throws Exception
     {
         super();
         PacmanGame g = new PacmanGame(mazePath, this);
@@ -32,34 +39,12 @@ public class ControllerPacmanGameClient extends AbstractController {
         this.rw = new ReaderWriter(so);
     }
 
-    public void setStrategiePacman(ListeStrategie strategie)
-    {
-        PacmanGame g = (PacmanGame)game;
-        g.setPacmanStrategie(strategie);
-    }
+    /***   
+        *   fonction qui retourne la vue du jeu pacman utiliser par le controleur pacman
+    ***/
 
-    public void setStrategieFantome(ListeStrategie strategie)
-    {
-        PacmanGame g = (PacmanGame)game;
-        g.setFantomeStrategie(strategie);
-    }
-
-    public void changeMaze(String mazeFile)
-    {
-        PacmanGame g = (PacmanGame)game;
-        g.changeMaze(mazeFile);
-    }
-
-    public void setStrategiePacmanParam(int param)
-    {
-        PacmanGame g = (PacmanGame)game;
-        g.setPacmanStrategieParam(param);
-    }
-
-    public void setStrategieFantomeParam(int param)
-    {
-        PacmanGame g = (PacmanGame)game;
-        g.setFantomeStrategieParam(param);
+    public ViewPacmanGame getViewGame() {
+        return viewGame;
     }
 
     /***   
@@ -71,7 +56,27 @@ public class ControllerPacmanGameClient extends AbstractController {
     }
 
     /***   
-        *   fonction qui retourne le jeu pacman utiliser par le controleur pacman
+        *   fonction pour evoyer sur le serveur unr action du pacman
+     * @throws InvalidAttributesException 
+     * @throws JsonProcessingException 
     ***/
+
+    public void sendAction(AgentAction action) throws JsonProcessingException, InvalidAttributesException
+    {
+        ObjectMapper mapper = new ObjectMapper();
+        rw.getWriter().write(mapper.writeValueAsString(action));
+    }
+
+    /***   
+        *   fonction pour recuperer l'etat du jeu depuis le serveur
+     * @throws InvalidAttributesException 
+     * @throws IOException 
+    ***/
+
+    public EtatGame getEtatGame() throws InvalidAttributesException, IOException
+    {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(rw.getReader().readLine(), EtatGame.class);
+    }
 }
  
