@@ -25,7 +25,9 @@ public class PacmanGame extends Game {
     {
         super();
         this.controlleur = controlleur;
-        this.maze = controlleur.getMaze();
+        if(controlleur.getEtatGame() != null)
+            this.maze = controlleur.getEtatGame().getMaze(); 
+        else throw new Exception("Maze not found");
     }
 
 

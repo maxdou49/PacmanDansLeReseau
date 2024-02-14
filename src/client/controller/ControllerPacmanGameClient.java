@@ -77,9 +77,7 @@ public class ControllerPacmanGameClient extends AbstractController {
     {
         ObjectMapper mapper = new ObjectMapper();
         
-        String msg = rw.getReader().readLine();
-        if(msg != null)
-            etatGame = mapper.readValue(msg, EtatGame.class);
+        etatGame = mapper.readValue(rw.getReader().readLine(), EtatGame.class);
         
         return etatGame;
     }

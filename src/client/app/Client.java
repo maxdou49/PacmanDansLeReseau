@@ -5,12 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Random;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import client.controller.ControllerPacmanGameClient;
-import model.AgentAction;
 
 public class Client {
     public static void main(String[] argu) throws InterruptedException
