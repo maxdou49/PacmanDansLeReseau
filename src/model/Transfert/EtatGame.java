@@ -1,6 +1,7 @@
 package model.Transfert;
 
 import java.util.ArrayList;
+import model.Maze;
 
 public class EtatGame {
     protected ArrayList<EtatAgentFantome> fantomes;
@@ -9,9 +10,9 @@ public class EtatGame {
     protected int lives;
     protected int level;
     protected int turn;
-    protected EtatMaze maze;
+    protected Maze maze;
 
-    public EtatGame(int score, int lives, int level, int turn, EtatMaze maze)
+    public EtatGame(int score, int lives, int level, int turn, Maze maze)
     {
         this.score = score;
         this.lives = lives;
@@ -62,7 +63,7 @@ public class EtatGame {
         return turn;
     }
 
-    public EtatMaze getMaze()
+    public Maze getMaze()
     {
         return maze;
     }

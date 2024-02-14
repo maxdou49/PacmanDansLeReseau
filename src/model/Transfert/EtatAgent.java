@@ -8,6 +8,4 @@ import model.PositionAgent;
 
 public interface EtatAgent {
     public PositionAgent getPos();
-
-    public boolean getAlive();
 }

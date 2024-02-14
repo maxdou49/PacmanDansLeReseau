@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import controller.AbstractController;
 import model.AgentAction;
 import model.ReaderWriter;
@@ -94,9 +96,17 @@ public class ControllerPacmanGameServeur extends AbstractController {
 
     public void envoyerEtat(EtatGame etat)
     {
-        for(ClientCommunication client: clients)
+        try
         {
-            client.sendState(etat);
+            ObjectMapper objectMapper = new ObjectMapper();
+            System.out.println(objectMapper.writeValueAsString(etat));
+            for(ClientCommunication client: clients)
+            {
+                client.sendState(etat);
+            }
+        } catch (Exception e)
+        {
+            
         }
     }
 }

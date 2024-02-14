@@ -318,18 +318,4 @@ public class PacmanGame extends Game {
     public void setFantomeStrategieParam(int param) {
         StrategieAgent.setParamFantome(param);
     }
-
-    //Etat
-    public EtatGame getEtat()
-    {
-        EtatGame etat = new EtatGame(score, lives, level, turn, maze.getEtat());
-        for(Agent a:agents)
-        {
-            if(a instanceof Pacman)
-                etat.addPacman((EtatAgentPacman)a.getEtatAgent());
-            else if(a instanceof Fantome)
-                etat.addFantome((EtatAgentFantome)a.getEtatAgent());
-        }
-        return etat;
-    }
 }

@@ -9,6 +9,13 @@
             "name": "Serveur",
             "request": "launch",
             "mainClass": "serveur.app.Serveur",
+            "projectName": "PacmanDansLeReseau_39ec12f1"
+        },
+        {
+            "type": "java",
+            "name": "Serveur",
+            "request": "launch",
+            "mainClass": "serveur.app.Serveur",
             "projectName": "PacmanDansLeReseau_fcd066c3"
         },
         {

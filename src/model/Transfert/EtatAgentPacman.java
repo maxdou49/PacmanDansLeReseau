@@ -4,21 +4,14 @@ import model.PositionAgent;
 
 public class EtatAgentPacman implements EtatAgent {
 
-    protected boolean alive;
     protected PositionAgent pos;
 
-    public EtatAgentPacman(PositionAgent pos, boolean alive) {
+    public EtatAgentPacman(PositionAgent pos) {
         this.pos = pos;
-        this.alive = alive;
     }
     
     public PositionAgent getPos()
     {
         return pos;
-    }
-
-    public boolean getAlive()
-    {
-        return alive;
     }
 }

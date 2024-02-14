@@ -10,9 +10,6 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import model.Transfert.EtatMaze;
-
-
 public class Maze implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = 1L;
@@ -261,14 +258,51 @@ public class Maze implements Serializable, Cloneable {
 		return s;
 	}
 
+	public int getSize_x() {
+		return size_x;
+	}
+
+	public void setSize_x(int size_x) {
+		this.size_x = size_x;
+	}
+
+	public int getSize_y() {
+		return size_y;
+	}
+
+	public void setSize_y(int size_y) {
+		this.size_y = size_y;
+	}
+
+	public boolean[][] getWalls() {
+		return walls;
+	}
+
+	public void setWalls(boolean[][] walls) {
+		this.walls = walls;
+	}
+
+	public boolean[][] getFood() {
+		return food;
+	}
+
+	public void setFood(boolean[][] food) {
+		this.food = food;
+	}
+
+	public boolean[][] getCapsules() {
+		return capsules;
+	}
+
+	public void setCapsules(boolean[][] capsules) {
+		this.capsules = capsules;
+	}
+
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return (Maze) super.clone();
 	}
 
-	public EtatMaze getEtat()
-	{
-		return new EtatMaze(plateauToString("|"));
-	}
+	
 	
 }

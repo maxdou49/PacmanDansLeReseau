@@ -123,7 +123,7 @@ public class Fantome extends Agent {
 
     public EtatAgent getEtatAgent()
     {
-        return new EtatAgentFantome(pos, alive, canDie);
+        return new EtatAgentFantome(pos, canDie);
     }
 
     public void setFromEtatAgent(EtatAgent e)
@@ -132,7 +132,6 @@ public class Fantome extends Agent {
         {
             EtatAgentFantome f = (EtatAgentFantome)e;
             pos = f.getPos();
-            alive = f.getAlive();
             canDie = f.getFrightened();
         }
     }

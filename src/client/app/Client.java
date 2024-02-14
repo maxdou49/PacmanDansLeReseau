@@ -10,12 +10,8 @@ import java.util.Random;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.controller.ControllerPacmanGameClient;
-import client.model.PacmanGame;
 import model.AgentAction;
-import model.Transfert.EtatGame;
 import client.model.Strategie.ListeStrategie;
-import client.model.Strategie.StrategieAgent;
-import client.model.Pacman;
 
 public class Client {
     public static void main(String[] argu) throws InterruptedException
@@ -39,10 +35,6 @@ public class Client {
                 ControllerPacmanGameClient controleur = new ControllerPacmanGameClient("layout/originalClassic.lay", so);
                 controleur.setStrategiePacman(ListeStrategie.KEYBOARD);
                 controleur.play();
-
-                PacmanGame game = (PacmanGame)controleur.getGame();
-                Pacman pacmans = game.getPacman();
-                StrategieAgent strategie = pacmans.getStrategie();
 
                 Random r = new Random();
                 while(so.isConnected()) {

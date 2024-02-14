@@ -127,8 +127,4 @@ public abstract class Agent {
         this.player = player;
     }
 
-    public abstract EtatAgent getEtatAgent();
-
-    public abstract void setFromEtatAgent(EtatAgent e);
-
 }
