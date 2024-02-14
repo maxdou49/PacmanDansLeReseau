@@ -106,7 +106,7 @@ public class Pacman extends Agent
 
     public EtatAgent getEtatAgent()
     {
-        return new EtatAgentPacman(pos, alive);
+        return new EtatAgentPacman(pos);
     }
 
     public void setFromEtatAgent(EtatAgent e)
@@ -115,7 +115,6 @@ public class Pacman extends Agent
         {
             EtatAgentPacman p = (EtatAgentPacman)e;
             pos = p.getPos();
-            alive = p.getAlive();
         }
     }
 

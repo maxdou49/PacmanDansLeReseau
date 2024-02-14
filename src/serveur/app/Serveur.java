@@ -13,7 +13,10 @@ public class Serveur {
         ServerSocket ecoute;
         Socket so;
 
-        try {
+        ControllerPacmanGameServeur gestionnaire = new ControllerPacmanGameServeur("layout/openClassic.lay");
+        gestionnaire.lancer();
+
+        /*try {
             ecoute = new ServerSocket(p); // on crée le serveur
             System.out.println("serveur mis en place ");
             while(true) {// le serveur va attendre qu’une connexion arrive
@@ -25,7 +28,7 @@ public class Serveur {
                 gestionnaire.setStrategiePacman(ListeStrategie.KEYBOARD);
                 gestionnaire.lancer();
             }
-        } catch (IOException e) { System.out.println("problème\n"+e); }
+        } catch (IOException e) { System.out.println("problème\n"+e); }*/
     
     }
 }
