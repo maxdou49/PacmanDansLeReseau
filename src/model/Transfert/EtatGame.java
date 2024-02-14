@@ -12,6 +12,23 @@ public class EtatGame {
     protected int turn;
     protected Maze maze;
 
+    public void setFantomes(ArrayList<EtatAgentFantome> fantomes) {
+        this.fantomes = fantomes;
+    }
+
+    public void setPacmans(ArrayList<EtatAgentPacman> pacmans) {
+        this.pacmans = pacmans;
+    }
+
+    public void setMaze(Maze maze) {
+        this.maze = maze;
+    }
+
+    public EtatGame()
+    {
+        
+    }
+
     public EtatGame(int score, int lives, int level, int turn, Maze maze)
     {
         this.score = score;

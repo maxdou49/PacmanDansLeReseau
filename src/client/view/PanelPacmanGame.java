@@ -60,8 +60,8 @@ public class PanelPacmanGame extends JPanel {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, dx, dy);
 
-		int sx = m.getSizeX();
-		int sy = m.getSizeY();
+		int sx = m.getSize_x();
+		int sy = m.getSize_y();
 		double stepx = dx / (double) sx;
 		double stepy = dy / (double) sy;
 		double posx = 0;
@@ -128,8 +128,8 @@ public class PanelPacmanGame extends JPanel {
 			int dx = getSize().width;
 			int dy = getSize().height;
 	
-			int sx = m.getSizeX();
-			int sy = m.getSizeY();
+			int sx = m.getSize_x();
+			int sy = m.getSize_y();
 			double stepx = dx / (double) sx;
 			double stepy = dy / (double) sy;
 	
@@ -173,8 +173,8 @@ public class PanelPacmanGame extends JPanel {
 			int dx = getSize().width;
 			int dy = getSize().height;
 	
-			int sx = m.getSizeX();
-			int sy = m.getSizeY();
+			int sx = m.getSize_x();
+			int sy = m.getSize_y();
 			double stepx = dx / (double) sx;
 			double stepy = dy / (double) sy;
 	
