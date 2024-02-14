@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import controller.AbstractController;
 import model.AgentAction;
 import model.ReaderWriter;
@@ -70,10 +68,6 @@ public class ControllerPacmanGameServeur extends AbstractController {
     public PacmanGame getGame() {
         return (PacmanGame) game;
     }
-
-    /***   
-        *   fonction qui retourne le jeu pacman utiliser par le controleur pacman
-    ***/
 
     public void ajouterJoueur(Socket s)
     {

@@ -118,4 +118,9 @@ public class Pacman extends Agent
         }
     }
 
+    @Override
+    public String toString() {
+        return "Pacman";
+    }
+
 }

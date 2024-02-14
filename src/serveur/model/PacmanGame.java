@@ -122,11 +122,11 @@ public class PacmanGame extends Game {
 
     protected void takeTurn()
     {
-        System.out.println("a");
         //On gère la logique
         for(Agent a:agents)
         {
             AgentAction action = a.getAction();
+            System.out.println(a + " " + action);
             a.moveAgent(action);
             a.takeTurn();
             a.manageKill();

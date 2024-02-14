@@ -135,4 +135,9 @@ public class Fantome extends Agent {
             canDie = f.getFrightened();
         }
     }
+
+    @Override
+    public String toString() {
+        return "Fantome";
+    }
 }

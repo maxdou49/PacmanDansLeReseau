@@ -131,4 +131,5 @@ public abstract class Agent {
 
     public abstract void setFromEtatAgent(EtatAgent e);
 
+    public abstract String toString();
 }
