@@ -91,6 +91,7 @@ public class ControllerPacmanGameServeur extends AbstractController {
     public AgentAction lireActionClient(int client)
     {
         AgentAction action = clients.get(client).getAction();
+        System.out.println("action " + action);
         return action;
     }
 
@@ -98,15 +99,13 @@ public class ControllerPacmanGameServeur extends AbstractController {
     {
         try
         {
-            ObjectMapper objectMapper = new ObjectMapper();
-            System.out.println(objectMapper.writeValueAsString(etat));
             for(ClientCommunication client: clients)
             {
                 client.sendState(etat);
             }
         } catch (Exception e)
         {
-            
+
         }
     }
 }

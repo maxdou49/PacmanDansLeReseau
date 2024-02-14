@@ -39,6 +39,12 @@ public class Maze implements Serializable, Cloneable {
 	private ArrayList<PositionAgent> pacman_start;
 	private ArrayList<PositionAgent> ghosts_start;
 
+	public Maze()
+	{
+		size_x = 0;
+		size_y = 0;
+	}
+
 	public Maze(String filename) throws Exception {
 		try {
 			System.out.println("Layout file is " + filename);
@@ -130,20 +136,6 @@ public class Maze implements Serializable, Cloneable {
 	}
 
 	/**
-	 * Renvoie la taille X du labyrtinhe
-	 */
-	public int getSizeX() {
-		return (size_x);
-	}
-
-	/**
-	 * Renvoie la taille Y du labyrinthe
-	 */
-	public int getSizeY() {
-		return (size_y);
-	}
-
-	/**
 	 * Permet de savoir si il y a un mur
 	 */
 	public boolean isWall(int x, int y) {
@@ -189,25 +181,6 @@ public class Maze implements Serializable, Cloneable {
 
 	public void setCapsule(int x, int y, boolean b) {
 		capsules[x][y] = b;
-	}
-	
-
-	/**
-	 * Renvoie le nombre de pacmans
-	 * 
-	 * @return
-	 */
-	public int getInitNumberOfPacmans() {
-		return (pacman_start.size());
-	}
-
-	/**
-	 * Renvoie le nombre de fantomes
-	 * 
-	 * @return
-	 */
-	public int getInitNumberOfGhosts() {
-		return (ghosts_start.size());
 	}
 
 	public ArrayList<PositionAgent> getPacman_start() {

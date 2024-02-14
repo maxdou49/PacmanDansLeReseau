@@ -6,6 +6,19 @@ public class EtatAgentFantome implements EtatAgent {
     protected boolean frightened;
     protected PositionAgent pos;
 
+    public void setFrightened(boolean frightened) {
+        this.frightened = frightened;
+    }
+
+    public void setPos(PositionAgent pos) {
+        this.pos = pos;
+    }
+
+    public EtatAgentFantome()
+    {
+        
+    }
+
     public EtatAgentFantome(PositionAgent pos, boolean frightened)
     {
         this.pos = pos;
