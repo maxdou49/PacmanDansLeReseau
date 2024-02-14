@@ -6,27 +6,6 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Serveur",
-            "request": "launch",
-            "mainClass": "serveur.app.Serveur",
-            "projectName": "PacmanDansLeReseau_39ec12f1"
-        },
-        {
-            "type": "java",
-            "name": "Serveur",
-            "request": "launch",
-            "mainClass": "serveur.app.Serveur",
-            "projectName": "PacmanDansLeReseau_fcd066c3"
-        },
-        {
-            "type": "java",
-            "name": "Test",
-            "request": "launch",
-            "mainClass": "client.test.Test",
-            "projectName": "PacmanDansLeReseau_fcd066c3"
-        },
-        {
-            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -35,7 +14,7 @@
             "type": "java",
             "name": "Serveur",
             "request": "launch",
-            "mainClass": "serveur.Serveur",
+            "mainClass": "serveur.app.Serveur",
             "args": "1234"
         },
         {

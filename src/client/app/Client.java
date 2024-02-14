@@ -28,21 +28,11 @@ public class Client {
             sortie = new PrintWriter (so.getOutputStream(), true); 
 
             ControllerPacmanGameClient controleur = new ControllerPacmanGameClient("layout/originalClassic.lay", so);
-            String message = entree.readLine();
-            ObjectMapper objectMapper = new ObjectMapper();
-
-            if(message.equals("Lance")) {
-                controleur.play();
-
-                Random r = new Random();
-                while(so.isConnected()) {
-                    Thread.sleep(1000);
-                    AgentAction action = new AgentAction(r.nextInt(4));
-                    sortie.println(objectMapper.writeValueAsString(action));
-                }
-            }
-
-        } catch (IOException e) { System.out.println("problème\n"+e); }
-        catch (Exception e) { System.out.println("problème\n"+e); }
+            controleur.play();
+            
+        } catch (IOException e) { System.out.println("problème\n"+e);
+        e.printStackTrace(); }
+        catch (Exception e) { System.out.println("problème\n"+e); 
+        e.printStackTrace();}
     }
 }

@@ -86,6 +86,10 @@ public class PacmanGame extends Game {
 
     @Override
     protected void initializeGame() {
-        /** Appel au controlleur pour initisaliser la game */
+        try {
+            maze = controlleur.getEtatGame().getMaze();
+        } catch (InvalidAttributesException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }

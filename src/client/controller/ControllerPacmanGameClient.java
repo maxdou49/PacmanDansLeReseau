@@ -4,7 +4,6 @@ import controller.AbstractController;
 import model.AgentAction;
 import model.ReaderWriter;
 import model.Transfert.EtatGame;
-import serveur.model.Agent;
 import client.view.ViewCommand;
 import client.view.ViewPacmanGame;
 
@@ -28,6 +27,8 @@ public class ControllerPacmanGameClient extends AbstractController {
     public ControllerPacmanGameClient(String mazePath, Socket so) throws Exception
     {
         super();
+        this.socket = so;
+        this.rw = new ReaderWriter(so);
         PacmanGame g = new PacmanGame(mazePath, this);
         this.game = g;
         this.game.setMaxTurn(Integer.MAX_VALUE);
@@ -35,8 +36,6 @@ public class ControllerPacmanGameClient extends AbstractController {
         this.viewCom = new ViewCommand(this);
         g.setKeyboard(viewGame.getKeyboard());
         this.game.init();
-        this.socket = so;
-        this.rw = new ReaderWriter(so);
     }
 
     /***   
