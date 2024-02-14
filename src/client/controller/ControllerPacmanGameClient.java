@@ -2,6 +2,7 @@ package client.controller;
 
 import controller.AbstractController;
 import model.AgentAction;
+import model.Maze;
 import model.ReaderWriter;
 import model.Transfert.EtatGame;
 import client.view.ViewCommand;
@@ -22,7 +23,7 @@ public class ControllerPacmanGameClient extends AbstractController {
     ViewCommand viewCom;
     Socket socket;
     ReaderWriter rw;
-    
+    EtatGame etatGame;
 
     public ControllerPacmanGameClient(String mazePath, Socket so) throws Exception
     {
@@ -75,7 +76,21 @@ public class ControllerPacmanGameClient extends AbstractController {
     public EtatGame getEtatGame() throws InvalidAttributesException, IOException
     {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(rw.getReader().readLine(), EtatGame.class);
+        
+        String msg = rw.getReader().readLine();
+        if(msg != null)
+            etatGame = mapper.readValue(msg, EtatGame.class);
+        
+        return etatGame;
+    }
+
+    /***   
+        *   fonction pour recuperer la maze
+    ***/
+
+    public Maze getMaze()
+    {
+        return (etatGame != null) ? etatGame.getMaze() : null;
     }
 }
  

@@ -67,4 +67,34 @@ public class EtatGame {
     {
         return maze;
     }
+
+    public void setFantomes(ArrayList<EtatAgentFantome> fantomes) {
+        this.fantomes = fantomes;
+    }
+
+    public void setPacmans(ArrayList<EtatAgentPacman> pacmans) {
+        this.pacmans = pacmans;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
+    public void setMaze(Maze maze) {
+        this.maze = maze;
+    }
+    
+    
 }

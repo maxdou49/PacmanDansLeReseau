@@ -6,12 +6,9 @@ package client.model;
 import model.Game;
 import model.KeyboadManager;
 import model.Maze;
-import model.PositionAgent;
 import model.Transfert.EtatGame;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.naming.directory.InvalidAttributesException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -28,7 +25,7 @@ public class PacmanGame extends Game {
     {
         super();
         this.controlleur = controlleur;
-        this.maze = controlleur.getEtatGame().getMaze();
+        this.maze = controlleur.getMaze();
     }
 
 
