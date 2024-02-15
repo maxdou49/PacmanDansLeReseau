@@ -69,8 +69,6 @@ public class ClientCommunication implements Runnable {
     {
         try
         {
-            //System.out.println(client.getAddress());
-            //System.out.println(objectMapper.writeValueAsString(state));
             client.getWriter().println(objectMapper.writeValueAsString(state));
         } catch (Exception e)
         {

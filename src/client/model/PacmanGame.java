@@ -8,9 +8,6 @@ import model.Game;
 import model.KeyboadManager;
 import model.Maze;
 import model.Transfert.EtatGame;
-import serveur.model.Agent;
-
-import java.io.IOException;
 import javax.naming.directory.InvalidAttributesException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,9 +24,13 @@ public class PacmanGame extends Game {
     {
         super();
         this.controlleur = controlleur;
-        if(controlleur.getEtatGame() != null)
-            this.maze = controlleur.getEtatGame().getMaze(); 
-        else throw new Exception("Maze not found");
+
+        EtatGame etat = controlleur.getEtatGame();
+        if(etat != null)
+        {
+            this.maze = etat.getMaze();
+            this.setStepTime(etat.getTimer());
+        } else throw new Exception("Maze not found");
     }
 
 
@@ -48,8 +49,6 @@ public class PacmanGame extends Game {
             maze = etat.getMaze();
             controlleur.getViewGame().rafrachier(etat);
         } catch (JsonProcessingException | InvalidAttributesException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
         updateObservers();
@@ -89,10 +88,6 @@ public class PacmanGame extends Game {
 
     @Override
     protected void initializeGame() {
-        try {
-            maze = controlleur.getEtatGame().getMaze();
-        } catch (InvalidAttributesException | IOException e) {
-            e.printStackTrace();
-        }
+        maze = controlleur.getEtatGame().getMaze();
     }
 }

@@ -335,7 +335,7 @@ public class PacmanGame extends Game {
     //Etat
     public EtatGame getEtat()
     {
-        EtatGame etat = new EtatGame(score, lives, level, turn, maze);
+        EtatGame etat = new EtatGame(score, lives, level, turn, stepTime, maze);
         for(Agent a:agents)
         {
             if(a instanceof Pacman)

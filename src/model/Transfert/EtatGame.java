@@ -10,6 +10,7 @@ public class EtatGame {
     protected int lives;
     protected int level;
     protected int turn;
+    protected long timer;
     protected Maze maze;
     
     public EtatGame()
@@ -17,12 +18,14 @@ public class EtatGame {
         
     }
 
-    public EtatGame(int score, int lives, int level, int turn, Maze maze)
+    public EtatGame(int score, int lives, int level, int turn, long timer, Maze maze)
     {
         this.score = score;
         this.lives = lives;
         this.level = level;
         this.turn = turn;
+        this.timer = timer;
+
         this.fantomes = new ArrayList<EtatAgentFantome>();
         this.pacmans = new ArrayList<EtatAgentPacman>();
         this.maze = maze;
@@ -99,6 +102,14 @@ public class EtatGame {
 
     public void setMaze(Maze maze) {
         this.maze = maze;
+    }
+
+    public long getTimer() {
+        return timer;
+    }
+
+    public void setTimer(long timer) {
+        this.timer = timer;
     }
     
     

@@ -30,6 +30,29 @@ public class ControllerPacmanGameClient extends AbstractController {
         super();
         this.socket = so;
         this.rw = new ReaderWriter(so);
+
+        new Thread(new Runnable() {
+            ObjectMapper mapper = new ObjectMapper();
+            String rd;
+
+            @Override
+            public void run() {
+                try {
+                    System.out.println("run etat");
+                    do {
+                        rd = rw.getReader().readLine();
+                        etatGame = mapper.readValue(rd, EtatGame.class);
+                    } while((rd != null));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            
+        }).start();
+
+        ObjectMapper mapper = new ObjectMapper();
+        etatGame = mapper.readValue(rw.getReader().readLine(), EtatGame.class);
+        
         PacmanGame g = new PacmanGame(mazePath, this);
         this.game = g;
         this.game.setMaxTurn(Integer.MAX_VALUE);
@@ -73,12 +96,8 @@ public class ControllerPacmanGameClient extends AbstractController {
      * @throws IOException 
     ***/
 
-    public EtatGame getEtatGame() throws InvalidAttributesException, IOException
-    {
-        ObjectMapper mapper = new ObjectMapper();
-        
-        etatGame = mapper.readValue(rw.getReader().readLine(), EtatGame.class);
-        
+    public EtatGame getEtatGame()
+    {   
         return etatGame;
     }
 

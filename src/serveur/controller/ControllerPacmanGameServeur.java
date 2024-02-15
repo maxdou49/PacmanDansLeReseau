@@ -29,6 +29,7 @@ public class ControllerPacmanGameServeur extends AbstractController {
     {
         this.game.init();
         this.game.launch();
+        envoyerEtat(getGame().getEtat());
     }
 
     public void setStrategiePacman(ListeStrategie strategie)
