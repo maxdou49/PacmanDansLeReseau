@@ -20,7 +20,7 @@ public class PacmanGame extends Game {
     StrategieKeyboard strategieKeyboard;
     private ControllerPacmanGameClient controlleur;
 
-    public PacmanGame(String mazeFile, ControllerPacmanGameClient controlleur) throws Exception
+    public PacmanGame(ControllerPacmanGameClient controlleur) throws Exception
     {
         super();
         this.controlleur = controlleur;

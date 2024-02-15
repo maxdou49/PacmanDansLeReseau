@@ -25,7 +25,7 @@ public class ControllerPacmanGameClient extends AbstractController {
     ReaderWriter rw;
     EtatGame etatGame;
 
-    public ControllerPacmanGameClient(String mazePath, Socket so) throws Exception
+    public ControllerPacmanGameClient(Socket so) throws Exception
     {
         super();
 
@@ -34,7 +34,7 @@ public class ControllerPacmanGameClient extends AbstractController {
         ObjectMapper mapper = new ObjectMapper();
         etatGame = mapper.readValue(rw.getReader().readLine(), EtatGame.class);
         
-        PacmanGame g = new PacmanGame(mazePath, this);
+        PacmanGame g = new PacmanGame(this);
         this.game = g;
         this.game.setMaxTurn(Integer.MAX_VALUE);
         this.viewGame = new ViewPacmanGame(this);

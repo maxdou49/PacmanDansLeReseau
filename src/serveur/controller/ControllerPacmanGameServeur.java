@@ -22,7 +22,6 @@ public class ControllerPacmanGameServeur extends AbstractController {
         PacmanGame g = new PacmanGame(mazePath, this);
         this.game = g;
         this.game.setMaxTurn(Integer.MAX_VALUE);
-        this.game.setStepTime(500);
         this.clients = new ArrayList<ClientCommunication>();
     }
 
@@ -99,7 +98,7 @@ public class ControllerPacmanGameServeur extends AbstractController {
             }
         } catch (Exception e)
         {
-
+            e.printStackTrace();
         }
     }
 }

@@ -17,7 +17,7 @@ public abstract class Game implements Runnable, Observable {
         observers = new ArrayList<Observer>();
         maxTurn = 50;
         isRunning = false;
-        stepTime = 100;
+        stepTime = 500;
     }
 
     public void init()

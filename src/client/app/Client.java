@@ -12,7 +12,7 @@ public class Client {
         
         try {
             so = new Socket("localhost", p);
-            ControllerPacmanGameClient controleur = new ControllerPacmanGameClient("layout/originalClassic.lay", so);
+            ControllerPacmanGameClient controleur = new ControllerPacmanGameClient(so);
             controleur.play();
             
         } catch (IOException e) { System.out.println("problème\n"+e);

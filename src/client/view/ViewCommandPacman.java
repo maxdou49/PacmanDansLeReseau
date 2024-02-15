@@ -4,19 +4,9 @@ import java.awt.FileDialog;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import client.model.PacmanGame;
-import serveur.model.Strategie.ListeStrategie;
 import client.controller.ControllerPacmanGameClient;
 
 public class ViewCommandPacman extends ViewCommand {
