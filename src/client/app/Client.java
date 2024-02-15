@@ -1,8 +1,8 @@
 package client.app;
 
-import java.io.IOException;
 import java.net.Socket;
 import client.controller.ControllerPacmanGameClient;
+import model.MethodeFactory;
 
 public class Client {
     public static void main(String[] argu) throws InterruptedException
@@ -15,9 +15,9 @@ public class Client {
             ControllerPacmanGameClient controleur = new ControllerPacmanGameClient(so);
             controleur.play();
             
-        } catch (IOException e) { System.out.println("problème\n"+e);
-        e.printStackTrace(); }
-        catch (Exception e) { System.out.println("problème\n"+e); 
-        e.printStackTrace();}
+        } catch (Exception e) {
+            System.out.println(new MethodeFactory().constructMessage("Client\t"+e)); 
+            e.printStackTrace();
+        }
     }
 }

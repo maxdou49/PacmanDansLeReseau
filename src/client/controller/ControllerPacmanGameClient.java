@@ -3,6 +3,7 @@ package client.controller;
 import controller.AbstractController;
 import model.AgentAction;
 import model.Maze;
+import model.MethodeFactory;
 import model.ReaderWriter;
 import model.Transfert.EtatGame;
 import client.view.ViewCommand;
@@ -107,6 +108,7 @@ public class ControllerPacmanGameClient extends AbstractController {
                         // getGame().setMaze(etatGame.getMaze());
                     } while((rd != null));
                 } catch (Exception e) {
+                    System.out.println(new MethodeFactory().constructMessage("ControllerClient\t"+e));
                     e.printStackTrace();
                 }
             }

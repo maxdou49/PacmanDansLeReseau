@@ -7,6 +7,7 @@ import model.AgentAction;
 import model.Game;
 import model.KeyboadManager;
 import model.Maze;
+import model.MethodeFactory;
 import model.Transfert.EtatGame;
 import javax.naming.directory.InvalidAttributesException;
 
@@ -45,6 +46,7 @@ public class PacmanGame extends Game {
             AgentAction action = strategieKeyboard.getAction();
             controlleur.sendAction(action);
         } catch (JsonProcessingException | InvalidAttributesException e) {
+            System.out.println(new MethodeFactory().constructMessage("Pac-Man-Client\t"+e));
             e.printStackTrace();
         }
         updateObservers();
