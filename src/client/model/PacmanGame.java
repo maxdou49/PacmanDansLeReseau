@@ -9,8 +9,6 @@ import model.KeyboadManager;
 import model.Maze;
 import model.MethodeFactory;
 import model.Transfert.EtatGame;
-import serveur.model.Agent;
-
 import javax.naming.directory.InvalidAttributesException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;

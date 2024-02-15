@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import controller.AbstractController;
 import model.AgentAction;
+import model.MethodeFactory;
 import model.ReaderWriter;
 import model.Transfert.EtatGame;
 import serveur.model.ClientCommunication;
@@ -98,6 +99,7 @@ public class ControllerPacmanGameServeur extends AbstractController {
             }
         } catch (Exception e)
         {
+            System.out.println(new MethodeFactory().constructMessage("ControllerPacmanGameServeur\t"+e));
             e.printStackTrace();
         }
     }
