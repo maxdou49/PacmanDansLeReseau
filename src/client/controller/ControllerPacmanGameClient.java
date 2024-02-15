@@ -64,7 +64,7 @@ public class ControllerPacmanGameClient extends AbstractController {
     public void sendAction(AgentAction action) throws JsonProcessingException, InvalidAttributesException
     {
         ObjectMapper mapper = new ObjectMapper();
-        rw.getWriter().write(mapper.writeValueAsString(action));
+        rw.getWriter().println(mapper.writeValueAsString(action));
     }
 
     /***   

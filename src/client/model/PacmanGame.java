@@ -3,10 +3,12 @@
  */
 
 package client.model;
+import model.AgentAction;
 import model.Game;
 import model.KeyboadManager;
 import model.Maze;
 import model.Transfert.EtatGame;
+import serveur.model.Agent;
 
 import java.io.IOException;
 import javax.naming.directory.InvalidAttributesException;
@@ -39,7 +41,9 @@ public class PacmanGame extends Game {
     protected void takeTurn()
     {
         try {
-            controlleur.sendAction(strategieKeyboard.getAction());
+            AgentAction action = strategieKeyboard.getAction();
+            controlleur.sendAction(action);
+            System.out.println(action);
             EtatGame etat = controlleur.getEtatGame();
             maze = etat.getMaze();
             controlleur.getViewGame().rafrachier(etat);
