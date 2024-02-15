@@ -125,9 +125,12 @@ public class PacmanGame extends Game {
         //On gère la logique
         for(Agent a:agents)
         {
-            AgentAction action = a.getAction();
-            System.out.println(a + " " + action);
-            a.moveAgent(action);
+            if(a.isAlive()) //On ne bouge pas si on est mort(sinon ça plante)
+            {
+                AgentAction action = a.getAction();
+                //System.out.println(a + " " + action);
+                a.moveAgent(action);
+            }
             a.takeTurn();
             a.manageKill();
         }

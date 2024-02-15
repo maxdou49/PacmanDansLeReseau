@@ -45,12 +45,7 @@ public class ViewPacmanGame extends JFrame implements Observer {
 
     public void update(Observable o)
     {
-        if(o instanceof PacmanGame)
-        {
-            Maze maze = ((PacmanGame)o).getMaze();
-            mazePanel.setMaze((maze));
-            mazePanel.repaint();
-        }
+        
     }
 
     public KeyboadManager getKeyboard()
@@ -66,10 +61,18 @@ public class ViewPacmanGame extends JFrame implements Observer {
         }
         mazePanel.setPacmans_pos(pacmans);
         ArrayList<PositionAgent> fantomes = new ArrayList<PositionAgent>();
+        ArrayList<Boolean> fright = new ArrayList<Boolean>();
         for(int i = 0; i < etat.getFantomes().size(); i++)
         {
             fantomes.add(etat.getFantomes().get(i).getPos());
+            fright.add(etat.getFantomes().get(i).getFrightened());
         }
         mazePanel.setGhosts_pos(fantomes);
+        mazePanel.setGhostsScarred(fright);
+
+        Maze maze = etat.getMaze();
+        mazePanel.setMaze(maze);
+        //On rafraichit ici histoire que ce soit plus propre
+        mazePanel.repaint();
     }
 }

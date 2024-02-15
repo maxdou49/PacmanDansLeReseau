@@ -9,6 +9,8 @@ import model.KeyboadManager;
 import model.Maze;
 import model.MethodeFactory;
 import model.Transfert.EtatGame;
+import serveur.model.Agent;
+
 import javax.naming.directory.InvalidAttributesException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,6 +22,10 @@ public class PacmanGame extends Game {
     protected KeyboadManager keyboard;
     StrategieKeyboard strategieKeyboard;
     private ControllerPacmanGameClient controlleur;
+    private AgentAction lastAction;
+    private int lives;
+    private int score;
+    private int level;
 
     public PacmanGame(ControllerPacmanGameClient controlleur) throws Exception
     {
@@ -40,11 +46,33 @@ public class PacmanGame extends Game {
         return true;
     }
 
+    public void run()
+    {
+        while(isRunning)
+        {
+            step();
+            try
+            {
+                Thread.sleep(10); //On attend un peu histoire de
+            } catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
     protected void takeTurn()
     {
         try {
             AgentAction action = strategieKeyboard.getAction();
-            controlleur.sendAction(action);
+            if(!action.equals(lastAction)) //On ne renvoit pas si ça ne change pas afin de ne pas spammer
+                controlleur.sendAction(action);
+            lastAction = action;
+            EtatGame etat = controlleur.getEtatGame();
+            turn = etat.getTurn();
+            lives = etat.getLives();
+            score = etat.getScore();
+            level = etat.getLevel();
         } catch (JsonProcessingException | InvalidAttributesException e) {
             System.out.println(new MethodeFactory().constructMessage("Pac-Man-Client\t"+e));
             e.printStackTrace();
@@ -81,7 +109,7 @@ public class PacmanGame extends Game {
 
     public String getTexte()
     {
-        return String.format("");
+        return String.format("Niveau: %d <br/>Score: %d \\tVies: %d", level, score, lives);
     }
 
     @Override

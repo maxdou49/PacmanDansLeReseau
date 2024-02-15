@@ -104,4 +104,14 @@ public class AgentAction {
 
 		return sb.toString();
 	}
+
+	public boolean equals(AgentAction b)
+	{
+		if(b == null)
+		{
+			return false;
+		}
+		return _direction == b._direction;
+	}
+	
 }
