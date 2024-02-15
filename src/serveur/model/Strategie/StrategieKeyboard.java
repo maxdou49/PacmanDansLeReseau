@@ -18,10 +18,7 @@ public class StrategieKeyboard extends StrategieAgent {
     public AgentAction getAction()
     {
         AgentAction action = agent.getGame().getController().lireActionClient(agent.getPlayer());
-        if(action != null)
-        {
-            return action;
-        }
-        return new AgentAction(AgentAction.STOP);
+        
+        return (action != null) ? action : new AgentAction(AgentAction.STOP);
     }
 }

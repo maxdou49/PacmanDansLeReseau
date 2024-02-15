@@ -24,35 +24,27 @@ public class ClientCommunication implements Runnable {
 
     public void run()
     {
-        System.out.println("running Client thread...");
         this.running = true;
         try
         {
             //Récuperer la dernière action du client
             while(running)
             {
-                    System.out.println("###CLIENT### "+client);  
-                    System.out.println("###BFR###### "+client.getReader());
-
-                    String str = client.getReader().readLine();
-                    System.out.println("###run###### " + str);
-                    if(str != null)
-                    {
-                        action = objectMapper.readValue(str, AgentAction.class);
-                    }
-                    else
-                    {
-                        running = false;
-                    }
+                String str = client.getReader().readLine();
+                if(str != null)
+                {
+                    action = objectMapper.readValue(str, AgentAction.class);
+                }
+                else
+                {
+                    running = false;
+                }
                 
             }
-        System.out.println("terminating Client thread...");
         } catch(Exception e)
         {
             running = false;
-            System.out.println("terminating Client thread...(EXCEPTION)");
         }
-        System.out.println("terminating Client thread...");
     }
 
     public boolean isRunning()

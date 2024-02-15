@@ -28,28 +28,9 @@ public class ControllerPacmanGameClient extends AbstractController {
     public ControllerPacmanGameClient(String mazePath, Socket so) throws Exception
     {
         super();
+
         this.socket = so;
         this.rw = new ReaderWriter(so);
-
-        new Thread(new Runnable() {
-            ObjectMapper mapper = new ObjectMapper();
-            String rd;
-
-            @Override
-            public void run() {
-                try {
-                    System.out.println("run etat");
-                    do {
-                        rd = rw.getReader().readLine();
-                        etatGame = mapper.readValue(rd, EtatGame.class);
-                    } while((rd != null));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            
-        }).start();
-
         ObjectMapper mapper = new ObjectMapper();
         etatGame = mapper.readValue(rw.getReader().readLine(), EtatGame.class);
         
@@ -109,5 +90,28 @@ public class ControllerPacmanGameClient extends AbstractController {
     {
         return (etatGame != null) ? etatGame.getMaze() : null;
     }
+
+    public void play()
+    {
+        new Thread(new Runnable() {
+            ObjectMapper mapper = new ObjectMapper();
+            String rd;
+
+            @Override
+            public void run() {
+                try {
+                    do {
+                        rd = rw.getReader().readLine();
+                        etatGame = mapper.readValue(rd, EtatGame.class);
+                        viewGame.rafrachier(etatGame);
+                        // getGame().setMaze(etatGame.getMaze());
+                    } while((rd != null));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+      
+        game.launch();
+    }
 }
- 

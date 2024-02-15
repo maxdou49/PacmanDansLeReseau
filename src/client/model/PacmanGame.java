@@ -44,10 +44,6 @@ public class PacmanGame extends Game {
         try {
             AgentAction action = strategieKeyboard.getAction();
             controlleur.sendAction(action);
-            System.out.println(action);
-            EtatGame etat = controlleur.getEtatGame();
-            maze = etat.getMaze();
-            controlleur.getViewGame().rafrachier(etat);
         } catch (JsonProcessingException | InvalidAttributesException e) {
             e.printStackTrace();
         }
