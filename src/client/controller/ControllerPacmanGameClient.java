@@ -6,6 +6,8 @@ import model.Maze;
 import model.MethodeFactory;
 import model.ReaderWriter;
 import model.Transfert.EtatGame;
+import model.Transfert.Message;
+import model.Transfert.MessageBuilder;
 import client.view.ViewCommand;
 import client.view.ViewPacmanGame;
 
@@ -33,7 +35,12 @@ public class ControllerPacmanGameClient extends AbstractController {
         this.socket = so;
         this.rw = new ReaderWriter(so);
         ObjectMapper mapper = new ObjectMapper();
-        etatGame = mapper.readValue(rw.getReader().readLine(), EtatGame.class);
+        etatGame = null;
+        do
+        {
+            String rd = rw.getReader().readLine();
+            readMessage(rd);
+        } while(etatGame == null);
         
         PacmanGame g = new PacmanGame(this);
         this.game = g;
@@ -66,10 +73,16 @@ public class ControllerPacmanGameClient extends AbstractController {
      * @throws JsonProcessingException 
     ***/
 
-    public void sendAction(AgentAction action) throws JsonProcessingException, InvalidAttributesException
+    public void sendAction(AgentAction action)
     {
         ObjectMapper mapper = new ObjectMapper();
-        rw.getWriter().println(mapper.writeValueAsString(action));
+        try
+        {
+            rw.getWriter().println((MessageBuilder.build(Message.ACTION, mapper.writeValueAsString(action))).toString());
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     /***   
@@ -92,20 +105,39 @@ public class ControllerPacmanGameClient extends AbstractController {
         return (etatGame != null) ? etatGame.getMaze() : null;
     }
 
+    public String readMessage(String message) throws Exception
+    {
+        ObjectMapper mapper = new ObjectMapper();
+        Message msg = MessageBuilder.buildFromString(message);
+        switch(msg.getType())
+        {
+            case Message.ETAT:
+                etatGame = mapper.readValue(msg.getData(), EtatGame.class);
+                break;
+            default:
+                break;
+        }
+        return msg.getType();
+    }
+
     public void play()
     {
         new Thread(new Runnable() {
-            ObjectMapper mapper = new ObjectMapper();
-            String rd;
-
             @Override
             public void run() {
                 try {
+                    String rd;
                     do {
                         rd = rw.getReader().readLine();
-                        etatGame = mapper.readValue(rd, EtatGame.class);
-                        viewGame.rafrachier(etatGame);
-                        // getGame().setMaze(etatGame.getMaze());
+                        if(rd != null)
+                        {
+                            String type = readMessage(rd);
+                            System.out.println(type);
+                            if(type.equals(Message.ETAT))
+                            {
+                                viewGame.rafrachier(etatGame);
+                            }
+                        }
                     } while((rd != null));
                 } catch (Exception e) {
                     System.out.println(new MethodeFactory().constructMessage("ControllerClient\t"+e));

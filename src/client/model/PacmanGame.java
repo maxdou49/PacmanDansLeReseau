@@ -7,13 +7,10 @@ import model.AgentAction;
 import model.Game;
 import model.KeyboadManager;
 import model.Maze;
-import model.MethodeFactory;
 import model.Transfert.EtatGame;
-import javax.naming.directory.InvalidAttributesException;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import client.controller.ControllerPacmanGameClient;
+
 public class PacmanGame extends Game {
 
     private Maze maze;
@@ -61,19 +58,17 @@ public class PacmanGame extends Game {
 
     protected void takeTurn()
     {
-        try {
-            AgentAction action = strategieKeyboard.getAction();
-            if(!action.equals(lastAction)) //On ne renvoit pas si ça ne change pas afin de ne pas spammer
-                controlleur.sendAction(action);
-            lastAction = action;
-            EtatGame etat = controlleur.getEtatGame();
+        AgentAction action = strategieKeyboard.getAction();
+        if(!action.equals(lastAction)) //On ne renvoit pas si ça ne change pas afin de ne pas spammer
+            controlleur.sendAction(action);
+        lastAction = action;
+        EtatGame etat = controlleur.getEtatGame();
+        if(etat != null)
+        {
             turn = etat.getTurn();
             lives = etat.getLives();
             score = etat.getScore();
             level = etat.getLevel();
-        } catch (JsonProcessingException | InvalidAttributesException e) {
-            System.out.println(new MethodeFactory().constructMessage("Pac-Man-Client\t"+e));
-            e.printStackTrace();
         }
         updateObservers();
     }
@@ -107,7 +102,7 @@ public class PacmanGame extends Game {
 
     public String getTexte()
     {
-        return String.format("Niveau: %d <br/>Score: %d \\tVies: %d", level, score, lives);
+        return String.format("Niveau: %d <br/>Score: %d \tVies: %d", level, score, lives);
     }
 
     @Override

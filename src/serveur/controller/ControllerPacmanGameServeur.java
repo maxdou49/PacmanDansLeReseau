@@ -4,11 +4,15 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import controller.AbstractController;
 import model.AgentAction;
 import model.MethodeFactory;
 import model.ReaderWriter;
 import model.Transfert.EtatGame;
+import model.Transfert.Message;
+import model.Transfert.MessageBuilder;
 import serveur.model.ClientCommunication;
 import serveur.model.PacmanGame;
 import serveur.model.Strategie.ListeStrategie;
@@ -93,9 +97,11 @@ public class ControllerPacmanGameServeur extends AbstractController {
     {
         try
         {
+            ObjectMapper mapper = new ObjectMapper();
+            Message msg = MessageBuilder.build(Message.ETAT, mapper.writeValueAsString(etat));
             for(ClientCommunication client: clients)
             {
-                client.sendState(etat);
+                client.sendMessage(msg);
             }
         } catch (Exception e)
         {

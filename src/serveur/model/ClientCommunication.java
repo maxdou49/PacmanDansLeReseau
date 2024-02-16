@@ -5,10 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.AgentAction;
 import model.ReaderWriter;
 import model.Transfert.EtatGame;
-
+import model.Transfert.Message;
 /*
  * Gère la communication entre le client et le serveur(coté serveur)
  */
+import model.Transfert.MessageBuilder;
 
 public class ClientCommunication implements Runnable {
     ReaderWriter client;
@@ -33,7 +34,15 @@ public class ClientCommunication implements Runnable {
                 String str = client.getReader().readLine();
                 if(str != null)
                 {
-                    action = objectMapper.readValue(str, AgentAction.class);
+                    Message msg = MessageBuilder.buildFromString(str);
+                    switch(msg.getType())
+                    {
+                        case Message.ACTION:
+                            action = objectMapper.readValue(msg.getData(), AgentAction.class);
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 else
                 {
@@ -57,11 +66,11 @@ public class ClientCommunication implements Runnable {
         return action;
     }
 
-    public void sendState(EtatGame state)
+    public void sendMessage(Message message)
     {
         try
         {
-            client.getWriter().println(objectMapper.writeValueAsString(state));
+            client.getWriter().println(message.toString());
         } catch (Exception e)
         {
             e.printStackTrace();
