@@ -3,7 +3,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import controller.AbstractController;
+import controller.GameControlleur;
 import model.Game;
 import model.Observable;
 import model.Observer;
@@ -11,7 +11,7 @@ import model.Observer;
 public class ViewSimpleGame extends JFrame implements Observer {
     private JLabel label;
 
-    public ViewSimpleGame(AbstractController controlleur)
+    public ViewSimpleGame(GameControlleur controlleur)
     {
         setTitle("Game");
         setSize(new Dimension(700,700));

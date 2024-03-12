@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import controller.AbstractController;
+import controller.GameControlleur;
 import model.Game;
 import model.Observable;
 import model.Observer;
@@ -19,9 +19,9 @@ public class ViewCommand extends JFrame implements Observer {
     protected JButton play;
     protected JButton step;
     protected JButton pause;
-    protected AbstractController controller;
+    protected GameControlleur controller;
 
-    public ViewCommand(AbstractController controlleur)
+    public ViewCommand(GameControlleur controlleur)
     {
         super();
         this.controller = controlleur;

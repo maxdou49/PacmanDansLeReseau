@@ -1,14 +1,15 @@
 package client.app;
 
-import java.net.Socket;
-import client.controller.ControllerPacmanGameClient;
-import client.controller.MenuControlleur;
-import model.MethodeFactory;
+import client.controller.MainControlleur;
 
 public class Client {
     public static void main(String[] argu) throws InterruptedException
     {
-        MenuControlleur menu = new MenuControlleur(argu);
-        menu.showCurrent();
+        try {
+            MainControlleur menu = new MainControlleur(argu);
+            menu.run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,6 +1,6 @@
 package client.controller;
 
-import controller.AbstractController;
+import controller.GameControlleur;
 import model.AgentAction;
 import model.Maze;
 import model.MethodeFactory;
@@ -8,6 +8,7 @@ import model.ReaderWriter;
 import model.Transfert.EtatGame;
 import model.Transfert.Message;
 import model.Transfert.MessageBuilder;
+import model.Transfert.MessageLancer;
 import client.view.ViewCommand;
 import client.view.ViewPacmanGame;
 
@@ -21,26 +22,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.model.PacmanGame;
 
-public class ControllerPacmanGameClient extends AbstractController {
+public class ControllerPacmanGameClient extends GameControlleur {
     ViewPacmanGame viewGame;
     ViewCommand viewCom;
-    Socket socket;
-    ReaderWriter rw;
     EtatGame etatGame;
+    MainControlleur controlleur;
 
-    public ControllerPacmanGameClient(Socket so) throws Exception
+    public ControllerPacmanGameClient(MainControlleur controlleur, EtatGame etat) throws Exception
     {
         super();
 
-        this.socket = so;
-        this.rw = new ReaderWriter(so);
-        ObjectMapper mapper = new ObjectMapper();
-        etatGame = null;
-        do
-        {
-            String rd = rw.getReader().readLine();
-            readMessage(rd);
-        } while(etatGame == null);
+        this.controlleur = controlleur;
+        etatGame = etat;
         
         PacmanGame g = new PacmanGame(this);
         this.game = g;
@@ -78,7 +71,7 @@ public class ControllerPacmanGameClient extends AbstractController {
         ObjectMapper mapper = new ObjectMapper();
         try
         {
-            rw.getWriter().println((MessageBuilder.build(Message.ACTION, mapper.writeValueAsString(action))).toString());
+            controlleur.envoyerMessage((MessageBuilder.build(Message.ACTION, mapper.writeValueAsString(action))));
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -96,6 +89,12 @@ public class ControllerPacmanGameClient extends AbstractController {
         return etatGame;
     }
 
+    public void setEtatGame(EtatGame etat)
+    {
+        etatGame = etat;
+        viewGame.rafrachier(etatGame);
+    }
+
     /***   
         *   fonction pour recuperer la maze
     ***/
@@ -105,24 +104,10 @@ public class ControllerPacmanGameClient extends AbstractController {
         return (etatGame != null) ? etatGame.getMaze() : null;
     }
 
-    public String readMessage(String message) throws Exception
-    {
-        ObjectMapper mapper = new ObjectMapper();
-        Message msg = MessageBuilder.buildFromString(message);
-        switch(msg.getType())
-        {
-            case Message.ETAT:
-                etatGame = mapper.readValue(msg.getData(), EtatGame.class);
-                break;
-            default:
-                break;
-        }
-        return msg.getType();
-    }
-
     public void play()
     {
-        new Thread(new Runnable() {
+        //Le thread est dans MainControlleur qui envoie vers ControlleurPacmanGameClient en récéption de message
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -132,7 +117,6 @@ public class ControllerPacmanGameClient extends AbstractController {
                         if(rd != null)
                         {
                             String type = readMessage(rd);
-                            System.out.println(type);
                             if(type.equals(Message.ETAT))
                             {
                                 viewGame.rafrachier(etatGame);
@@ -144,7 +128,7 @@ public class ControllerPacmanGameClient extends AbstractController {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        }).start();*/
       
         game.launch();
     }
