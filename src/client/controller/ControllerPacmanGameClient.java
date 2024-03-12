@@ -3,17 +3,13 @@ package client.controller;
 import controller.GameControlleur;
 import model.AgentAction;
 import model.Maze;
-import model.MethodeFactory;
-import model.ReaderWriter;
 import model.Transfert.EtatGame;
 import model.Transfert.Message;
 import model.Transfert.MessageBuilder;
-import model.Transfert.MessageLancer;
 import client.view.ViewCommand;
 import client.view.ViewPacmanGame;
 
 import java.io.IOException;
-import java.net.Socket;
 
 import javax.naming.directory.InvalidAttributesException;
 

@@ -84,7 +84,7 @@ public class ControllerPacmanGameServeur extends GameControlleur {
         {
             ClientCommunication client = new ClientCommunication(new ReaderWriter(s));
             this.clients.add(client);
-            client.launch();
+            this.clientsAction.add(new AgentAction(AgentAction.STOP));
         } catch (IOException e)
         {
             e.printStackTrace();
@@ -104,7 +104,13 @@ public class ControllerPacmanGameServeur extends GameControlleur {
 
     public void setActionClient(int client, AgentAction action)
     {
-        clientsAction.set(client, action);
+        try
+        {
+            clientsAction.set(client, action);
+        } catch(Exception e)
+        {
+
+        }
     }
 
     public void envoyerEtat(EtatGame etat)

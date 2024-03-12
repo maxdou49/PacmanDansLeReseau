@@ -2,7 +2,6 @@ package client.view.menu;
 
 import java.awt.event.KeyEvent;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import client.controller.MenuControlleur;

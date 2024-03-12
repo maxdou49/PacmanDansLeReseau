@@ -15,10 +15,11 @@ public class EtatClientJeu extends EtatClient {
 
     public void lireMessage(Message m) throws Exception
     {
+        System.out.println(m.getType() + " " + m.getData());
         ControllerPacmanGameServeur g = controller.getGame();
         if(m.getType().equals("ACTION"))
         {
-            if(g)
+            if(g != null)
             {
                 g.setActionClient(0, objectMapper.readValue(m.getData(), AgentAction.class));
             }

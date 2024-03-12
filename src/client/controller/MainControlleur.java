@@ -6,7 +6,6 @@ import java.net.Socket;
 import client.model.etatClient.EtatClient;
 import client.model.etatClient.EtatClientJeu;
 import client.model.etatClient.EtatClientMenu;
-import controller.AbstractControlleur;
 import controller.GameControlleur;
 import model.MethodeFactory;
 import model.ReaderWriter;
@@ -38,6 +37,7 @@ public class MainControlleur {
     {
         game = new ControllerPacmanGameClient(this, etat);
         setEtat(new EtatClientJeu(this));
+        game.play();
     }
 
     public void setEtat(EtatClient etat)

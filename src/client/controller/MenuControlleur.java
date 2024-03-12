@@ -1,7 +1,5 @@
 package client.controller;
 
-import java.net.Socket;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.view.menu.MenuMain;
