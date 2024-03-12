@@ -1,18 +1,22 @@
 package client.view.menu;
 
-import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import client.controller.MenuControlleur;
 
-public abstract class MenuView extends JFrame {
+public abstract class MenuView extends JPanel {
     protected MenuControlleur controlleur;
 
     public MenuView(MenuControlleur controlleur)
     {
         this.controlleur = controlleur;
-        setTitle("Pacman");
-        setSize(new Dimension(700,700));
+    }
+
+    public boolean onKeyPress(KeyEvent e)
+    {
+        return false;
     }
 }

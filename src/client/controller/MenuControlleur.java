@@ -3,16 +3,17 @@ package client.controller;
 import java.net.Socket;
 
 import client.view.menu.MenuMain;
+import client.view.menu.MenuPanel;
 import client.view.menu.MenuStarting;
 import client.view.menu.MenuView;
 import model.MethodeFactory;
 
 public class MenuControlleur {
-    private MenuView menu;
+    private MenuPanel menu;
 
     public MenuControlleur(String args[])
     {
-        setScreen(new MenuMain(this));
+        menu = new MenuPanel(this, new MenuMain(this));
     }
 
     public void showCurrent()
@@ -25,16 +26,9 @@ public class MenuControlleur {
         menu.setVisible(false);
     }
 
-    public void setScreen(MenuView menu)
+    public void setScreen(MenuView view)
     {
-        boolean visible = false;
-        if(this.menu != null)
-        {
-            visible = this.menu.isVisible();
-            this.menu.setVisible(false);
-        }
-        this.menu = menu;
-        this.menu.setVisible(visible);
+        menu.setView(view);
     }
 
     public void startGame()
@@ -42,6 +36,7 @@ public class MenuControlleur {
         int p=1234; // le port d’écoute
         Socket so;
         
+        System.out.println("Ouverture de starting");
         setScreen(new MenuStarting(this));
         try {
             so = new Socket("localhost", p);
