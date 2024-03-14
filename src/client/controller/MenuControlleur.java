@@ -34,14 +34,7 @@ public class MenuControlleur extends AbstractControlleur {
 
     public void setScreen(MenuView view)
     {
-        boolean visible = false;
-        if(this.menu != null)
-        {
-            visible = this.menu.isVisible();
-            this.menu.setVisible(false);
-        }
-        this.menu = menu;
-        this.menu.setVisible(visible);
+        menu.setView(view);
     }
 
     public void startGame()
@@ -56,7 +49,7 @@ public class MenuControlleur extends AbstractControlleur {
             //Démarrage de la partie
             MessageLancer msg = new MessageLancer("openClassic");
             controlleur.envoyerMessage(MessageBuilder.build("LANCER", mapper.writeValueAsString(msg)));
-            //On
+            //On se met en attente
             controlleur.setEtat(new EtatClientAttente(controlleur));
             
         } catch (Exception e) {

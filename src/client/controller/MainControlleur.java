@@ -38,6 +38,7 @@ public class MainControlleur {
         game = new ControllerPacmanGameClient(this, etat);
         setEtat(new EtatClientJeu(this));
         game.play();
+        menu.hideCurrent();
     }
 
     public void setEtat(EtatClient etat)
