@@ -3,8 +3,6 @@ package client.view.menu;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.JButton;
-
 import client.controller.MenuControlleur;
 
 public class MenuMain extends MenuView {
