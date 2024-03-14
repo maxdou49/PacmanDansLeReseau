@@ -3,9 +3,7 @@ package serveur.app;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import serveur.controller.ControllerPacmanGameServeur;
 import serveur.controller.ControlleurClient;
-import serveur.model.Strategie.ListeStrategie;
 
 public class Serveur {
     public static void main(String[] args)

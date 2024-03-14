@@ -42,7 +42,6 @@ public class MainControlleur {
 
     public void setEtat(EtatClient etat)
     {
-        System.out.println(etat);
         this.etat = etat;
     }
 

@@ -2,7 +2,7 @@ package serveur.controller;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.Vector;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -13,15 +13,14 @@ import model.ReaderWriter;
 import model.Transfert.EtatGame;
 import model.Transfert.Message;
 import model.Transfert.MessageBuilder;
-import serveur.model.Agent;
 import serveur.model.ClientCommunication;
 import serveur.model.PacmanGame;
 import serveur.model.Strategie.ListeStrategie;
 
 public class ControllerPacmanGameServeur extends GameControlleur {
 
-    protected ArrayList<AgentAction> clientsAction;
-    protected ArrayList<ClientCommunication> clients;
+    protected Vector<AgentAction> clientsAction;
+    protected Vector<ClientCommunication> clients;
 
     public ControllerPacmanGameServeur(String mazePath)
     {
@@ -29,8 +28,8 @@ public class ControllerPacmanGameServeur extends GameControlleur {
         PacmanGame g = new PacmanGame(mazePath, this);
         this.game = g;
         this.game.setMaxTurn(Integer.MAX_VALUE);
-        this.clients = new ArrayList<ClientCommunication>();
-        this.clientsAction = new ArrayList<AgentAction>();
+        this.clients = new Vector<ClientCommunication>();
+        this.clientsAction = new Vector<AgentAction>();
     }
 
     public void lancer()
@@ -78,17 +77,24 @@ public class ControllerPacmanGameServeur extends GameControlleur {
         return (PacmanGame) game;
     }
 
-    public void ajouterJoueur(Socket s)
+    public int ajouterJoueur(Socket s)
     {
         try
         {
-            ClientCommunication client = new ClientCommunication(new ReaderWriter(s));
-            this.clients.add(client);
-            this.clientsAction.add(new AgentAction(AgentAction.STOP));
+            int id = 0;
+            synchronized(this.clients)
+            {
+                id = clients.size();
+                ClientCommunication client = new ClientCommunication(new ReaderWriter(s));
+                this.clients.add(client);
+                this.clientsAction.add(new AgentAction(AgentAction.STOP));
+            }
+            return id;
         } catch (IOException e)
         {
             e.printStackTrace();
         }
+        return -1;
     }
 
     public AgentAction lireActionClient(int client)

@@ -18,6 +18,7 @@ public class ControlleurClient {
     Socket socket;
     EtatClient etat;
     ControllerPacmanGameServeur game;
+    int joueur;
 
     public ControlleurClient(Socket client) throws IOException
     {
@@ -53,7 +54,6 @@ public class ControlleurClient {
     public void setEtat(EtatClient etat)
     {
         this.etat = etat;
-        System.out.println(etat);
     }
 
     public ControllerPacmanGameServeur getGame()
@@ -65,11 +65,16 @@ public class ControlleurClient {
     {
         System.out.println("Démarrage sur "+parametres.getCarte());
         game = new ControllerPacmanGameServeur("layout/"+parametres.getCarte()+".lay");
-        game.ajouterJoueur(socket);
+        joueur = game.ajouterJoueur(socket);
         game.envoyerEtat(game.getGame().getEtat());
         game.setStrategieFantome(ListeStrategie.RANDOM);
         game.setStrategiePacman(ListeStrategie.KEYBOARD);
         game.lancer();
         setEtat(new EtatClientJeu(this));
+    }
+
+    public int getJoueur()
+    {
+        return joueur;
     }
 }

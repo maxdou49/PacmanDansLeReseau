@@ -1,9 +1,7 @@
 package serveur.controller.etatClient;
 
-import controller.GameControlleur;
 import model.AgentAction;
 import model.Transfert.Message;
-import model.Transfert.MessageLancer;
 import serveur.controller.ControllerPacmanGameServeur;
 import serveur.controller.ControlleurClient;
 
@@ -21,7 +19,7 @@ public class EtatClientJeu extends EtatClient {
         {
             if(g != null)
             {
-                g.setActionClient(0, objectMapper.readValue(m.getData(), AgentAction.class));
+                g.setActionClient(controller.getJoueur(), objectMapper.readValue(m.getData(), AgentAction.class));
             }
         }
         else
