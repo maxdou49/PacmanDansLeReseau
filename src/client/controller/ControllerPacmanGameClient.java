@@ -117,7 +117,7 @@ public class ControllerPacmanGameClient extends AbstractController {
             default:
                 break;
         }
-        return msg.getType();
+            return msg.getType();
     }
 
     public void play()

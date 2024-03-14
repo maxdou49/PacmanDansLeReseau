@@ -28,8 +28,7 @@ public class MenuControlleur {
     public void setScreen(MenuView menu)
     {
         boolean visible = false;
-        if(this.menu != null)
-        {
+        if(this.menu != null) {
             visible = this.menu.isVisible();
             this.menu.setVisible(false);
         }
@@ -52,5 +51,10 @@ public class MenuControlleur {
             System.out.println(new MethodeFactory().constructMessage("Client\t"+e)); 
             e.printStackTrace();
         }
+    }
+
+    public void multiplayer() {
+        hideCurrent();
+        
     }
 }
