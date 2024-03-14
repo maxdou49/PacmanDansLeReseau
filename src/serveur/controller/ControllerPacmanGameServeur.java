@@ -6,19 +6,21 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import controller.AbstractController;
+import controller.GameControlleur;
 import model.AgentAction;
 import model.MethodeFactory;
 import model.ReaderWriter;
 import model.Transfert.EtatGame;
 import model.Transfert.Message;
 import model.Transfert.MessageBuilder;
+import serveur.model.Agent;
 import serveur.model.ClientCommunication;
 import serveur.model.PacmanGame;
 import serveur.model.Strategie.ListeStrategie;
 
-public class ControllerPacmanGameServeur extends AbstractController {
+public class ControllerPacmanGameServeur extends GameControlleur {
 
+    protected ArrayList<AgentAction> clientsAction;
     protected ArrayList<ClientCommunication> clients;
 
     public ControllerPacmanGameServeur(String mazePath)
@@ -28,6 +30,7 @@ public class ControllerPacmanGameServeur extends AbstractController {
         this.game = g;
         this.game.setMaxTurn(Integer.MAX_VALUE);
         this.clients = new ArrayList<ClientCommunication>();
+        this.clientsAction = new ArrayList<AgentAction>();
     }
 
     public void lancer()
@@ -81,7 +84,7 @@ public class ControllerPacmanGameServeur extends AbstractController {
         {
             ClientCommunication client = new ClientCommunication(new ReaderWriter(s));
             this.clients.add(client);
-            client.launch();
+            this.clientsAction.add(new AgentAction(AgentAction.STOP));
         } catch (IOException e)
         {
             e.printStackTrace();
@@ -90,7 +93,24 @@ public class ControllerPacmanGameServeur extends AbstractController {
 
     public AgentAction lireActionClient(int client)
     {
-        return clients.get(client).getAction();
+        try
+        {
+            return clientsAction.get(client);
+        } catch(Exception e)
+        {
+            return new AgentAction(AgentAction.STOP);
+        }
+    }
+
+    public void setActionClient(int client, AgentAction action)
+    {
+        try
+        {
+            clientsAction.set(client, action);
+        } catch(Exception e)
+        {
+
+        }
     }
 
     public void envoyerEtat(EtatGame etat)

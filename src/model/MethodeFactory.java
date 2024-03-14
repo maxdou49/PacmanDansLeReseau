@@ -1,14 +1,14 @@
 package model;
 
-import controller.AbstractController;
+import controller.GameControlleur;
 
 public class MethodeFactory {
-    private AbstractController controlleur;
+    private GameControlleur controlleur;
 
     public MethodeFactory() {
     }
 
-    public MethodeFactory(AbstractController ctr) {
+    public MethodeFactory(GameControlleur ctr) {
         this.controlleur = ctr;
     }
 
