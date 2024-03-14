@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import serveur.controller.ControllerPacmanGameServeur;
+import serveur.controller.ControlleurClient;
 import serveur.model.Strategie.ListeStrategie;
 
 public class Serveur {
@@ -21,12 +22,8 @@ public class Serveur {
                 so = ecoute.accept();
                 System.out.println("Client connecté");
             
-                ControllerPacmanGameServeur gestionnaire = new ControllerPacmanGameServeur("layout/openClassic.lay");        
-                gestionnaire.ajouterJoueur(so);
-                gestionnaire.envoyerEtat(gestionnaire.getGame().getEtat());
-                gestionnaire.setStrategieFantome(ListeStrategie.RANDOM);
-                gestionnaire.setStrategiePacman(ListeStrategie.KEYBOARD);
-                gestionnaire.lancer();
+                ControlleurClient gestionnaire = new ControlleurClient(so);        
+                gestionnaire.run();
             }
         } catch (IOException e) { System.out.println("problème\n"+e); 
         e.printStackTrace();}

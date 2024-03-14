@@ -7,7 +7,7 @@ import client.view.ViewCommand;
 import client.view.ViewSimpleGame;
 import model.SimpleGame;
 
-public class ControlleurSimpleGame extends AbstractController {
+public class ControlleurSimpleGame extends GameControlleur {
     ViewSimpleGame viewGame;
     ViewCommand viewCom;
 

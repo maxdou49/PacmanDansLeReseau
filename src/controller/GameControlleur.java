@@ -5,10 +5,10 @@
 package controller;
 import model.Game;
 
-public abstract class AbstractController {
+public abstract class GameControlleur extends AbstractControlleur {
     protected Game game;
 
-    public AbstractController()
+    public GameControlleur()
     {
     }
 

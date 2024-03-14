@@ -1,10 +1,8 @@
 package client.controller;
 
-import controller.AbstractController;
+import controller.GameControlleur;
 import model.AgentAction;
 import model.Maze;
-import model.MethodeFactory;
-import model.ReaderWriter;
 import model.Transfert.EtatGame;
 import model.Transfert.Message;
 import model.Transfert.MessageBuilder;
@@ -12,7 +10,6 @@ import client.view.ViewCommand;
 import client.view.ViewPacmanGame;
 
 import java.io.IOException;
-import java.net.Socket;
 
 import javax.naming.directory.InvalidAttributesException;
 
@@ -21,26 +18,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.model.PacmanGame;
 
-public class ControllerPacmanGameClient extends AbstractController {
+public class ControllerPacmanGameClient extends GameControlleur {
     ViewPacmanGame viewGame;
     ViewCommand viewCom;
-    Socket socket;
-    ReaderWriter rw;
     EtatGame etatGame;
+    MainControlleur controlleur;
 
-    public ControllerPacmanGameClient(Socket so) throws Exception
+    public ControllerPacmanGameClient(MainControlleur controlleur, EtatGame etat) throws Exception
     {
         super();
 
-        this.socket = so;
-        this.rw = new ReaderWriter(so);
-        ObjectMapper mapper = new ObjectMapper();
-        etatGame = null;
-        do
-        {
-            String rd = rw.getReader().readLine();
-            readMessage(rd);
-        } while(etatGame == null);
+        this.controlleur = controlleur;
+        etatGame = etat;
         
         PacmanGame g = new PacmanGame(this);
         this.game = g;
@@ -78,7 +67,7 @@ public class ControllerPacmanGameClient extends AbstractController {
         ObjectMapper mapper = new ObjectMapper();
         try
         {
-            rw.getWriter().println((MessageBuilder.build(Message.ACTION, mapper.writeValueAsString(action))).toString());
+            controlleur.envoyerMessage((MessageBuilder.build(Message.ACTION, mapper.writeValueAsString(action))));
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -94,6 +83,12 @@ public class ControllerPacmanGameClient extends AbstractController {
     public EtatGame getEtatGame()
     {   
         return etatGame;
+    }
+
+    public void setEtatGame(EtatGame etat)
+    {
+        etatGame = etat;
+        viewGame.rafrachier(etatGame);
     }
 
     /***   
@@ -122,7 +117,8 @@ public class ControllerPacmanGameClient extends AbstractController {
 
     public void play()
     {
-        new Thread(new Runnable() {
+        //Le thread est dans MainControlleur qui envoie vers ControlleurPacmanGameClient en récéption de message
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -132,7 +128,6 @@ public class ControllerPacmanGameClient extends AbstractController {
                         if(rd != null)
                         {
                             String type = readMessage(rd);
-                            System.out.println(type);
                             if(type.equals(Message.ETAT))
                             {
                                 viewGame.rafrachier(etatGame);
@@ -144,7 +139,7 @@ public class ControllerPacmanGameClient extends AbstractController {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        }).start();*/
       
         game.launch();
     }
