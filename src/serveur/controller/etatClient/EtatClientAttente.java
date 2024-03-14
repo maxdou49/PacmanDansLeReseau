@@ -12,11 +12,9 @@ public class EtatClientAttente extends EtatClient {
 
     public void lireMessage(Message m) throws Exception
     {
-        System.out.println(m.toString());
-        System.out.println("\""+m.getType()+"\"");
         if(m.getType().equals("LANCER"))
         {
-            controller.lancerPartie(objectMapper.readValue(m.getData(), MessageLancer.class));
+            controller.preparerPartie(objectMapper.readValue(m.getData(), MessageLancer.class));
         }
         else
         {

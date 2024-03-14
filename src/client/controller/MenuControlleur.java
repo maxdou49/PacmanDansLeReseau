@@ -59,7 +59,23 @@ public class MenuControlleur extends AbstractControlleur {
     }
 
     public void multiplayer() {
-        hideCurrent();
+        ObjectMapper mapper = new ObjectMapper();
+        int p=1234; // le port d’écoute
+        
+        setScreen(new MenuStarting(this));
+        try {
+            //Connexion au serveur
+            controlleur.assignerServeur("localhost", p);
+            //Démarrage de la partie
+            MessageLancer msg = new MessageLancer("openClassic_twoPacman"); //On lance sur une map qui a deux joueurs
+            controlleur.envoyerMessage(MessageBuilder.build("LANCER", mapper.writeValueAsString(msg)));
+            //On se met en attente
+            controlleur.setEtat(new EtatClientAttente(controlleur));
+            
+        } catch (Exception e) {
+            System.out.println(new MethodeFactory().constructMessage("Client\t"+e)); 
+            e.printStackTrace();
+        }
         
     }
 }

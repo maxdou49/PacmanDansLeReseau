@@ -85,18 +85,20 @@ public class PacmanGame extends Game {
         //Charger agents
         agents.clear();
         AgentFactory f = new AgentFactory();
+        int player = 0;
         for(PositionAgent p: maze.getPacman_start())
         {
             Pacman a = f.createPacman(this, p);
             a.setStrategie(pacmanStrategie);
-            a.setPlayer(0);
+            a.setPlayer(player);
             agents.add(a);
+            player++;
         }
         for(PositionAgent p: maze.getGhosts_start())
         {
             Fantome a = f.createFantome(this, p);
             a.setChaseStrategie(fantomeStrategie);
-            a.setPlayer(1);
+            a.setPlayer(-1);
             agents.add(a);
         }
 
@@ -383,5 +385,10 @@ public class PacmanGame extends Game {
     public ControllerPacmanGameServeur getController()
     {
         return controlleur;
+    }
+
+    public int getNbPlayers()
+    {
+        return maze.getPacman_start().size();
     }
 }

@@ -1,7 +1,5 @@
 package serveur.controller;
 
-import java.io.IOException;
-import java.net.Socket;
 import java.util.Vector;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,18 +7,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import controller.GameControlleur;
 import model.AgentAction;
 import model.MethodeFactory;
-import model.ReaderWriter;
 import model.Transfert.EtatGame;
 import model.Transfert.Message;
 import model.Transfert.MessageBuilder;
-import serveur.model.ClientCommunication;
+import model.Transfert.MessageLancer;
 import serveur.model.PacmanGame;
 import serveur.model.Strategie.ListeStrategie;
 
 public class ControllerPacmanGameServeur extends GameControlleur {
 
+    static protected Vector<ControllerPacmanGameServeur> parties = new Vector<ControllerPacmanGameServeur>();
+
     protected Vector<AgentAction> clientsAction;
-    protected Vector<ClientCommunication> clients;
+    protected Vector<ControlleurClient> clients;
 
     public ControllerPacmanGameServeur(String mazePath)
     {
@@ -28,7 +27,7 @@ public class ControllerPacmanGameServeur extends GameControlleur {
         PacmanGame g = new PacmanGame(mazePath, this);
         this.game = g;
         this.game.setMaxTurn(Integer.MAX_VALUE);
-        this.clients = new Vector<ClientCommunication>();
+        this.clients = new Vector<ControlleurClient>();
         this.clientsAction = new Vector<AgentAction>();
     }
 
@@ -57,6 +56,12 @@ public class ControllerPacmanGameServeur extends GameControlleur {
         g.changeMaze(mazeFile);
     }
 
+    public String getMaze()
+    {
+        PacmanGame g = (PacmanGame)game;
+        return g.getMazeFile();
+    }
+
     public void setStrategiePacmanParam(int param)
     {
         PacmanGame g = (PacmanGame)game;
@@ -77,24 +82,62 @@ public class ControllerPacmanGameServeur extends GameControlleur {
         return (PacmanGame) game;
     }
 
-    public int ajouterJoueur(Socket s)
+    public int ajouterJoueur(ControlleurClient client)
+    {
+        int id = 0;
+        synchronized(this.clients)
+        {
+            id = clients.size();
+            this.clients.add(client);
+            this.clientsAction.add(new AgentAction(AgentAction.STOP));
+        }
+        return id;
+    }
+
+    public void enleverJoueur(int client)
     {
         try
         {
-            int id = 0;
             synchronized(this.clients)
             {
-                id = clients.size();
-                ClientCommunication client = new ClientCommunication(new ReaderWriter(s));
-                this.clients.add(client);
-                this.clientsAction.add(new AgentAction(AgentAction.STOP));
+                this.clients.set(client, null);
+                this.clientsAction.set(client, new AgentAction(AgentAction.STOP));
             }
-            return id;
-        } catch (IOException e)
+            //On supprime la partie s'il n'y a plus personne
+            if(getNombreJoueurs() <= 0)
+            {
+                parties.remove(this);
+            }
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
-        return -1;
+    }
+
+    public int getNombreJoueurs()
+    {
+        synchronized(this.clients)
+        {
+            int nb = 0;
+            for(ControlleurClient c: clients)
+            {
+                if(c != null)
+                {
+                    nb++;
+                }
+            }
+            return nb;
+        }
+    }
+
+    public Vector<ControlleurClient> getJoueurs()
+    {
+        return clients;
+    }
+
+    public boolean assezRempli()
+    {
+        return getNombreJoueurs() >= getGame().getNbPlayers();
     }
 
     public AgentAction lireActionClient(int client)
@@ -125,15 +168,44 @@ public class ControllerPacmanGameServeur extends GameControlleur {
         {
             ObjectMapper mapper = new ObjectMapper();
             Message msg = MessageBuilder.build(Message.ETAT, mapper.writeValueAsString(etat));
-            for(ClientCommunication client: clients)
+            for(ControlleurClient client: clients)
             {
-                client.sendMessage(msg);
+                //System.out.println("Envoi " + client);
+                if(client != null)
+                {
+                    client.sendMessage(msg);
+                }
             }
         } catch (Exception e)
         {
             System.out.println(new MethodeFactory().constructMessage("ControllerPacmanGameServeur\t"+e));
             e.printStackTrace();
         }
+    }
+
+    static public ControllerPacmanGameServeur chercherPartie(MessageLancer config)
+    {
+        //On cherche s'il y a une partie avec des joueurs manquant
+        String carte = "layout/" + config.getCarte() + ".lay";
+        for(ControllerPacmanGameServeur game: parties)
+        {
+            //Même carte?
+            if(game.getMaze().equals(carte))
+            {
+                //Il y a de la place?
+                if(!game.assezRempli())
+                {
+                    return game;
+                }
+            }
+        }
+        //Sinon on crée une nouvelle partie
+        System.out.println("Création partie sur "+carte);
+        ControllerPacmanGameServeur game = new ControllerPacmanGameServeur(carte);
+        game.setStrategieFantome(ListeStrategie.RANDOM);
+        game.setStrategiePacman(ListeStrategie.KEYBOARD);
+        parties.add(game);
+        return game;
     }
 }
  

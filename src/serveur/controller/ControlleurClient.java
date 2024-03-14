@@ -11,7 +11,6 @@ import model.Transfert.MessageLancer;
 import serveur.controller.etatClient.EtatClient;
 import serveur.controller.etatClient.EtatClientAttente;
 import serveur.controller.etatClient.EtatClientJeu;
-import serveur.model.Strategie.ListeStrategie;
 
 public class ControlleurClient {
     ReaderWriter clientRW;
@@ -38,7 +37,6 @@ public class ControlleurClient {
                         rd = clientRW.getReader().readLine();
                         if(rd != null)
                         {
-                            System.out.println(rd);
                             Message msg = MessageBuilder.buildFromString(rd);
                             etat.lireMessage(msg);
                         }
@@ -47,12 +45,15 @@ public class ControlleurClient {
                     System.out.println(new MethodeFactory().constructMessage("ControllerClient\t"+e));
                     e.printStackTrace();
                 }
+                //On pense a enlever le joueur de la partie quand il quitte
+                game.enleverJoueur(joueur);
             }
         }).start();
     }
 
     public void setEtat(EtatClient etat)
     {
+        System.out.println(etat);
         this.etat = etat;
     }
 
@@ -61,20 +62,49 @@ public class ControlleurClient {
         return game;
     }
 
-    public void lancerPartie(MessageLancer parametres)
+    //Rejoint une partie
+    public void preparerPartie(MessageLancer parametres)
     {
         System.out.println("Démarrage sur "+parametres.getCarte());
-        game = new ControllerPacmanGameServeur("layout/"+parametres.getCarte()+".lay");
-        joueur = game.ajouterJoueur(socket);
-        game.envoyerEtat(game.getGame().getEtat());
-        game.setStrategieFantome(ListeStrategie.RANDOM);
-        game.setStrategiePacman(ListeStrategie.KEYBOARD);
-        game.lancer();
+        game = ControllerPacmanGameServeur.chercherPartie(parametres);
+        joueur = game.ajouterJoueur(this);
+
+        //On lance la partie s'il elle est remplie
+        System.out.println("Joueurs " + game.getNombreJoueurs() + "/" + game.getGame().getNbPlayers());
+        if(game.assezRempli())
+        {
+            game.lancer();
+            for(ControlleurClient client: game.getJoueurs())
+            {
+                System.out.println("Démarrage pour " + client);
+                if(client != null)
+                {
+                    client.lancerPartie();
+                }
+            }
+        }
+    }
+
+    //Lance la partie
+    private void lancerPartie()
+    {
         setEtat(new EtatClientJeu(this));
     }
 
     public int getJoueur()
     {
         return joueur;
+    }
+
+    public void sendMessage(Message message)
+    {
+        try
+        {
+            //System.out.println("Msg: " + message.toString());
+            clientRW.getWriter().println(message.toString());
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

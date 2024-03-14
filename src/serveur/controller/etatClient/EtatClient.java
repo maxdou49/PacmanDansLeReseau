@@ -17,6 +17,6 @@ public class EtatClient {
 
     public void lireMessage(Message m) throws Exception
     {
-        throw new Exception("Message invalide");
+        throw new Exception("Message invalide : "+m.getType());
     }
 }
