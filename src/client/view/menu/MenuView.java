@@ -1,21 +1,68 @@
 package client.view.menu;
 
-import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
-import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import client.controller.MenuControlleur;
 
-public abstract class MenuView extends JPanel {
-    protected MenuControlleur controlleur;
+public class MenuView extends JFrame {
+    MenuPanel menu;
+    MenuControlleur controlleur;
 
     public MenuView(MenuControlleur controlleur)
     {
         this.controlleur = controlleur;
+        
+        setTitle("PacmanGame");
+        setSize(new Dimension(400,600));
+        setView(new MenuMain(controlleur));
+        
+        
+        addKeyListener(new KeyListener() { //C'est un peu bugué la gestion des touches dans un sous-panel
+            public void keyPressed(KeyEvent e) {
+                menu.onKeyPress(e);
+            }
+        
+            public void keyReleased(KeyEvent e) {
+                return;
+            }
+        
+            public void keyTyped(KeyEvent e) {
+                return;
+            }
+        });
     }
 
-    public boolean onKeyPress(KeyEvent e)
+    public void setView(MenuPanel panel)
     {
-        return false;
+        System.out.println("Ouverture de " + panel.toString());
+        if(menu != null)
+        {
+            remove(menu);
+        }
+        
+        setContentPane(panel);
+        menu = panel;
+
+        repaint();
+    }
+
+    @Override
+    public void setVisible(boolean b)
+    {
+        super.setVisible(b);
+        if(menu != null)
+        {
+            menu.setVisible(b);
+        }
+
+        repaint();
     }
 }

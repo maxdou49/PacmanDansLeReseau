@@ -3,9 +3,9 @@ package client.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.view.menu.MenuMain;
-import client.view.menu.MenuPanel;
-import client.view.menu.MenuStarting;
 import client.view.menu.MenuView;
+import client.view.menu.MenuStarting;
+import client.view.menu.MenuPanel;
 import controller.AbstractControlleur;
 import model.MethodeFactory;
 import model.Transfert.MessageBuilder;
@@ -13,12 +13,13 @@ import model.Transfert.MessageLancer;
 import client.model.etatClient.EtatClientAttente;
 
 public class MenuControlleur extends AbstractControlleur {
-    private MenuPanel menu;
+    private MenuView menu;
     private MainControlleur controlleur;
 
     public MenuControlleur(MainControlleur controlleur)
     {
-        menu = new MenuPanel(this, new MenuMain(this));
+        menu = new MenuView(this);
+        menu.setVisible(true);
         this.controlleur = controlleur;
     }
 
@@ -32,7 +33,7 @@ public class MenuControlleur extends AbstractControlleur {
         menu.setVisible(false);
     }
 
-    public void setScreen(MenuView view)
+    public void setScreen(MenuPanel view)
     {
         menu.setView(view);
     }

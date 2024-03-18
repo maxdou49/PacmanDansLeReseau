@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 
 import client.controller.MenuControlleur;
 
-public class MenuStarting extends MenuView {
+public class MenuStarting extends MenuPanel {
     public MenuStarting(MenuControlleur controlleur)
     {
         super(controlleur);
