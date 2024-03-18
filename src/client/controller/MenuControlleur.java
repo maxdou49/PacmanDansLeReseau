@@ -2,7 +2,6 @@ package client.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import client.view.menu.MenuMain;
 import client.view.menu.MenuView;
 import client.view.menu.MenuStarting;
 import client.view.menu.MenuPanel;
@@ -13,6 +12,7 @@ import model.Transfert.MessageLancer;
 import client.model.etatClient.EtatClientAttente;
 
 public class MenuControlleur extends AbstractControlleur {
+    String serverName = "localhost";
     private MenuView menu;
     private MainControlleur controlleur;
 
@@ -46,7 +46,7 @@ public class MenuControlleur extends AbstractControlleur {
         setScreen(new MenuStarting(this));
         try {
             //Connexion au serveur
-            controlleur.assignerServeur("localhost", p);
+            controlleur.assignerServeur(serverName, p);
             //Démarrage de la partie
             MessageLancer msg = new MessageLancer("openClassic");
             controlleur.envoyerMessage(MessageBuilder.build("LANCER", mapper.writeValueAsString(msg)));
@@ -66,7 +66,7 @@ public class MenuControlleur extends AbstractControlleur {
         setScreen(new MenuStarting(this));
         try {
             //Connexion au serveur
-            controlleur.assignerServeur("localhost", p);
+            controlleur.assignerServeur(serverName, p);
             //Démarrage de la partie
             MessageLancer msg = new MessageLancer("openClassic_twoPacman"); //On lance sur une map qui a deux joueurs
             controlleur.envoyerMessage(MessageBuilder.build("LANCER", mapper.writeValueAsString(msg)));
@@ -78,5 +78,10 @@ public class MenuControlleur extends AbstractControlleur {
             e.printStackTrace();
         }
         
+    }
+
+
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
     }
 }

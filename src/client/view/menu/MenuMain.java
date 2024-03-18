@@ -1,6 +1,5 @@
 package client.view.menu;
 
-import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -9,8 +8,6 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-
 import client.controller.MenuControlleur;
 
 public class MenuMain extends MenuPanel {
@@ -30,7 +27,7 @@ public class MenuMain extends MenuPanel {
 
         JButton multiButton = new JButton("Multiplayer");
         JButton soloButton = new JButton("Solo");
-
+        
         this.add(multiButton);
         this.add(soloButton);
 
@@ -39,6 +36,7 @@ public class MenuMain extends MenuPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controlleur.startGame();
+                controlleur.hideCurrent();
             }
 
         });
@@ -48,6 +46,7 @@ public class MenuMain extends MenuPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controlleur.multiplayer();
+                controlleur.hideCurrent();
             }
 
         });
