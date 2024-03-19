@@ -51,7 +51,7 @@ public class ControlleurClient {
                         rd = clientRW.getReader().readLine();
                         if(rd != null)
                         {
-                            System.out.println(rd);
+                            //System.out.println(rd);
                             Message msg = MessageBuilder.buildFromString(rd);
                             etat.lireMessage(msg);
                         }
@@ -68,14 +68,31 @@ public class ControlleurClient {
         }).start();
     }
 
-    public boolean validerConnexion(String utilisateur, String motdepasse)
+    //Prévenir l'utilisateur d'un echec
+    private void echecConnexion()
     {
-        //On accepte de base
+        sendMessage(MessageBuilder.build("REFUS", "")); //Peut-être mettre une raison
+        closeConnexion();
+    }
 
-        //On a vérifier la connexion. On previent le joueur
+    //Prevenir l'utilisateur d'une reussite
+    private void reussiteConnextion()
+    {
         setEtat(new EtatClientAttente(this));
         sendMessage(MessageBuilder.build("VALIDE", ""));
-        return true;
+    }
+
+    public void validerConnexion(String utilisateur, String motdepasse)
+    {
+        //On teste
+        if(motdepasse.equals("mdp"))
+        {
+            reussiteConnextion();
+            return;
+        }
+
+        echecConnexion();
+        return;
     }
 
     public void setEtat(EtatClient etat)

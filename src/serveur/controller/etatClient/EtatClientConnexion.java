@@ -15,10 +15,7 @@ public class EtatClientConnexion extends EtatClient {
         if(m.getType().equals("LOGIN"))
         {
             MessageConnexion msg = objectMapper.readValue(m.getData(), MessageConnexion.class);
-            if(!controller.validerConnexion(msg.getUtilisateur(), msg.getMotdepasse()))
-            {
-                controller.closeConnexion();
-            }
+            controller.validerConnexion(msg.getUtilisateur(), msg.getMotdepasse());
         }
         else
         {
