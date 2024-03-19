@@ -31,14 +31,19 @@ public class PacmanGame extends Game {
     private int score;
     private ListeStrategie pacmanStrategie;
     private ListeStrategie fantomeStrategie;
+    private boolean endless;
+    private boolean ended;
 
     private int NB_LIVES = 5;
+    private int MAX_LEVEL = 255;
 
     private ControllerPacmanGameServeur controlleur;
 
     public PacmanGame(String mazeFile, ControllerPacmanGameServeur controller)
     {
         super();
+        this.endless = false;
+        this.ended = false;
         this.mazeFile = mazeFile;
         agents = new ArrayList<Agent>();
         loadMaze();
@@ -81,6 +86,7 @@ public class PacmanGame extends Game {
         level = 1;
         score = 0;
         lives = NB_LIVES;
+        ended = false;
 
         //Charger agents
         agents.clear();
@@ -108,12 +114,19 @@ public class PacmanGame extends Game {
 
     protected void nextLevel()
     {
-        loadMaze();
-        level += 1;
-        System.out.println("Niveau "+Integer.toString(level));
-        for(Agent a: agents)
+        if(level < MAX_LEVEL)
         {
-            a.revive();
+            loadMaze();
+            level += 1;
+            System.out.println("Niveau "+Integer.toString(level));
+            for(Agent a: agents)
+            {
+                a.revive();
+            }
+        }
+        else
+        {
+            ended = true;
         }
     }
 
@@ -141,7 +154,10 @@ public class PacmanGame extends Game {
 
         if(!isAnyFoodLeft())
         {
-            nextLevel();
+            if(endless)
+                nextLevel();
+            else
+                ended = true;
         }
 
         if(!pacmanAlive() && lives > 0)
@@ -157,9 +173,14 @@ public class PacmanGame extends Game {
         controlleur.envoyerEtat(getEtat());
     }
 
+    protected boolean hasWon()
+    {
+        return ended;
+    }
+
     protected boolean gameEnd()
     {
-        return (lives <= 0) || level > 255;
+        return (lives <= 0) || ended;
     }
 
     protected void gameOver()
