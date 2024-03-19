@@ -54,8 +54,7 @@ public class MenuMain extends MenuPanel {
 
     public boolean onKeyPress(KeyEvent event)
     {
-        controlleur.startGame();
-        return true;
+        return false;
     }
 
     @Override

@@ -41,12 +41,9 @@ public class MenuControlleur extends AbstractControlleur {
     public void startGame()
     {
         ObjectMapper mapper = new ObjectMapper();
-        int p=1234; // le port d’écoute
         
         setScreen(new MenuStarting(this));
         try {
-            //Connexion au serveur
-            controlleur.assignerServeur(serverName, p);
             //Démarrage de la partie
             MessageLancer msg = new MessageLancer("openClassic");
             controlleur.envoyerMessage(MessageBuilder.build("LANCER", mapper.writeValueAsString(msg)));
@@ -61,12 +58,9 @@ public class MenuControlleur extends AbstractControlleur {
 
     public void multiplayer() {
         ObjectMapper mapper = new ObjectMapper();
-        int p=1234; // le port d’écoute
         
         setScreen(new MenuStarting(this));
         try {
-            //Connexion au serveur
-            controlleur.assignerServeur(serverName, p);
             //Démarrage de la partie
             MessageLancer msg = new MessageLancer("openClassic_twoPacman"); //On lance sur une map qui a deux joueurs
             controlleur.envoyerMessage(MessageBuilder.build("LANCER", mapper.writeValueAsString(msg)));
@@ -78,6 +72,19 @@ public class MenuControlleur extends AbstractControlleur {
             e.printStackTrace();
         }
         
+    }
+
+    public void connexion(String serveur, String utilisateur, String motdepasse)
+    {
+        try
+        {
+            int p=1234; // le port d’écoute
+            serverName = serveur;
+            controlleur.connexionServeur(serverName, p, utilisateur, motdepasse);
+        } catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
 
