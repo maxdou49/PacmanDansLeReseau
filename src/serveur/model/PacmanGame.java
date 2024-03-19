@@ -198,6 +198,7 @@ public class PacmanGame extends Game {
         System.out.println("Score: "+Integer.toString(getScore()));
 
         updateObservers();
+        controlleur.terminerPartie();
     }
 
     public Maze getMaze()

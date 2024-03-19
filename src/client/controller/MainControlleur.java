@@ -6,6 +6,7 @@ import java.net.Socket;
 import client.model.etatClient.EtatClient;
 import client.model.etatClient.EtatClientJeu;
 import client.model.etatClient.EtatClientMenu;
+import client.view.menu.MenuMain;
 import controller.GameControlleur;
 import model.MethodeFactory;
 import model.ReaderWriter;
@@ -19,9 +20,11 @@ public class MainControlleur {
     MenuControlleur menu;
     GameControlleur game;
     EtatClient etat;
+    boolean running;
 
     public MainControlleur(String args[]) throws IOException
     {
+        this.running = true;
         menu = new MenuControlleur(this);
         etat = new EtatClientMenu(this);
     }
@@ -39,6 +42,27 @@ public class MainControlleur {
         setEtat(new EtatClientJeu(this));
         game.play();
         menu.hideCurrent();
+    }
+
+    public void terminerPartie()
+    {
+        try
+        {
+            //On ferme la communication
+            rw = null;
+            socket.close();
+            socket = null;
+        } catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        //On ferme le jeu
+        game.close();
+        game = null;
+        //On retourne au menu
+        setEtat(new EtatClientMenu(this));
+        menu.setScreen(new MenuMain(menu));
+        menu.showCurrent();
     }
 
     public void setEtat(EtatClient etat)
@@ -62,29 +86,32 @@ public class MainControlleur {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(rw == null) //On peut avoir un controlleur sans serveur. On attends d'en avoir un dans ce cas
+                running = true;
+                while(running)
                 {
-                    try
+                    while(rw == null) //On peut avoir un controlleur sans serveur. On attends d'en avoir un dans ce cas
                     {
-                        Thread.sleep(10);
-                    } catch(Exception e)
-                    {
-                        
-                    }
-                }
-                try {
-                    String rd;
-                    do {
-                        rd = rw.getReader().readLine();
-                        if(rd != null)
+                        try
                         {
-                            Message msg = MessageBuilder.buildFromString(rd);
-                            etat.lireMessage(msg);
+                            Thread.sleep(10);
+                        } catch(Exception e)
+                        {
+                            
                         }
-                    } while((rd != null));
-                } catch (Exception e) {
-                    System.out.println(new MethodeFactory().constructMessage("ControllerClient\t"+e));
-                    e.printStackTrace();
+                    }
+                    try {
+                        String rd;
+                        do {
+                            rd = rw.getReader().readLine();
+                            if(rd != null)
+                            {
+                                Message msg = MessageBuilder.buildFromString(rd);
+                                etat.lireMessage(msg);
+                            }
+                        } while((rd != null));
+                    } catch (Exception e) {
+                        //C'est normal d'avoir une erreur si la partie se termine
+                    }
                 }
             }
         }).start();

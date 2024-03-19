@@ -183,6 +183,26 @@ public class ControllerPacmanGameServeur extends GameControlleur {
         }
     }
 
+    public void terminerPartie()
+    {
+        try
+        {
+            Message msg = MessageBuilder.build("FIN", "");
+            for(ControlleurClient client: clients)
+            {
+                //System.out.println("Envoi " + client);
+                if(client != null)
+                {
+                    client.sendMessage(msg);
+                }
+            }
+        } catch (Exception e)
+        {
+            System.out.println(new MethodeFactory().constructMessage("ControllerPacmanGameServeur\t"+e));
+            e.printStackTrace();
+        }
+    }
+
     static public ControllerPacmanGameServeur chercherPartie(MessageLancer config)
     {
         //On cherche s'il y a une partie avec des joueurs manquant
