@@ -28,6 +28,8 @@ public class MenuView extends JFrame {
         JMenu menu = new JMenu("Configuration");
         JMenuBar mb = new JMenuBar();
         JMenuItem chgServ = new JMenuItem("Changer de domaine");
+        chgServ.setMnemonic(KeyEvent.VK_D);
+        
         chgServ.addActionListener((ActionEvent e) -> {
             String newServName = JOptionPane.showInputDialog(null, "Entrez une le nouveau domaine :");
             controlleur.setServerName(newServName);
@@ -63,6 +65,8 @@ public class MenuView extends JFrame {
                 return;
             }
         });
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void setView(MenuPanel panel)
