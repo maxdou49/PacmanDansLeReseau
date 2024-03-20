@@ -40,6 +40,13 @@ public class ControllerPacmanGameClient extends GameControlleur {
         this.game.init();
     }
 
+    //On ferme les fenêtres du jeu
+    public void close()
+    {
+        viewGame.dispose();
+        viewCom.dispose();
+    }
+
     /***   
         *   fonction qui retourne la vue du jeu pacman utiliser par le controleur pacman
     ***/

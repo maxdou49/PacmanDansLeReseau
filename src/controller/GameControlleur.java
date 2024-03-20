@@ -12,6 +12,11 @@ public abstract class GameControlleur extends AbstractControlleur {
     {
     }
 
+    public void close()
+    {
+        
+    }
+
     public void restart()
     {
         game.init();

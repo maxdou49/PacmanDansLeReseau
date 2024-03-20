@@ -10,6 +10,7 @@ import model.Transfert.MessageBuilder;
 import model.Transfert.MessageLancer;
 import serveur.controller.etatClient.EtatClient;
 import serveur.controller.etatClient.EtatClientAttente;
+import serveur.controller.etatClient.EtatClientConnexion;
 import serveur.controller.etatClient.EtatClientJeu;
 
 public class ControlleurClient {
@@ -23,7 +24,20 @@ public class ControlleurClient {
     {
         this.socket = client;
         clientRW = new ReaderWriter(client);
-        setEtat(new EtatClientAttente(this));
+        setEtat(new EtatClientConnexion(this));
+    }
+
+    public void closeConnexion()
+    {
+        try
+        {
+            clientRW = null;
+            socket.close();
+            socket = null;
+        } catch(IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void run()
@@ -37,18 +51,48 @@ public class ControlleurClient {
                         rd = clientRW.getReader().readLine();
                         if(rd != null)
                         {
+                            //System.out.println(rd);
                             Message msg = MessageBuilder.buildFromString(rd);
                             etat.lireMessage(msg);
                         }
                     } while((rd != null));
                 } catch (Exception e) {
-                    System.out.println(new MethodeFactory().constructMessage("ControllerClient\t"+e));
-                    e.printStackTrace();
+                    //On autorise le serveur a stopper la connexion
                 }
                 //On pense a enlever le joueur de la partie quand il quitte
-                game.enleverJoueur(joueur);
+                if(game != null)
+                {
+                    game.enleverJoueur(joueur);
+                }
             }
         }).start();
+    }
+
+    //Prévenir l'utilisateur d'un echec
+    private void echecConnexion()
+    {
+        sendMessage(MessageBuilder.build("REFUS", "")); //Peut-être mettre une raison
+        closeConnexion();
+    }
+
+    //Prevenir l'utilisateur d'une reussite
+    private void reussiteConnextion()
+    {
+        setEtat(new EtatClientAttente(this));
+        sendMessage(MessageBuilder.build("VALIDE", ""));
+    }
+
+    public void validerConnexion(String utilisateur, String motdepasse)
+    {
+        //On teste
+        if(motdepasse.equals("mdp"))
+        {
+            reussiteConnextion();
+            return;
+        }
+
+        echecConnexion();
+        return;
     }
 
     public void setEtat(EtatClient etat)

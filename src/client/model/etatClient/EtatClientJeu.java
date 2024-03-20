@@ -22,6 +22,10 @@ public class EtatClientJeu extends EtatClient {
                 ((ControllerPacmanGameClient)game).setEtatGame(objectMapper.readValue(m.getData(), EtatGame.class));
             }
         }
+        else if(m.getType().equals("FIN"))
+        {
+            controller.terminerPartie();
+        }
         else
         {
             super.lireMessage(m);
