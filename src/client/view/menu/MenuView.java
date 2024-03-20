@@ -48,7 +48,7 @@ public class MenuView extends JFrame {
         
         this.setJMenuBar(mb);
         this.setView(new MenuMain(controlleur));
-        this.setSize(new Dimension(450, 280));
+        this.setSize(new Dimension(450*2, 280*2));
         this.setLocation(780, 325);
         this.addKeyListener(new KeyListener() { //C'est un peu bugué la gestion des touches dans un sous-panel
             public void keyPressed(KeyEvent e) {

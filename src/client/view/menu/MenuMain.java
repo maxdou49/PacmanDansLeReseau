@@ -1,5 +1,8 @@
 package client.view.menu;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -8,6 +11,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
 import client.controller.MenuControlleur;
 
 public class MenuMain extends MenuPanel {
@@ -20,16 +24,26 @@ public class MenuMain extends MenuPanel {
         super(controlleur);
         
         try {
-            background = new ImageIcon("../icons/imgAcc.jpg").getImage();
+            background = new ImageIcon("src/icons/imgAcc.jpg").getImage();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        //this.setLayout(new GridLayout(3,2));
+
         JButton multiButton = new JButton("Multiplayer");
         JButton soloButton = new JButton("Solo");
+
+        multiButton.setContentAreaFilled(false);
+        soloButton.setContentAreaFilled(false);
+        multiButton.setMinimumSize(new Dimension(getParent().getWidth()/2, getHeight()));
+
+        multiButton.setForeground(Color.ORANGE);
+        soloButton.setForeground(Color.ORANGE);
+        soloButton.setMinimumSize(new Dimension(getParent().getWidth()/2, getHeight()));
         
-        this.add(multiButton);
-        this.add(soloButton);
+        this.add(multiButton, BorderLayout.EAST);
+        this.add(soloButton, BorderLayout.WEST);
 
         soloButton.addActionListener(new ActionListener() {
 
@@ -50,6 +64,8 @@ public class MenuMain extends MenuPanel {
             }
 
         });
+
+        setSize(new Dimension(438, 274));
     }
 
     public boolean onKeyPress(KeyEvent event)
