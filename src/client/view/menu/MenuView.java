@@ -29,7 +29,7 @@ public class MenuView extends JFrame {
         JMenuBar mb = new JMenuBar();
         JMenuItem chgServ = new JMenuItem("Changer de domaine");
         chgServ.setMnemonic(KeyEvent.VK_D);
-        
+
         chgServ.addActionListener((ActionEvent e) -> {
             String newServName = JOptionPane.showInputDialog(null, "Entrez une le nouveau domaine :");
             controlleur.setServerName(newServName);
@@ -49,7 +49,7 @@ public class MenuView extends JFrame {
         mb.add(menu);
         
         this.setJMenuBar(mb);
-        this.setView(new MenuMain(controlleur));
+        this.setView(new MenuConnexion(controlleur));
         this.setSize(new Dimension(450*2, 280*2));
         this.setLocation(780, 325);
         this.addKeyListener(new KeyListener() { //C'est un peu bugué la gestion des touches dans un sous-panel

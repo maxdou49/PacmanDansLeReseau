@@ -12,42 +12,51 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import client.controller.MenuControlleur;
 
 public class MenuConnexion extends MenuPanel {
-    Image background;
     JButton connexion;
-    TextField serveur;
-    TextField utilisateur;
-    TextField motdepasse;
+    JTextField serveur;
+    JTextField utilisateur;
+    JTextField motdepasse;
 
     public MenuConnexion(MenuControlleur controlleur) {
+        
         super(controlleur);
-        //TODO Auto-generated constructor stub
+        
         try {
-            background = new ImageIcon("../icons/imgAcc.jpg").getImage();
+            background = new ImageIcon("src/icons/imgCo.jpg").getImage();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
         setLayout(new GridLayout(4,1));
-        serveur = new TextField("localhost");
-        utilisateur = new TextField();
-        motdepasse = new TextField();
+        serveur = new JTextField("localhost");
+        utilisateur = new JTextField();
+        motdepasse = new JTextField();
         connexion = new JButton("Connexion");
 
-        JPanel serverPanel = new JPanel(new GridLayout(2,1));
-        serverPanel.add(new JLabel("Serveur : "));
+        JPanel serverPanel = new JPanel(new GridLayout(1, 2));
+        JLabel serveurLabel = new JLabel("Serveur : ");
+        serverPanel.add(serveurLabel);
         serverPanel.add(serveur);
 
-        JPanel userPanel = new JPanel(new GridLayout(2,1));
-        userPanel.add(new JLabel("Nom d'utilisateur : "));
+        JPanel userPanel = new JPanel(new GridLayout(1, 2));
+        JLabel utilisateurLabel = new JLabel("Utilisateur : ");
+        userPanel.add(utilisateurLabel);
         userPanel.add(utilisateur);
 
-        JPanel passPanel = new JPanel(new GridLayout(2,1));
-        passPanel.add(new JLabel("Mot de passe : "));
+        JPanel passPanel = new JPanel(new GridLayout(1, 2));
+        JLabel motdepasseLabel = new JLabel("Mot de passe : ");
+        passPanel.add(motdepasseLabel);
         passPanel.add(motdepasse);
         
+        custumizeTextField(serveur);
+        custumizeTextField(utilisateur);
+        custumizeTextField(motdepasse);
+        custumizeButton(connexion);
         this.add(serverPanel);
         this.add(userPanel);
         this.add(passPanel);
@@ -66,11 +75,5 @@ public class MenuConnexion extends MenuPanel {
     public boolean onKeyPress(KeyEvent event)
     {
         return false;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
     }
 }
