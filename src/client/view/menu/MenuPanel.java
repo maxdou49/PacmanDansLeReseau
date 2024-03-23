@@ -48,14 +48,15 @@ public abstract class MenuPanel extends JPanel {
 
     void custumizeLabel(JLabel label) {
         label.setFont(new Font("Arial", Font.PLAIN, 26));
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setForeground(new Color(0, 0, 0, 0));
+        label.setForeground(Color.BLUE);
+        label.setOpaque(false);
     }
 
     void custumizeTextField(JTextField textField) {
         textField.setFont(new Font("Arial", Font.PLAIN, 26));
-        //textField.setOpaque(false);
-        textField.setForeground(Color.ORANGE);
+        textField.setHorizontalAlignment(SwingConstants.CENTER);
+        textField.setForeground(Color.BLUE);
+        textField.setOpaque(false);
     }
 
     @Override

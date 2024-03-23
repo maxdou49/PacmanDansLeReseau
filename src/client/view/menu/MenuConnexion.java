@@ -36,20 +36,26 @@ public class MenuConnexion extends MenuPanel {
         serveur = new JTextField("localhost");
         utilisateur = new JTextField();
         motdepasse = new JTextField();
-        connexion = new JButton("Connexion");
+        connexion = new JButton("Connexion", new ImageIcon("src/icons/icnCo.jpg"));
 
         JPanel serverPanel = new JPanel(new GridLayout(1, 2));
-        JLabel serveurLabel = new JLabel("Serveur : ");
+        serverPanel.setOpaque(false);
+        JLabel serveurLabel = new JLabel("Serveur : ", JLabel.CENTER);
+        custumizeLabel(serveurLabel);
         serverPanel.add(serveurLabel);
         serverPanel.add(serveur);
 
         JPanel userPanel = new JPanel(new GridLayout(1, 2));
-        JLabel utilisateurLabel = new JLabel("Utilisateur : ");
+        userPanel.setOpaque(false);
+        JLabel utilisateurLabel = new JLabel("Utilisateur : ", JLabel.CENTER);
+        custumizeLabel(utilisateurLabel);
         userPanel.add(utilisateurLabel);
         userPanel.add(utilisateur);
 
         JPanel passPanel = new JPanel(new GridLayout(1, 2));
-        JLabel motdepasseLabel = new JLabel("Mot de passe : ");
+        passPanel.setOpaque(false);
+        JLabel motdepasseLabel = new JLabel("Mot de passe : ", JLabel.CENTER);
+        custumizeLabel(motdepasseLabel);
         passPanel.add(motdepasseLabel);
         passPanel.add(motdepasse);
         
