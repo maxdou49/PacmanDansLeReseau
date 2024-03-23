@@ -4,10 +4,10 @@ import java.awt.FlowLayout;
 
 import javax.swing.JLabel;
 
-import client.controller.MenuControlleur;
+import client.controller.MenuViewControlleur;
 
 public class MenuStarting extends MenuPanel {
-    public MenuStarting(MenuControlleur controlleur)
+    public MenuStarting(MenuViewControlleur controlleur)
     {
         super(controlleur);
         setLayout(new FlowLayout());

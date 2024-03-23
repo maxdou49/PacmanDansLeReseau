@@ -11,12 +11,12 @@ import model.Transfert.MessageBuilder;
 import model.Transfert.MessageLancer;
 import client.model.etatClient.EtatClientAttente;
 
-public class MenuControlleur extends AbstractControlleur {
+public class MenuViewControlleur extends AbstractControlleur {
     String serverName = "localhost";
     private MenuView menu;
     private MainControlleur controlleur;
 
-    public MenuControlleur(MainControlleur controlleur)
+    public MenuViewControlleur(MainControlleur controlleur)
     {
         menu = new MenuView(this);
         menu.setVisible(true);

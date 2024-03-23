@@ -22,7 +22,7 @@ import model.Transfert.MessageConnexion;
 public class MainControlleur {
     ReaderWriter rw;
     Socket socket;
-    MenuControlleur menu;
+    MenuViewControlleur menu;
     GameControlleur game;
     EtatClient etat;
     boolean running;
@@ -30,7 +30,7 @@ public class MainControlleur {
     public MainControlleur(String args[]) throws IOException
     {
         this.running = true;
-        menu = new MenuControlleur(this);
+        menu = new MenuViewControlleur(this);
         etat = new EtatClientMenu(this);
     }
 

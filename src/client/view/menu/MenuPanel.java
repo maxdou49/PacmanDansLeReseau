@@ -14,13 +14,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import client.controller.MenuControlleur;
+import client.controller.MenuViewControlleur;
 
 public abstract class MenuPanel extends JPanel {
     Image background;
-    MenuControlleur controlleur;
+    MenuViewControlleur controlleur;
 
-    public MenuPanel(MenuControlleur controlleur)
+    public MenuPanel(MenuViewControlleur controlleur)
     {
         this.controlleur = controlleur;
     }

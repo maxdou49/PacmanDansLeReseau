@@ -12,13 +12,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import client.controller.MenuControlleur;
+import client.controller.MenuViewControlleur;
 
 public class MenuView extends JFrame {
     MenuPanel panel;
-    MenuControlleur controlleur;
+    MenuViewControlleur controlleur;
 
-    public MenuView(MenuControlleur controlleur)
+    public MenuView(MenuViewControlleur controlleur)
     {
         this.controlleur = controlleur;
         

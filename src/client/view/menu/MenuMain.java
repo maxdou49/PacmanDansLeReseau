@@ -7,13 +7,13 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import client.controller.MenuControlleur;
+import client.controller.MenuViewControlleur;
 
 public class MenuMain extends MenuPanel {
     JButton multiButton;
     JButton soloButton;
 
-    public MenuMain(MenuControlleur controlleur)
+    public MenuMain(MenuViewControlleur controlleur)
     {
         super(controlleur);
         

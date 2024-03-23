@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import client.controller.MenuControlleur;
+import client.controller.MenuViewControlleur;
 
 public class MenuConnexion extends MenuPanel {
     JButton connexion;
@@ -22,7 +22,7 @@ public class MenuConnexion extends MenuPanel {
     JTextField utilisateur;
     JTextField motdepasse;
 
-    public MenuConnexion(MenuControlleur controlleur) {
+    public MenuConnexion(MenuViewControlleur controlleur) {
         
         super(controlleur);
         
