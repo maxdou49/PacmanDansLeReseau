@@ -1,9 +1,13 @@
 package client.controller;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.view.menu.MenuView;
 import client.view.menu.MenuStarting;
+import client.view.menu.MenuMain;
 import client.view.menu.MenuPanel;
 import controller.AbstractControlleur;
 import model.MethodeFactory;
@@ -80,7 +84,12 @@ public class MenuViewControlleur extends AbstractControlleur {
         {
             int p=1234; // le port d’écoute
             serverName = serveur;
-            controlleur.connexionServeur(serverName, p, utilisateur, motdepasse);
+            if(controlleur.connexionServeur(serverName, p, utilisateur, motdepasse)) {
+                menu.setView(new MenuMain(this));
+            } else {
+                JOptionPane.showMessageDialog(null, "Connexion impossible !", "Erreur - Connexion", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("Connexion impossible");
+            }
         } catch(Exception e)
         {
             e.printStackTrace();

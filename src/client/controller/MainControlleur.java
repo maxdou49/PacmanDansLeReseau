@@ -34,8 +34,9 @@ public class MainControlleur {
         etat = new EtatClientMenu(this);
     }
 
-    public void connexionServeur(String serveur, int port, String utilisateur, String motdepasse) throws IOException
+    public boolean connexionServeur(String serveur, int port, String utilisateur, String motdepasse) throws IOException
     {
+
         socket = new Socket(serveur, port);
         rw = new ReaderWriter(socket);
 
@@ -47,6 +48,9 @@ public class MainControlleur {
         setEtat(new EtatClientConnexion(getThis()));
 
         System.out.println(serveur+":"+String.valueOf(port));
+        
+        return true;
+        
     }
 
     public void confirmationConnexion()
