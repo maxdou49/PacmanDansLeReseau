@@ -91,14 +91,18 @@ public class ControlleurClient {
         {
             //Acces a l'API pour se connecter
             Joueur joueur = CommunicationAPI.connexion(utilisateur, motdepasse);
+            System.out.println(joueur);
             //Si on a pas de joueur alors echec
             if(joueur == null)
             {
                 echecConnexion();
             }
+            System.out.println("Connecté en tant que "+joueur.getUtilisateur());
             reussiteConnextion();
         } catch(Exception e)
         {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             echecConnexion();
         }
         return;

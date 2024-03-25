@@ -25,27 +25,25 @@ public class CommunicationAPI {
     {
         try
         {
+            utilisateur = utilisateur.trim();
+            motdepasse = motdepasse.trim();
             //On lance la connexion
-            HttpURLConnection connexion = getConnexion("Connexion");
+            HttpURLConnection connexion = getConnexion(String.format("Connexion?utilisateur=%s&motdepasse=%s", utilisateur, motdepasse));
             connexion.setRequestMethod("GET");
-            //On définit les parametres
-            connexion.setRequestProperty("utilisateur", utilisateur);
-            connexion.setRequestProperty("motdepasse", motdepasse);
             //On lit
-            System.out.println(connexion.getURL().toString());
             BufferedReader reader = new BufferedReader(new InputStreamReader(connexion.getInputStream()));
-            int status = connexion.getResponseCode();
-            if(status != 200) //La requete a échoué.
+            String line = reader.readLine();
+            System.out.println("Response: " + line);
+            //On a pas recu un json
+            if(line.charAt(0) != '{')
             {
                 throw new Exception("Echec de la connexion");
             }
-            //Celle-ci a fonctionner donc on renvoie le joueur
-            return mapper.readValue(reader.readLine(), Joueur.class);
+            //On renvoit le joueur
+            return mapper.readValue(line, Joueur.class);
         } catch(IOException e)
         {
-            e.printStackTrace();
+            throw new Exception("Echec de la connexion");
         }
-
-        return null;
     }
 }
