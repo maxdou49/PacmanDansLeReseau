@@ -3,6 +3,7 @@ package serveur.controller;
 import java.io.IOException;
 import java.net.Socket;
 
+import model.Joueur;
 import model.MethodeFactory;
 import model.ReaderWriter;
 import model.Transfert.Message;
@@ -12,6 +13,7 @@ import serveur.controller.etatClient.EtatClient;
 import serveur.controller.etatClient.EtatClientAttente;
 import serveur.controller.etatClient.EtatClientConnexion;
 import serveur.controller.etatClient.EtatClientJeu;
+import serveur.model.CommunicationAPI;
 
 public class ControlleurClient {
     ReaderWriter clientRW;
@@ -84,14 +86,21 @@ public class ControlleurClient {
 
     public void validerConnexion(String utilisateur, String motdepasse)
     {
-        //On teste
-        if(motdepasse.equals("mdp"))
+        //On teste si on peut se connecter
+        try
         {
+            //Acces a l'API pour se connecter
+            Joueur joueur = CommunicationAPI.connexion(utilisateur, motdepasse);
+            //Si on a pas de joueur alors echec
+            if(joueur == null)
+            {
+                echecConnexion();
+            }
             reussiteConnextion();
-            return;
+        } catch(Exception e)
+        {
+            echecConnexion();
         }
-
-        echecConnexion();
         return;
     }
 
