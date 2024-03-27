@@ -157,7 +157,10 @@ public class PacmanGame extends Game {
             if(endless)
                 nextLevel();
             else
+            {
                 ended = true;
+                level = 2; //Histoire de simplifier la condition de victoire
+            }
         }
 
         if(!pacmanAlive() && lives > 0)
@@ -173,7 +176,7 @@ public class PacmanGame extends Game {
         controlleur.envoyerEtat(getEtat());
     }
 
-    protected boolean hasWon()
+    public boolean hasWon()
     {
         return ended;
     }
@@ -412,5 +415,9 @@ public class PacmanGame extends Game {
     public int getNbPlayers()
     {
         return maze.getPacman_start().size();
+    }
+
+    public boolean getEndless() {
+        return endless;
     }
 }

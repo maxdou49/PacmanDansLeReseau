@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -41,6 +42,34 @@ public class CommunicationAPI {
             }
             //On renvoit le joueur
             return mapper.readValue(line, Joueur.class);
+        } catch(IOException e)
+        {
+            throw new Exception("Echec de la connexion");
+        }
+    }
+
+    public static void envoiPartie(ArrayList<Joueur> joueurs, String maze, int score, boolean endless, boolean victoire) throws Exception
+    {
+        try
+        {
+            //On lance la connexion
+            StringBuilder listeId = new StringBuilder();
+            for(int i = 0; i < joueurs.size(); i++)
+            {
+                if(i > 0)
+                {
+                    listeId.append(',');
+                }
+                listeId.append(joueurs.get(i).getId());
+            }
+            String listeIdStr = listeId.toString();
+            System.out.println(joueurs.size() + " "+listeIdStr);
+            String get = String.format("Partie?score=%d&maze=%s&endless=%d&victoire=%d&joueurs=&s", score, maze, endless ? 1 : 0, victoire ? 1 : 0, listeIdStr);
+            HttpURLConnection connexion = getConnexion(get);
+            connexion.setRequestMethod("GET");
+            //On lit
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connexion.getInputStream()));
+            String line = reader.readLine();
         } catch(IOException e)
         {
             throw new Exception("Echec de la connexion");

@@ -21,6 +21,7 @@ public class ControlleurClient {
     EtatClient etat;
     ControllerPacmanGameServeur game;
     int joueur;
+    Joueur compte;
 
     public ControlleurClient(Socket client) throws IOException
     {
@@ -98,6 +99,7 @@ public class ControlleurClient {
                 echecConnexion();
             }
             System.out.println("Connecté en tant que "+joueur.getUtilisateur());
+            compte = joueur;
             reussiteConnextion();
         } catch(Exception e)
         {
@@ -106,6 +108,11 @@ public class ControlleurClient {
             echecConnexion();
         }
         return;
+    }
+
+    public Joueur getCompte()
+    {
+        return compte;
     }
 
     public void setEtat(EtatClient etat)

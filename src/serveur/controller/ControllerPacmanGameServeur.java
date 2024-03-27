@@ -1,16 +1,19 @@
 package serveur.controller;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import controller.GameControlleur;
 import model.AgentAction;
+import model.Joueur;
 import model.MethodeFactory;
 import model.Transfert.EtatGame;
 import model.Transfert.Message;
 import model.Transfert.MessageBuilder;
 import model.Transfert.MessageLancer;
+import serveur.model.CommunicationAPI;
 import serveur.model.PacmanGame;
 import serveur.model.Strategie.ListeStrategie;
 
@@ -20,11 +23,13 @@ public class ControllerPacmanGameServeur extends GameControlleur {
 
     protected Vector<AgentAction> clientsAction;
     protected Vector<ControlleurClient> clients;
+    String mazePath;
 
     public ControllerPacmanGameServeur(String mazePath)
     {
         super();
-        PacmanGame g = new PacmanGame(mazePath, this);
+        this.mazePath = mazePath;
+        PacmanGame g = new PacmanGame("layout/"+mazePath+".lay", this);
         this.game = g;
         this.game.setMaxTurn(Integer.MAX_VALUE);
         this.clients = new Vector<ControlleurClient>();
@@ -58,8 +63,7 @@ public class ControllerPacmanGameServeur extends GameControlleur {
 
     public String getMaze()
     {
-        PacmanGame g = (PacmanGame)game;
-        return g.getMazeFile();
+        return mazePath;
     }
 
     public void setStrategiePacmanParam(int param)
@@ -188,14 +192,22 @@ public class ControllerPacmanGameServeur extends GameControlleur {
         try
         {
             Message msg = MessageBuilder.build("FIN", "");
+            //On récupère la liste des joueurs
+            ArrayList<Joueur> listeId = new ArrayList<Joueur>();
+
             for(ControlleurClient client: clients)
             {
                 //System.out.println("Envoi " + client);
                 if(client != null)
                 {
                     client.sendMessage(msg);
+                    listeId.add(client.getCompte());
                 }
             }
+
+            //On envoi les stats au site
+            CommunicationAPI.envoiPartie(listeId, getMaze(), getGame().getScore(), getGame().getEndless(), getGame().hasWon());
+
         } catch (Exception e)
         {
             System.out.println(new MethodeFactory().constructMessage("ControllerPacmanGameServeur\t"+e));
@@ -206,7 +218,7 @@ public class ControllerPacmanGameServeur extends GameControlleur {
     static public ControllerPacmanGameServeur chercherPartie(MessageLancer config)
     {
         //On cherche s'il y a une partie avec des joueurs manquant
-        String carte = "layout/" + config.getCarte() + ".lay";
+        String carte = config.getCarte();
         for(ControllerPacmanGameServeur game: parties)
         {
             //Même carte?

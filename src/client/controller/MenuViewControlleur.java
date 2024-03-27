@@ -49,7 +49,7 @@ public class MenuViewControlleur extends AbstractControlleur {
         setScreen(new MenuStarting(this));
         try {
             //Démarrage de la partie
-            MessageLancer msg = new MessageLancer("openClassic");
+            MessageLancer msg = new MessageLancer("testMaze");
             controlleur.envoyerMessage(MessageBuilder.build("LANCER", mapper.writeValueAsString(msg)));
             //On se met en attente
             controlleur.setEtat(new EtatClientAttente(controlleur));
