@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Joueur;
 
 public class CommunicationAPI {
-    private static final String api = "http://localhost:8080/AppWebPacMan1/AppWebApi/"; //A changer si c'est autre part
+    private static final String api = "http://localhost:8080/AppWebPacMan/AppWebApi/"; //A changer si c'est autre part
 
     private static ObjectMapper mapper = new ObjectMapper();
 
