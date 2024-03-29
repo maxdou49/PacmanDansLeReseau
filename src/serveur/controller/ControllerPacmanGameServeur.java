@@ -92,8 +92,23 @@ public class ControllerPacmanGameServeur extends GameControlleur {
         synchronized(this.clients)
         {
             id = clients.size();
-            this.clients.add(client);
-            this.clientsAction.add(new AgentAction(AgentAction.STOP));
+            //On cherche si on a un client qui a quitté
+            for(int i = 0; i < clients.size(); i++)
+            {
+                if(clients.get(i) == null)
+                {
+                    id = i;
+                }
+            }
+            if(id == clients.size())
+            {
+                this.clients.add(client);
+                this.clientsAction.add(new AgentAction(AgentAction.STOP));
+            }
+            else
+            {
+                clients.set(id, client);
+            }
             System.out.println("Ajout joueur " + id);
         }
         return id;
@@ -103,6 +118,7 @@ public class ControllerPacmanGameServeur extends GameControlleur {
     {
         try
         {
+            System.out.println("Retrait joueur " + client);
             synchronized(this.clients)
             {
                 this.clients.set(client, null);

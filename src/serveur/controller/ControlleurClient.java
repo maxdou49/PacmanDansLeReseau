@@ -129,7 +129,7 @@ public class ControlleurClient {
     //Rejoint une partie
     public void preparerPartie(MessageLancer parametres)
     {
-        System.out.println("Démarrage sur "+parametres.getCarte());
+        System.out.println("Rejoint "+parametres.getCarte());
         game = ControllerPacmanGameServeur.chercherPartie(parametres);
         joueur = game.ajouterJoueur(this);
 
