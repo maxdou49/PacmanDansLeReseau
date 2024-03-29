@@ -3,8 +3,11 @@ package serveur.controller;
 import java.io.IOException;
 import java.net.Socket;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import model.Joueur;
 import model.ReaderWriter;
+import model.Transfert.ListePartie;
 import model.Transfert.Message;
 import model.Transfert.MessageBuilder;
 import model.Transfert.MessageLancer;
@@ -53,7 +56,7 @@ public class ControlleurClient {
                         rd = clientRW.getReader().readLine();
                         if(rd != null)
                         {
-                            //System.out.println(rd);
+                            System.out.println(rd);
                             Message msg = MessageBuilder.buildFromString(rd);
                             etat.lireMessage(msg);
                         }
@@ -170,6 +173,19 @@ public class ControlleurClient {
     public int getJoueur()
     {
         return joueur;
+    }
+
+    public void envoyerListePartie()
+    {
+        ObjectMapper mapper = new ObjectMapper();
+        ListePartie liste = new ListePartie(ControllerPacmanGameServeur.listerParties());
+        try
+        {
+            sendMessage(MessageBuilder.build("LISTER", mapper.writeValueAsString(liste)));
+        } catch(IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void sendMessage(Message message)

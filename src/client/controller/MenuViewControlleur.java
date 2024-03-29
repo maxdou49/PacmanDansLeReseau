@@ -77,6 +77,18 @@ public class MenuViewControlleur extends AbstractControlleur {
         
     }
 
+    public void accesListe()
+    {
+        try {
+            //Récupération liste
+            controlleur.envoyerMessage(MessageBuilder.build("LISTER", ""));
+            
+        } catch (Exception e) {
+            System.out.println(new MethodeFactory().constructMessage("Client\t"+e)); 
+            e.printStackTrace();
+        }
+    }
+
     public void connexion(String serveur, String utilisateur, String motdepasse)
     {
         try

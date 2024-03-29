@@ -15,6 +15,7 @@ import client.view.menu.MenuMain;
 import controller.GameControlleur;
 import model.ReaderWriter;
 import model.Transfert.EtatGame;
+import model.Transfert.ListePartie;
 import model.Transfert.Message;
 import model.Transfert.MessageBuilder;
 import model.Transfert.MessageConnexion;
@@ -65,6 +66,16 @@ public class MainControlleur {
         setEtat(new EtatClientJeu(this));
         game.play();
         menu.hideCurrent();
+    }
+
+    public void gotListePartie(ListePartie liste)
+    {
+        System.out.println("Liste des parties: ");
+        for(Integer p:liste.getListe())
+        {
+            System.out.print(p + " ");
+        }
+        System.out.println();
     }
 
     public void terminerPartie()

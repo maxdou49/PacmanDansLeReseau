@@ -25,6 +25,7 @@ public class MenuMain extends MenuPanel {
 
         JButton multiButton = new JButton("Multiplayer");
         JButton soloButton = new JButton("Solo");
+        JButton listerButton = new JButton("Liste parties");
         JButton btnVide1 = new JButton(); btnVide1.setVisible(false);
         JButton btnVide2 = new JButton(); btnVide2.setVisible(false);
         
@@ -34,6 +35,7 @@ public class MenuMain extends MenuPanel {
         this.setLayout(new GridLayout(3, 2));
         this.add(multiButton);
         this.add(soloButton);
+        this.add(listerButton);
         this.add(btnVide1);
         this.add(btnVide2);
 
@@ -53,6 +55,15 @@ public class MenuMain extends MenuPanel {
             public void actionPerformed(ActionEvent e) {
                 controlleur.multiplayer();
                 controlleur.hideCurrent();
+            }
+
+        });
+
+        listerButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controlleur.accesListe();
             }
 
         });

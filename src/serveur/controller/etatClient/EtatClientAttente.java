@@ -12,6 +12,10 @@ public class EtatClientAttente extends EtatClient {
 
     public void lireMessage(Message m) throws Exception
     {
+        if(m.getType().equals("LISTER"))
+        {
+            controller.envoyerListePartie();
+        }
         if(m.getType().equals("LANCER"))
         {
             controller.preparerPartie(objectMapper.readValue(m.getData(), MessageLancer.class));
