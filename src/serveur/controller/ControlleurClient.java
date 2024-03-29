@@ -2,6 +2,7 @@ package serveur.controller;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -178,7 +179,8 @@ public class ControlleurClient {
     public void envoyerListePartie()
     {
         ObjectMapper mapper = new ObjectMapper();
-        ListePartie liste = new ListePartie(ControllerPacmanGameServeur.listerParties());
+        ArrayList<Integer> l = ControllerPacmanGameServeur.listerParties();
+        ListePartie liste = new ListePartie(l);
         try
         {
             sendMessage(MessageBuilder.build("LISTER", mapper.writeValueAsString(liste)));

@@ -294,7 +294,7 @@ public class ControllerPacmanGameServeur extends GameControlleur {
         return game;
     }
 
-    static ArrayList<Integer> listerParties()
+    static public ArrayList<Integer> listerParties()
     {
         ArrayList<Integer> liste = new ArrayList<Integer>();
         for(ControllerPacmanGameServeur partie: parties)

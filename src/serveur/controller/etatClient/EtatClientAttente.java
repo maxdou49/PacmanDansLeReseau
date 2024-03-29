@@ -16,7 +16,7 @@ public class EtatClientAttente extends EtatClient {
         {
             controller.envoyerListePartie();
         }
-        if(m.getType().equals("LANCER"))
+        else if(m.getType().equals("LANCER"))
         {
             controller.preparerPartie(objectMapper.readValue(m.getData(), MessageLancer.class));
         }
