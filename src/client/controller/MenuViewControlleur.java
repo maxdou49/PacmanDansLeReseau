@@ -65,7 +65,7 @@ public class MenuViewControlleur extends AbstractControlleur {
         setScreen(new MenuStarting(this));
         try {
             //Démarrage de la partie
-            MessageLancer msg = new MessageLancer("openClassic_threePacman"); //On lance sur une map qui a deux joueurs
+            MessageLancer msg = new MessageLancer("openClassic_twoPacman"); //On lance sur une map qui a deux joueurs
             controlleur.envoyerMessage(MessageBuilder.build("LANCER", mapper.writeValueAsString(msg)));
             //On se met en attente
             controlleur.setEtat(new EtatClientAttente(controlleur));
