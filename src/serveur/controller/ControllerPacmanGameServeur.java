@@ -24,6 +24,8 @@ public class ControllerPacmanGameServeur extends GameControlleur {
     protected Vector<AgentAction> clientsAction;
     protected Vector<ControlleurClient> clients;
     String mazePath;
+    int idPartie;
+    static int lastId = 0;
 
     public ControllerPacmanGameServeur(String mazePath)
     {
@@ -34,6 +36,7 @@ public class ControllerPacmanGameServeur extends GameControlleur {
         this.game.setMaxTurn(Integer.MAX_VALUE);
         this.clients = new Vector<ControlleurClient>();
         this.clientsAction = new Vector<AgentAction>();
+        this.idPartie = ++lastId;
     }
 
     public void lancer()
@@ -185,7 +188,7 @@ public class ControllerPacmanGameServeur extends GameControlleur {
 
     public void supprimerPartie()
     {
-        System.out.println("Suppression d'une partie.");
+        System.out.println("Suppression de la partie " + getId());
         parties.remove(this);
     }
 
@@ -208,6 +211,11 @@ public class ControllerPacmanGameServeur extends GameControlleur {
             System.out.println(new MethodeFactory().constructMessage("ControllerPacmanGameServeur\t"+e));
             e.printStackTrace();
         }
+    }
+
+    public int getId()
+    {
+        return idPartie;
     }
 
     public void terminerPartie()
@@ -239,6 +247,21 @@ public class ControllerPacmanGameServeur extends GameControlleur {
         }
     }
 
+    //Récupère une partie ayant un certain ID
+    static public ControllerPacmanGameServeur getPartie(int id)
+    {
+        //Chercher la partie avec l'ID spécifié
+        for(ControllerPacmanGameServeur partie: parties)
+        {
+            if(partie.getId() == id)
+            {
+                return partie;
+            }
+        }
+        return null;
+    }
+
+    //Rejoint une partie correspondant a une carte(ou en crée une si besoin)
     static public ControllerPacmanGameServeur chercherPartie(MessageLancer config)
     {
         //On cherche s'il y a une partie avec des joueurs manquant
@@ -255,13 +278,30 @@ public class ControllerPacmanGameServeur extends GameControlleur {
                 }
             }
         }
-        //Sinon on crée une nouvelle partie
-        System.out.println("Création partie sur "+carte);
+        //Sinon on en crée une
+        return creePartie(config);
+    }
+
+    //Crée une partie avec la config spécifiée
+    static public ControllerPacmanGameServeur creePartie(MessageLancer config)
+    {
+        String carte = config.getCarte();
         ControllerPacmanGameServeur game = new ControllerPacmanGameServeur(carte);
         game.setStrategieFantome(ListeStrategie.RANDOM);
         game.setStrategiePacman(ListeStrategie.KEYBOARD);
         parties.add(game);
+        System.out.println("Créer partie sur "+carte+". ID: " + game.getId());
         return game;
+    }
+
+    static ArrayList<Integer> listerParties()
+    {
+        ArrayList<Integer> liste = new ArrayList<Integer>();
+        for(ControllerPacmanGameServeur partie: parties)
+        {
+            liste.add(partie.getId());
+        }
+        return liste;
     }
 }
  
