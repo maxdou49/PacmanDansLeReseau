@@ -138,7 +138,7 @@ public class MainControlleur {
                             rd = rw.getReader().readLine();
                             if(rd != null)
                             {
-                                System.out.println(rd);
+                                //System.out.println(rd);
                                 Message msg = MessageBuilder.buildFromString(rd);
                                 etat.lireMessage(msg);
                             }

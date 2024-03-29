@@ -57,7 +57,7 @@ public class ControlleurClient {
                         rd = clientRW.getReader().readLine();
                         if(rd != null)
                         {
-                            System.out.println(rd);
+                            //System.out.println(rd);
                             Message msg = MessageBuilder.buildFromString(rd);
                             etat.lireMessage(msg);
                         }

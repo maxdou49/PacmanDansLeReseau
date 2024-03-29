@@ -5,7 +5,6 @@ import javax.swing.JOptionPane;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.view.menu.MenuView;
-import client.view.menu.MenuStarting;
 import client.view.menu.MenuPanel;
 import controller.AbstractControlleur;
 import model.Transfert.MessageBuilder;
@@ -43,7 +42,6 @@ public class MenuViewControlleur extends AbstractControlleur {
     {
         ObjectMapper mapper = new ObjectMapper();
         
-        setScreen(new MenuStarting(this));
         try {
             //Démarrage de la partie
             MessageLancer msg = new MessageLancer("testMaze");
@@ -60,7 +58,6 @@ public class MenuViewControlleur extends AbstractControlleur {
     public void multiplayer() {
         ObjectMapper mapper = new ObjectMapper();
         
-        setScreen(new MenuStarting(this));
         try {
             //Démarrage de la partie
             MessageLancer msg = new MessageLancer("openClassic_twoPacman"); //On lance sur une map qui a deux joueurs

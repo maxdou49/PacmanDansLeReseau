@@ -64,7 +64,6 @@ public class MenuMain extends MenuPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controlleur.startGame();
-                controlleur.hideCurrent();
             }
 
         });
@@ -74,7 +73,6 @@ public class MenuMain extends MenuPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controlleur.multiplayer();
-                controlleur.hideCurrent();
             }
 
         });
