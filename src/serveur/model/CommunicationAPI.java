@@ -64,12 +64,13 @@ public class CommunicationAPI {
             }
             String listeIdStr = listeId.toString();
             System.out.println(joueurs.size() + " "+listeIdStr);
-            String get = String.format("Partie?score=%d&maze=%s&endless=%d&victoire=%d&joueurs=&s", score, maze, endless ? 1 : 0, victoire ? 1 : 0, listeIdStr);
+            String get = String.format("Partie?score=%d&maze=%s&endless=%d&victoire=%d&joueurs=%s", score, maze, endless ? 1 : 0, victoire ? 1 : 0, listeIdStr);
+            System.out.println(get);
             HttpURLConnection connexion = getConnexion(get);
             connexion.setRequestMethod("GET");
-            //On lit
+            //On lit pour envoyer la requête car cette bibliothèque est bizarre
             BufferedReader reader = new BufferedReader(new InputStreamReader(connexion.getInputStream()));
-            String line = reader.readLine();
+            reader.readLine();
         } catch(IOException e)
         {
             throw new Exception("Echec de la connexion");

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.Socket;
 
 import model.Joueur;
-import model.MethodeFactory;
 import model.ReaderWriter;
 import model.Transfert.Message;
 import model.Transfert.MessageBuilder;
