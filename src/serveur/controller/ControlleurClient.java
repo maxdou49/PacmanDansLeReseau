@@ -16,6 +16,7 @@ import serveur.controller.etatClient.EtatClient;
 import serveur.controller.etatClient.EtatClientAttente;
 import serveur.controller.etatClient.EtatClientConnexion;
 import serveur.controller.etatClient.EtatClientJeu;
+import serveur.controller.etatClient.EtatClientLobby;
 import serveur.model.CommunicationAPI;
 
 public class ControlleurClient {
@@ -143,6 +144,7 @@ public class ControlleurClient {
         System.out.println("Rejoint "+parametres.getCarte());
         game = ControllerPacmanGameServeur.chercherPartie(parametres);
         joueur = game.ajouterJoueur(this);
+        setEtat(new EtatClientLobby(this));
 
         //On lance la partie s'il elle est remplie
         System.out.println("Joueurs " + game.getNombreJoueurs() + "/" + game.getGame().getNbPlayers());

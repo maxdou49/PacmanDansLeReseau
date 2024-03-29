@@ -1,3 +1,7 @@
+/*
+ * Le joueur est en train de jouer dans une partie
+ */
+
 package serveur.controller.etatClient;
 
 import model.AgentAction;

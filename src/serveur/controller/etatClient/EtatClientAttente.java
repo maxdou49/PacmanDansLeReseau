@@ -1,3 +1,7 @@
+/*
+ * Le joueur est connecté mais n'as pas lancé de partie
+ */
+
 package serveur.controller.etatClient;
 
 import model.Transfert.Message;

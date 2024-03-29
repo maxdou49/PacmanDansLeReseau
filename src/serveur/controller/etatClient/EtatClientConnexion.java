@@ -1,3 +1,7 @@
+/*
+ * Le joueur vient de lancer la communication et n'as plus qu'a se connecter
+ */
+
 package serveur.controller.etatClient;
 
 import model.Transfert.Message;
