@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import controller.GameControlleur;
 import model.AgentAction;
 import model.Joueur;
-import model.MethodeFactory;
 import model.Transfert.EtatGame;
 import model.Transfert.Message;
 import model.Transfert.MessageBuilder;
@@ -208,7 +207,7 @@ public class ControllerPacmanGameServeur extends GameControlleur {
             }
         } catch (Exception e)
         {
-            System.out.println(new MethodeFactory().constructMessage("ControllerPacmanGameServeur\t"+e));
+            System.out.println("ControllerPacmanGameServeur\t"+e);
             e.printStackTrace();
         }
     }
@@ -242,7 +241,7 @@ public class ControllerPacmanGameServeur extends GameControlleur {
 
         } catch (Exception e)
         {
-            System.out.println(new MethodeFactory().constructMessage("ControllerPacmanGameServeur\t"+e));
+            System.out.println("ControllerPacmanGameServeur\t"+e);
             e.printStackTrace();
         }
     }

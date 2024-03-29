@@ -6,10 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.view.menu.MenuView;
 import client.view.menu.MenuStarting;
-import client.view.menu.MenuMain;
 import client.view.menu.MenuPanel;
 import controller.AbstractControlleur;
-import model.MethodeFactory;
 import model.Transfert.MessageBuilder;
 import model.Transfert.MessageLancer;
 import client.model.etatClient.EtatClientAttente;
@@ -54,7 +52,7 @@ public class MenuViewControlleur extends AbstractControlleur {
             controlleur.setEtat(new EtatClientAttente(controlleur));
             
         } catch (Exception e) {
-            System.out.println(new MethodeFactory().constructMessage("Client\t"+e)); 
+            System.out.println("Client\t"+e); 
             e.printStackTrace();
         }
     }
@@ -71,7 +69,7 @@ public class MenuViewControlleur extends AbstractControlleur {
             controlleur.setEtat(new EtatClientAttente(controlleur));
             
         } catch (Exception e) {
-            System.out.println(new MethodeFactory().constructMessage("Client\t"+e)); 
+            System.out.println("Client\t"+e); 
             e.printStackTrace();
         }
         
@@ -84,7 +82,7 @@ public class MenuViewControlleur extends AbstractControlleur {
             controlleur.envoyerMessage(MessageBuilder.build("LISTER", ""));
             
         } catch (Exception e) {
-            System.out.println(new MethodeFactory().constructMessage("Client\t"+e)); 
+            System.out.println("Client\t"+e); 
             e.printStackTrace();
         }
     }
