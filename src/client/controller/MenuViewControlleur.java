@@ -1,7 +1,6 @@
 package client.controller;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

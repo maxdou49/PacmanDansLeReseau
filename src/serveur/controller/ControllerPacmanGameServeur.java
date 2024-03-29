@@ -94,6 +94,7 @@ public class ControllerPacmanGameServeur extends GameControlleur {
             id = clients.size();
             this.clients.add(client);
             this.clientsAction.add(new AgentAction(AgentAction.STOP));
+            System.out.println("Ajout joueur " + id);
         }
         return id;
     }
@@ -110,7 +111,7 @@ public class ControllerPacmanGameServeur extends GameControlleur {
             //On supprime la partie s'il n'y a plus personne
             if(getNombreJoueurs() <= 0)
             {
-                parties.remove(this);
+                supprimerPartie();
             }
         } catch (Exception e)
         {
@@ -166,6 +167,12 @@ public class ControllerPacmanGameServeur extends GameControlleur {
         }
     }
 
+    public void supprimerPartie()
+    {
+        System.out.println("Suppression d'une partie.");
+        parties.remove(this);
+    }
+
     public void envoyerEtat(EtatGame etat)
     {
         try
@@ -202,6 +209,7 @@ public class ControllerPacmanGameServeur extends GameControlleur {
                 {
                     client.sendMessage(msg);
                     listeId.add(client.getCompte());
+                    client.terminerPartie();
                 }
             }
 

@@ -65,6 +65,7 @@ public class ControlleurClient {
                 if(game != null)
                 {
                     game.enleverJoueur(joueur);
+                    game = null;
                 }
             }
         }).start();
@@ -146,6 +147,18 @@ public class ControlleurClient {
                 }
             }
         }
+    }
+
+    public void terminerPartie()
+    {
+        //On enlève le joueur de la partie
+        if(game != null)
+        {
+            game.enleverJoueur(joueur);
+        }
+        game = null;
+        //On remet le joueur en attente
+        setEtat(new EtatClientAttente(this));
     }
 
     //Lance la partie
