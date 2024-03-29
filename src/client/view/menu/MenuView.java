@@ -72,14 +72,15 @@ public class MenuView extends JFrame {
     public void setView(MenuPanel panel)
     {
         System.out.println("Ouverture de " + panel.toString());
-        if(panel != null)
+        /*if(this.panel != null)
         {
             remove(panel);
-        }
+        }*/
         
         setContentPane(panel);
         this.panel = panel;
-
+        revalidate();
+        panel.repaint();
         repaint();
     }
 

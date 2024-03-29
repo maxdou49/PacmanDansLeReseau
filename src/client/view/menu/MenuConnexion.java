@@ -1,5 +1,6 @@
 package client.view.menu;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,21 +39,21 @@ public class MenuConnexion extends MenuPanel {
         JPanel serverPanel = new JPanel(new GridLayout(1, 2));
         serverPanel.setOpaque(false);
         JLabel serveurLabel = new JLabel("Serveur : ", JLabel.CENTER);
-        custumizeLabel(serveurLabel);
+        custumizeLabel(serveurLabel, Color.BLUE);
         serverPanel.add(serveurLabel);
         serverPanel.add(serveur);
 
         JPanel userPanel = new JPanel(new GridLayout(1, 2));
         userPanel.setOpaque(false);
         JLabel utilisateurLabel = new JLabel("Utilisateur : ", JLabel.CENTER);
-        custumizeLabel(utilisateurLabel);
+        custumizeLabel(utilisateurLabel, Color.BLUE);
         userPanel.add(utilisateurLabel);
         userPanel.add(utilisateur);
 
         JPanel passPanel = new JPanel(new GridLayout(1, 2));
         passPanel.setOpaque(false);
         JLabel motdepasseLabel = new JLabel("Mot de passe : ", JLabel.CENTER);
-        custumizeLabel(motdepasseLabel);
+        custumizeLabel(motdepasseLabel, Color.BLUE);
         passPanel.add(motdepasseLabel);
         passPanel.add(motdepasse);
         

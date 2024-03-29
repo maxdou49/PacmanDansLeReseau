@@ -85,8 +85,15 @@ public class ControlleurClient {
     //Prevenir l'utilisateur d'une reussite
     private void reussiteConnextion()
     {
-        setEtat(new EtatClientAttente(this));
-        sendMessage(MessageBuilder.build("VALIDE", ""));
+        ObjectMapper mapper = new ObjectMapper();
+        try
+        {
+            sendMessage(MessageBuilder.build("VALIDE", mapper.writeValueAsString(compte)));
+            setEtat(new EtatClientAttente(this));
+        } catch(IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void validerConnexion(String utilisateur, String motdepasse)

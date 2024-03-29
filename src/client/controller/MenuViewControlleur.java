@@ -96,7 +96,7 @@ public class MenuViewControlleur extends AbstractControlleur {
             int p=1234; // le port d’écoute
             serverName = serveur;
             if(controlleur.connexionServeur(serverName, p, utilisateur, motdepasse)) {
-                menu.setView(new MenuMain(this));
+                //menu.setView(new MenuMain(this));
             } else {
                 JOptionPane.showMessageDialog(null, "Connexion impossible !", "Erreur - Connexion", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("Connexion impossible");
@@ -110,5 +110,10 @@ public class MenuViewControlleur extends AbstractControlleur {
 
     public void setServerName(String serverName) {
         this.serverName = serverName;
+    }
+
+    public MainControlleur getControlleur()
+    {
+        return controlleur;
     }
 }

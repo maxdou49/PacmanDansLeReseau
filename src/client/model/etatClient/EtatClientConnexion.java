@@ -1,6 +1,7 @@
 package client.model.etatClient;
 
 import client.controller.MainControlleur;
+import model.Joueur;
 import model.Transfert.Message;
 
 public class EtatClientConnexion extends EtatClient {
@@ -13,7 +14,7 @@ public class EtatClientConnexion extends EtatClient {
     {
         if(m.getType().equals("VALIDE"))
         {
-            controller.confirmationConnexion();
+            controller.confirmationConnexion(objectMapper.readValue(m.getData(), Joueur.class));
         }
         else
         {

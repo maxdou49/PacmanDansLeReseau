@@ -13,6 +13,7 @@ import client.model.etatClient.EtatClientMenu;
 import client.view.menu.MenuConnexion;
 import client.view.menu.MenuMain;
 import controller.GameControlleur;
+import model.Joueur;
 import model.ReaderWriter;
 import model.Transfert.EtatGame;
 import model.Transfert.ListePartie;
@@ -27,6 +28,7 @@ public class MainControlleur {
     GameControlleur game;
     EtatClient etat;
     boolean running;
+    Joueur compte;
 
     public MainControlleur(String args[]) throws IOException
     {
@@ -54,8 +56,9 @@ public class MainControlleur {
         
     }
 
-    public void confirmationConnexion()
+    public void confirmationConnexion(Joueur joueur)
     {
+        this.compte = joueur;
         setEtat(new EtatClientConnecte(getThis()));
         menu.setScreen(new MenuMain(menu));
     }
@@ -135,7 +138,7 @@ public class MainControlleur {
                             rd = rw.getReader().readLine();
                             if(rd != null)
                             {
-                                //System.out.println(rd);
+                                System.out.println(rd);
                                 Message msg = MessageBuilder.buildFromString(rd);
                                 etat.lireMessage(msg);
                             }
@@ -143,7 +146,7 @@ public class MainControlleur {
                     } catch (Exception e) {
                         //C'est normal d'avoir une erreur si la partie se termine
                     }
-                    //Retour au menu quand on perd la connexion
+                    //Retour au menu de connexion quand on perd la connexion
                     setEtat(new EtatClientMenu(getThis()));
                     menu.setScreen(new MenuConnexion(menu));
                     menu.showCurrent();
@@ -156,5 +159,10 @@ public class MainControlleur {
     public GameControlleur getGame()
     {
         return game;
+    }
+
+    public Joueur getCompte()
+    {
+        return compte;
     }
 }

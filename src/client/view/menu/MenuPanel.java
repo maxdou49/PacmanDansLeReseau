@@ -46,9 +46,14 @@ public abstract class MenuPanel extends JPanel {
         }, 0, 500);
     }
 
-    void custumizeLabel(JLabel label) {
+    void custumizePanel(JPanel panel)
+    {
+        panel.setOpaque(false);
+    }
+
+    void custumizeLabel(JLabel label, Color color) {
         label.setFont(new Font("Arial", Font.PLAIN, 26));
-        label.setForeground(Color.BLUE);
+        label.setForeground(color);
         label.setOpaque(false);
     }
 
