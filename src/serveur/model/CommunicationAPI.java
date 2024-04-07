@@ -33,15 +33,20 @@ public class CommunicationAPI {
             connexion.setRequestMethod("GET");
             //On lit
             BufferedReader reader = new BufferedReader(new InputStreamReader(connexion.getInputStream()));
-            String line = reader.readLine();
-            System.out.println("Response: " + line);
+            StringBuilder str = new StringBuilder();
+            String line;
+            while((line = reader.readLine()) != null)
+            {
+                str.append(line);
+            }
+            System.out.println("Response: " + str);
             //On a pas recu un json
-            if(line.charAt(0) != '{')
+            if(str.charAt(0) != '{')
             {
                 throw new Exception("Echec de la connexion");
             }
             //On renvoit le joueur
-            return mapper.readValue(line, Joueur.class);
+            return mapper.readValue(str.toString(), Joueur.class);
         } catch(IOException e)
         {
             throw new Exception("Echec de la connexion");
@@ -64,7 +69,7 @@ public class CommunicationAPI {
             }
             String listeIdStr = listeId.toString();
             System.out.println(joueurs.size() + " "+listeIdStr);
-            String get = String.format("Partie?score=%d&maze=%s&endless=%d&victoire=%d&joueurs=%s", score, maze, endless ? 1 : 0, victoire ? 1 : 0, listeIdStr);
+            String get = String.format("AddPartie?score=%d&maze=%s&endless=%d&victoire=%d&joueurs=%s", score, maze, endless ? 1 : 0, victoire ? 1 : 0, listeIdStr);
             System.out.println(get);
             HttpURLConnection connexion = getConnexion(get);
             connexion.setRequestMethod("GET");
